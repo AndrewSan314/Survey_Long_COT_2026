@@ -1,0 +1,381 @@
+# Paper theo Research Role A1–A4
+
+Cập nhật: **06/11/2026**. Danh mục làm việc gồm **20 paper**: 5 paper có vai trò chính trong mỗi nhóm, với **15 Long-CoT trực tiếp, 4 nghiên cứu liên quan, 1 công trình nền tảng**. Các nhóm nhỏ là đề xuất tổng hợp của nhóm, không phải taxonomy do từng paper đặt ra.
+
+Mỗi paper có một vai trò chính theo đóng góp trung tâm và có thể có vai trò phụ. Danh mục ưu tiên Long-CoT; MCTSr, ZebraLogic, ProcessBench và CriticBench cung cấp đối chiếu về tìm kiếm, độ phức tạp, phát hiện lỗi và phê phán; Lanham et al. cung cấp phương pháp can thiệp để khảo sát tính trung thực của CoT.
+
+Số liệu dưới đây là kết quả tác giả báo cáo trong các thiết lập đã ghi, chưa được nhóm tái lập. Không dùng số đường đi thay cho tổng token/FLOPs; không đồng nhất tương quan quan sát hoặc đồ thị trích xuất với cơ chế nhân quả nội tại. `pp` là điểm phần trăm.
+
+Đi tới: [A1](#a1-trainingdata) · [A2](#a2-inferencecontrol) · [A3](#a3-analysis) · [A4](#a4-evaluationbenchmark). Xem [bản thảo Related Work](../overleaf/related-work.tex), [PDF](../overleaf/draft-main.pdf) và [hướng dẫn đóng góp](../CONTRIBUTING.md).
+
+## A1 Training/Data
+
+| Nhóm nhỏ đề xuất | Paper đại diện |
+| --- | --- |
+| A1.1 — RL-Driven Long-CoT Emergence & Scale | [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](#rra1-deepseek-r1); [Kimi k1.5: Scaling Reinforcement Learning with LLMs](#rra1-kimi-k15) |
+| A1.2 — Minimalist Data-Centric SFT | [s1: Simple test-time scaling](#rra1-s1); [LIMO: Less is More for Reasoning](#rra1-limo) |
+| A1.3 — Multi-Stage Curriculum Pipelines & Hybrid Recipes | [Light-R1: Curriculum SFT, DPO and RL for Long COT from Scratch and Beyond](#rra1-light-r1) |
+
+### rra1-deepseek-r1
+
+**[DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](https://arxiv.org/abs/2501.12948v2)**
+
+Tác giả: DeepSeek-AI.
+Vai trò chính: **A1**; vai trò phụ: A3; nhóm nhỏ: A1.1: RL-Driven Long-CoT Emergence & Scale; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [v2](https://arxiv.org/abs/2501.12948v2); Preprint (arXiv:2501.12948v2).
+
+- **Bài toán:** Khảo sát sự phát sinh hành vi suy luận chuỗi dài qua pure RL không cần dữ liệu SFT khởi động và cách chuyển giao tri thức sang mô hình nhỏ.
+- **Phương pháp:** DeepSeek-R1-Zero áp dụng thuật toán GRPO (không critic network) với reward dựa trên độ đúng đáp án và định dạng tag; DeepSeek-R1 kết hợp quy trình multi-stage (cold-start SFT, reasoning RL, rejection sampling tạo 800k mẫu, general RL) và chưng cất sang Qwen/Llama.
+- **Kết quả tác giả báo cáo:** R1-Zero đạt 77.9% AIME24 và 95.9% MATH-500; DeepSeek-R1 (671B MoE) đạt 79.8% AIME24, 97.3% MATH-500, 71.5% GPQA Diamond; Distill-Qwen-32B đạt 72.6% AIME24.
+- **Đóng góp:** Báo cáo hành vi tự kiểm chứng và tự phản tư phát sinh nội sinh trong thiết lập pure RL; đề xuất quy trình multi-stage giải quyết vấn đề đọc hiểu và ngôn ngữ; xác nhận hiệu quả chưng cất cho mô hình nhỏ.
+- **Giới hạn:** Gặp khó khăn trong tác vụ tổng quát, pha trộn ngôn ngữ khi huấn luyện pure RL thuần túy, nhạy cảm với reward hacking nếu thiếu verifier tất định.
+- **Vị trí nguồn:** arXiv:2501.12948, §2.1, §2.2, Table 2, Table 3, Table 8
+
+Khóa BibTeX: `rra1_deepseek_r1` trong [references.bib](../overleaf/references.bib).
+
+### rra1-s1
+
+**[s1: Simple test-time scaling](https://arxiv.org/abs/2501.19393v3)**
+
+Tác giả: Niklas Muennighoff; Zitong Yang; Weijia Shi; Xiang Lisa Li; Li Fei-Fei; Hannaneh Hajishirzi; Luke Zettlemoyer; Percy Liang; Emmanuel Candès; Tatsunori Hashimoto.
+Vai trò chính: **A1**; vai trò phụ: A2; nhóm nhỏ: A1.2: Minimalist Data-Centric SFT; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [v3](https://arxiv.org/abs/2501.19393v3); Preprint (arXiv:2501.19393v3).
+
+- **Bài toán:** Khảo sát xem năng lực suy luận chuỗi dài có thể được kích hoạt bằng lượng dữ liệu giám sát cực nhỏ hay bắt buộc phải dùng RL phức tạp và hàng trăm nghìn mẫu SFT.
+- **Phương pháp:** Tinh chọn tập s1K (1,000 bài toán khó) với vết suy luận chưng cất từ Gemini 2.0 Flash Thinking Experimental; huấn luyện SFT chuẩn trên Qwen2.5-32B-Instruct; kết hợp kỹ thuật test-time budget forcing (chặn `</thought>`, chèn "Wait").
+- **Kết quả tác giả báo cáo:** s1-32B không can thiệp đạt 50.0% AIME24; khi bật budget forcing đạt 56.7% AIME24, 93.0% MATH-500, 59.6% GPQA Diamond (tăng +30.0 pp AIME so với base 26.7%).
+- **Đóng góp:** Minh chứng hiệu quả mẫu cao của phương pháp SFT tinh chọn tối giản trong thiết lập thử nghiệm; đề xuất cơ chế budget forcing đơn giản lúc suy luận.
+- **Giới hạn:** Kết quả phụ thuộc vào base model và chất lượng vết giải từ teacher trong thiết lập đã thử; không chứng minh cơ chế tri thức của mọi mô hình.
+- **Vị trí nguồn:** arXiv:2501.19393, §2.1, §3.1, §4.1, Table 1
+
+Khóa BibTeX: `rra1_s1` trong [references.bib](../overleaf/references.bib).
+
+### rra1-kimi-k15
+
+**[Kimi k1.5: Scaling Reinforcement Learning with LLMs](https://arxiv.org/abs/2501.12599v4)**
+
+Tác giả: Kimi Team.
+Vai trò chính: **A1**; vai trò phụ: A3; nhóm nhỏ: A1.1: RL-Driven Long-CoT Emergence & Scale; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [v4](https://arxiv.org/abs/2501.12599v4); Preprint (arXiv:2501.12599v4).
+
+- **Bài toán:** Mở rộng học tăng cường (RL) lên ngữ cảnh siêu dài (128k tokens) cho văn bản và đa phương thức, kiểm soát độ ổn định gradient và tối ưu chi phí suy luận.
+- **Phương pháp:** Warmup SFT kết hợp Online Policy Mirror Descent không dùng value model (value-head free), khai thác gradient âm từ vết giải lỗi, chính quy hóa relative entropy, CoT Reward Model (dùng suy luận CoT để phán quyết độ đúng đáp án cuối có giải trình JSON), và khung nén Long2short.
+- **Kết quả tác giả báo cáo:** Đạt 77.5% Pass@1 AIME24, 96.2% MATH-500, 74.9% MathVista; CoT-RM phán quyết độ đúng đáp án cuối đạt độ chính xác ~98.5% trên mẫu kiểm tra thủ công của tác giả (so với ~84.4% của Classic RM); Long2short giảm độ trễ và độ dài chuỗi.
+- **Đóng góp:** Báo cáo công thức mở rộng RL với chuỗi 128k tokens; áp dụng chính sách không value network kết hợp gradient âm; đề xuất phương pháp chưng cất Long2short.
+- **Giới hạn:** Tiêu tốn chi phí hạ tầng tính toán lớn; CoT-RM đòi hỏi thêm compute khi chấm điểm so với outcome RM thông thường.
+- **Vị trí nguồn:** arXiv:2501.12599v4, §2.2, §2.3.2, §2.3.5, Table 2, Figure 10
+
+Khóa BibTeX: `rra1_kimi_k15` trong [references.bib](../overleaf/references.bib).
+
+### rra1-limo
+
+**[LIMO: Less is More for Reasoning](https://arxiv.org/abs/2502.03387v3)**
+
+Tác giả: Yixin Ye; Zhen Huang; Yang Xiao; Ethan Chern; Shijie Xia; Pengfei Liu.
+Vai trò chính: **A1**; vai trò phụ: A3; nhóm nhỏ: A1.2: Minimalist Data-Centric SFT; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [v3](https://arxiv.org/abs/2502.03387v3); Preprint (arXiv:2502.03387v3).
+
+- **Bài toán:** Khảo sát giới hạn tối thiểu của dữ liệu SFT trong việc kích hoạt năng lực suy luận toán thi đấu đỉnh cao trên mô hình nền tảng.
+- **Phương pháp:** Lọc câu hỏi 2 tầng (loại bài dễ, giữ bài DeepSeek-R1-Distill-32B giải đúng 1-3/32 lần); chấm điểm vết suy luận theo rubric 4 chiều (lập luận, tự kiểm tra, thăm dò, độ hạt thích ứng); huấn luyện SFT trên 817 mẫu chọn lọc nhất với Qwen2.5-32B-Instruct.
+- **Kết quả tác giả báo cáo:** LIMO-32B đạt 63.3% AIME24, 95.6% MATH-500, 96.3% AMC23; khi chuyển sang base model yếu hơn (Qwen1.5-32B-Chat), hiệu năng AIME24 sụt giảm mạnh xuống 9.2% (-54.1 pp).
+- **Đóng góp:** Báo cáo hiệu quả mẫu của SFT trên mô hình nền mạnh trong thiết lập đã thử; đề xuất rubric bốn chiều để tinh chọn vết giải.
+- **Giới hạn:** Hiệu quả mẫu phụ thuộc vào năng lực của base model được thử nghiệm; thực nghiệm không cung cấp bằng chứng trực tiếp về cơ chế tiền huấn luyện.
+- **Vị trí nguồn:** arXiv:2502.03387v3, §3, §3.1, §6.2, Table 1, §6.3.3
+
+Khóa BibTeX: `rra1_limo` trong [references.bib](../overleaf/references.bib).
+
+### rra1-light-r1
+
+**[Light-R1: Curriculum SFT, DPO and RL for Long COT from Scratch and Beyond](https://arxiv.org/abs/2503.10460v4)**
+
+Tác giả: Liang Wen; Yunke Cai; Fenrui Xiao; Xin He; Qi An; Zhenyu Duan; Yimin Du; Junchen Liu; Lifu Tang; Xiaowei Lv; Haosheng Zou; Yongchao Deng; Shousheng Jia; Xiangzheng Zhang.
+Vai trò chính: **A1**; vai trò phụ: A4; nhóm nhỏ: A1.3: Multi-Stage Curriculum Pipelines & Hybrid Recipes; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [v4](https://arxiv.org/abs/2503.10460v4); Author-reported ACL 2025 Industry Track; arXiv:2503.10460v4.
+
+- **Bài toán:** Cung cấp công thức giáo trình huấn luyện mở, có thể tái lập Long-CoT từ checkpoint short-CoT và xử lý rò rỉ dữ liệu kiểm chuẩn mở.
+- **Phương pháp:** Quy trình gồm 3 giai đoạn huấn luyện (SFT-1 với 76k bài toán đã lọc và độ dài tối đa 20k tokens, SFT-2 với 3k bài thi đấu, DPO bán on-policy) kết hợp Model Merging trên checkpoint Qwen2.5-32B-Instruct; kèm kiểm định khử nhiễm benchmark nghiêm ngặt.
+- **Kết quả tác giả báo cáo:** Light-R1-32B tăng tiến AIME24 qua các giai đoạn (Base 16.6% -> SFT-1 69.0% -> SFT-2 73.0% -> DPO 75.8% -> Merging 76.6%), trong khi GPQA biến động (64.3% ở SFT-1 -> 60.6% ở SFT-2 -> 61.8% ở mô hình cuối); phát hiện rò rỉ đề thi trong nhiều tập dữ liệu mở trước đó.
+- **Đóng góp:** Công bố công thức giáo trình đào tạo Long-CoT mở có khả năng tái lập; định lượng vai trò của 3k mẫu chất lượng cao; cung cấp bộ kiểm tra rò rỉ benchmark.
+- **Giới hạn:** Khởi tạo từ checkpoint instruct mạnh đã qua căn chỉnh; phụ thuộc vào dữ liệu thi đấu chất lượng cao ở Stage 2.
+- **Vị trí nguồn:** arXiv:2503.10460v4, §3.1.2, §3.2, Table 2, Table 7
+
+Khóa BibTeX: `rra1_light_r1` trong [references.bib](../overleaf/references.bib).
+
+## A2 Inference/Control
+
+| Nhóm nhỏ đề xuất | Paper đại diện |
+| --- | --- |
+| A2.1 — Dynamic Early-Stopping & Sufficiency Control | [When Is Thinking Enough? Early Exit via Sufficiency Assessment for Efficient Reasoning](#rra2-dtsr); [Stop When Enough: Adaptive Early-Stopping for Chain-of-Thought Reasoning](#rra2-refrain) |
+| A2.2 — Error Trap Detection & Adaptive Restarts | [Thinking Traps in Long Chain-of-Thought: A Measurable Study and Trap-Aware Adaptive Restart](#rra2-taar); [Accessing GPT-4 level Mathematical Olympiad Solutions via Monte Carlo Tree Self-refine with LLaMa-3 8B](#rra2-mctsr) |
+| A2.3 — Modular Context Isolation & State Management | [Recursive Models for Long-Horizon Reasoning](#rra2-recursive-models) |
+
+### rra2-taar
+
+**[Thinking Traps in Long Chain-of-Thought: A Measurable Study and Trap-Aware Adaptive Restart](https://arxiv.org/abs/2601.11940v1)**
+
+Tác giả: Kang Chen; Fan Yu; Junjie Nian; Shihan Zhao; Zhuoka Feng; Zijun Yao; Heng Wang; Minshen Yu; Yixin Cao.
+Vai trò chính: **A2**; vai trò phụ: A3; nhóm nhỏ: A2.2: Error Trap Detection & Adaptive Restarts; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [v1](https://arxiv.org/abs/2601.11940v1); Author-reported Findings of ACL 2026; arXiv:2601.11940v1.
+
+- **Bài toán:** Hiện tượng bẫy tư duy (thinking traps) do cam kết sai sớm ở đoạn đầu chuỗi tự củng cố, khiến nỗ lực tự sửa muộn ở cuối chuỗi thất bại.
+- **Phương pháp:** Khung TAAR gồm policy chẩn đoán nhẹ pi_phi dự đoán vị trí bẫy t_hat và xác suất thoát lỗi p_hat; bộ điều khiển thực hiện Cut@Trap cắt bỏ phân đoạn bẫy và tái khởi động suy luận với nhiệt độ thích ứng.
+- **Kết quả tác giả báo cáo:** Với cùng ngân sách đường đi báo cáo K=4, trên DeepSeek-R1-Distill-Qwen-8B, độ chính xác trung bình trên 5 benchmark đạt 69.1% (tăng +4.6 pp so với Avg@4 64.5% và +3.1 pp so với PRM@4 66.0%); Cut@Trap đạt escape rate 16.5% (8B); trên GPT-OSS-120B đạt 79.2% (thấp hơn Avg@4 80.6%).
+- **Đóng góp:** Định lượng hiện tượng bẫy tư duy tập trung ở đoạn đầu chuỗi (44.4% xuất hiện trước vị trí 0.2); đề xuất cơ chế Cut@Trap can thiệp thích ứng lúc suy luận dựa trên chẩn đoán bẫy.
+- **Giới hạn:** Không đo trực tiếp cơ chế chú ý (attention mechanism); trên mô hình biên giới rất lớn (120B) có thể cắt nhầm đường dẫn gần đúng làm giảm độ chính xác.
+- **Vị trí nguồn:** arXiv:2601.11940v1, §3.1, Figure 4, §5.2, Table 2
+
+Khóa BibTeX: `rra2_taar` trong [references.bib](../overleaf/references.bib).
+
+### rra2-dtsr
+
+**[When Is Thinking Enough? Early Exit via Sufficiency Assessment for Efficient Reasoning](https://arxiv.org/abs/2604.06787v1)**
+
+Tác giả: Yang Xiang; Yixin Ji; Ruotao Xu; Dan Qiao; Zheming Yang; Juntao Li; Min Zhang.
+Vai trò chính: **A2**; vai trò phụ: A3; nhóm nhỏ: A2.1: Dynamic Early-Stopping & Sufficiency Control; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [v1](https://arxiv.org/abs/2604.06787v1); Author-reported ACL 2026 Main Conference; arXiv:2604.06787v1.
+
+- **Bài toán:** Hiện tượng overthinking khi mô hình tiếp tục kéo dài vết suy luận dù đã tích lũy đủ thông tin để kết luận đúng, làm tăng token và độ trễ.
+- **Phương pháp:** Cơ chế DTSR không cần huấn luyện, giám sát từ khóa phản tư ("Wait", "Alternative") để xác định điểm kiểm tra, sau đó dùng prompt tự đánh giá độ đủ suy luận (thought sufficiency); nếu vượt ngưỡng tau thì ép dừng `</think>`.
+- **Kết quả tác giả báo cáo:** Trên Qwen3-14B, độ chính xác đạt 84.8% (+0.4 pp so với baseline 84.4%) trong khi giảm 34.9% token; trên Qwen3-8B, token giảm 32.0% nhưng độ chính xác giảm nhẹ 0.9 pp (81.0% vs 81.9%).
+- **Đóng góp:** Đề xuất phương pháp metacognitive sufficiency check không cần huấn luyện giúp tiết kiệm đáng kể chi phí token lúc suy luận.
+- **Giới hạn:** Hiệu năng tự đánh giá độ đủ suy luận phụ thuộc vào quy mô mô hình; mô hình nhỏ hơn có thể dừng sớm khi chưa giải quyết trọn vẹn bài toán.
+- **Vị trí nguồn:** arXiv:2604.06787v1, §2.2, §3.2, Table 1
+
+Khóa BibTeX: `rra2_dtsr` trong [references.bib](../overleaf/references.bib).
+
+### rra2-refrain
+
+**[Stop When Enough: Adaptive Early-Stopping for Chain-of-Thought Reasoning](https://arxiv.org/abs/2510.10103v1)**
+
+Tác giả: Renliang Sun; Wei Cheng; Dawei Li; Haifeng Chen; Wei Wang.
+Vai trò chính: **A2**; vai trò phụ: A3; nhóm nhỏ: A2.1: Dynamic Early-Stopping & Sufficiency Control; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [v1](https://arxiv.org/abs/2510.10103v1); Preprint (arXiv:2510.10103v1).
+
+- **Bài toán:** Chuỗi suy luận dài lặp lại các bước giải thích hoặc tính toán lại đáp án đã có, dẫn đến dư thừa phản tư và nguy cơ trôi dạt ngữ nghĩa.
+- **Phương pháp:** REFRAIN kiểm tra đồng thời giả thuyết đáp án, token phản tư và độ dư thừa ngữ nghĩa cosine similarity giữa embedding câu hiện tại và quá khứ; dùng thuật toán Sliding-Window UCB bandit để tự điều chỉnh ngưỡng dừng tau.
+- **Kết quả tác giả báo cáo:** Trên gpt-oss-20B, tăng Pass@1 trên toàn bộ benchmark thử nghiệm (+2.73 pp GSM8K, +3.40 pp MATH-500, +7.07 pp GPQA Diamond) và giảm 33.3% đến 44.7% token; trên Qwen3-8B tiết kiệm 21.5% đến 54.2% token.
+- **Đóng góp:** Thiết lập chỉ số đo lường độ dư thừa phản tư dựa trên embedding câu; ứng dụng thuật toán bandit trực tuyến để điều tiết ngưỡng dừng tự thích ứng.
+- **Giới hạn:** Dư thừa phản tư dựa trên embedding ngữ nghĩa không đồng nhất hoàn toàn với độ đủ logic hình thức; phụ thuộc vào chất lượng mô hình embedding câu.
+- **Vị trí nguồn:** arXiv:2510.10103v1, §3.2, §3.4, §5.1, Table 1
+
+Khóa BibTeX: `rra2_refrain` trong [references.bib](../overleaf/references.bib).
+
+### rra2-recursive-models
+
+**[Recursive Models for Long-Horizon Reasoning](https://arxiv.org/abs/2603.02112v2)**
+
+Tác giả: Chenxiao Yang; Nathan Srebro; Zhiyuan Li.
+Vai trò chính: **A2**; vai trò phụ: A1; nhóm nhỏ: A2.3: Modular Context Isolation & State Management; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [v2](https://arxiv.org/abs/2603.02112v2); Author-reported ICML 2026; arXiv:2603.02112v2.
+
+- **Bài toán:** Mô hình tự hồi quy phẳng (flat context) chịu chi phí chú ý bậc hai và hiện tượng phân tâm ngữ cảnh khi vết suy luận kéo dài hàng chục nghìn tokens.
+- **Phương pháp:** Mô hình đệ quy (f^rm) phân rã bài toán thành các stack frame độc lập qua thẻ `<call>` và `<return>`; khi bài toán con hoàn thành chỉ trả về kết quả ngắn gọn b cho ngữ cảnh cha và giải phóng trace trung gian.
+- **Kết quả tác giả báo cáo:** Fine-tune Qwen2.5-3B-Instruct đệ quy trên SAT solving đạt 98% (Easy), 95% (Medium), 64% (Hard OOD), vượt GPT-4o phẳng (48.8% Hard); trên 4x4 Go (Length-OOD) đạt 38.5% trace accuracy trong khi CoT phẳng sụt giảm xuống 1.0%.
+- **Đóng góp:** Đặt cơ sở lý thuyết chứng minh mô hình đệ quy với ngữ cảnh giới hạn tương đương không gian tính toán Turing SPACE(S(n)); cô lập ngữ cảnh giúp cải thiện tổng quát hóa ngoài phân phối độ dài.
+- **Giới hạn:** Đòi hỏi định dạng bài toán có thể phân rã cấu trúc đệ quy rõ ràng; chi phí quản lý stack và chuyển ngữ cảnh ngoài bộ nhớ.
+- **Vị trí nguồn:** arXiv:2603.02112v2, §3, §5.1, Table 1, Table 2
+
+Khóa BibTeX: `rra2_recursive_models` trong [references.bib](../overleaf/references.bib).
+
+### rra2-mctsr
+
+**[Accessing GPT-4 level Mathematical Olympiad Solutions via Monte Carlo Tree Self-refine with LLaMa-3 8B](https://arxiv.org/abs/2406.07394v2)**
+
+Tác giả: Di Zhang; Xiaoshui Huang; Dongzhan Zhou; Yuqiang Li; Wanli Ouyang.
+Vai trò chính: **A2**; vai trò phụ: A3; nhóm nhỏ: A2.2: Error Trap Detection & Adaptive Restarts; phạm vi: **Nghiên cứu suy luận liên quan**.
+Nguồn đã dùng: [v2](https://arxiv.org/abs/2406.07394v2); Preprint (arXiv:2406.07394v2).
+
+- **Bài toán:** Mô hình ngôn ngữ vừa và nhỏ gặp khó khăn trong toán thi đấu Olympic do lỗi logic và thiếu cơ chế tìm kiếm - sửa sai có hệ thống lúc suy luận.
+- **Phương pháp:** Thuật toán MCTSr kết hợp tìm kiếm cây Monte Carlo với self-refine văn bản: mỗi nút là một lời giải hoàn chỉnh, mở rộng bằng critique và viết lại cải tiến, tự chấm điểm (-100 đến 100) và lan truyền ngược cập nhật giá trị.
+- **Kết quả tác giả báo cáo:** Trên LLaMA-3-8B không fine-tune, MATH accuracy tăng từ 24.36% (zero-shot) lên 58.24% (8-rollouts); Math Odyssey đạt 49.36% (ngang ngửa GPT-4 Turbo 49.1%).
+- **Đóng góp:** Đề xuất phương pháp kết hợp tìm kiếm cây MCTS với khả năng phản biện văn bản ở cấp độ lời giải hoàn chỉnh; minh họa khả năng thu hẹp khoảng cách hiệu năng qua test-time search.
+- **Giới hạn:** Tìm kiếm ở cấp độ cả lời giải (coarse granularity) tiêu tốn nhiều lượt sinh văn bản hoàn chỉnh; điểm số tự đánh giá có thể thiếu tin cậy ở bài toán quá khó. Scope thuộc adjacent_reasoning.
+- **Vị trí nguồn:** arXiv:2406.07394v2, §3, §4.3, Table 2, §4.4, Table 3
+
+Khóa BibTeX: `rra2_mctsr` trong [references.bib](../overleaf/references.bib).
+
+## A3 Analysis
+
+| Nhóm nhỏ đề xuất | Paper đại diện |
+| --- | --- |
+| A3.1 — Discourse Graph Structures vs Mechanistic Causality | [ReasoningFlow: Discourse Structures for Understanding LLM Reasoning Traces](#rra3-reasoningflow); [Measuring Faithfulness in Chain-of-Thought Reasoning](#rra3-lanham-faithfulness) |
+| A3.2 — Structural Graph Representations & Failure Mode Diagnosis | [Understanding Failures in LLM Reasoning by Learning Structured Representations of Chain-of-Thought](#rra3-cot2graph) |
+| A3.3 — Combinatorial Scaling Limits & Overthinking Mechanics | [ZebraLogic: On the Scaling Limits of LLMs for Logical Reasoning](#rra3-zebralogic); [Revisiting Overthinking in Long Chain-of-Thought from the Perspective of Self-Doubt](#rra3-overthinking) |
+
+### rra3-reasoningflow
+
+**[ReasoningFlow: Discourse Structures for Understanding LLM Reasoning Traces](https://arxiv.org/abs/2606.05402v2)**
+
+Tác giả: Jinu Lee; Shivam Agarwal; Amruta Parulekar; Siddarth Madala; Dilek Hakkani-Tür; Julia Hockenmaier.
+Vai trò chính: **A3**; vai trò phụ: A4; nhóm nhỏ: A3.1: Discourse Graph Structures vs Mechanistic Causality; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [v2](https://arxiv.org/abs/2606.05402v2); Author-reported EMNLP 2026 Oral; arXiv:2606.05402v2.
+
+- **Bài toán:** Vết suy luận Long-CoT phi tuyến tính thiếu schema diễn ngôn chuẩn hóa để mô tả quan hệ giữa các bước và chưa kiểm chứng mối liên hệ giữa cấu trúc bề mặt và cơ chế tính toán nội tại.
+- **Phương pháp:** Đề xuất ReasoningFlow biểu diễn vết suy luận thành DAG với các nhãn quan hệ diễn ngôn (support, attack, verify, assumption); thực hiện can thiệp Thought Anchors (attention masking) để đo điểm phụ thuộc nhân quả thực nghiệm qua log KL-divergence.
+- **Kết quả tác giả báo cáo:** Trên QwQ và AIME, điểm phụ thuộc Thought Anchors khi dự đoán cạnh ReasoningFlow không vượt trội so với baseline heuristic chọn nút gần nhất theo khoảng cách token; trên quan sát vết giải, bước kiểm tra cục bộ có sửa lỗi ghi nhận tỷ lệ bước đúng là 84% (so với 64%) và tỷ lệ dẫn đến đáp án đúng cuối là 20% (so với 5%).
+- **Đóng góp:** Cung cấp schema diễn ngôn hình thức phân tích cấu trúc vết suy luận; báo cáo quan sát thực nghiệm rằng mức độ thẳng hàng giữa đồ thị diễn ngôn bề mặt và điểm số dựa trên can thiệp nội tại là hạn chế trong thiết lập thử nghiệm QwQ và AIME.
+- **Giới hạn:** Tỷ lệ đúng của bước sửa lỗi là quan sát tương quan hành vi trên tập vết giải, không phải can thiệp nhân quả có đối chứng độc lập; chú ý Thought Anchors chỉ kiểm tra trên mô hình và tác vụ cụ thể.
+- **Vị trí nguồn:** arXiv:2606.05402v2, §3, §6.1, Figure 5, §8, Finding 4
+
+Khóa BibTeX: `rra3_reasoningflow` trong [references.bib](../overleaf/references.bib).
+
+### rra3-cot2graph
+
+**[Understanding Failures in LLM Reasoning by Learning Structured Representations of Chain-of-Thought](https://openreview.net/forum?id=wFTJZ8fvns)**
+
+Tác giả: Tommaso Felice Banfi; Mubashara Akhtar; Jingwei Ni; Mrinmaya Sachan.
+Vai trò chính: **A3**; vai trò phụ: không gán; nhóm nhỏ: A3.2: Structural Graph Representations & Failure Mode Diagnosis; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [OpenReview](https://openreview.net/forum?id=wFTJZ8fvns); Author-reported Findings of EMNLP 2026; OpenReview forum:wFTJZ8fvns.
+
+- **Bài toán:** Đánh giá CoT hiện tập trung vào tín hiệu cấp bước độc lập, bỏ qua cấu trúc tô-pô tổng thể của vết suy luận và các mẫu hình cấu trúc phân biệt thành công/thất bại.
+- **Phương pháp:** Chuyển đổi vết CoT thành đồ thị phụ thuộc định kiểu nắm bắt phân nhánh và gộp bài toán con; huấn luyện Graph Neural Networks (GNN) kết hợp GNNExplainer để trích xuất đặc trưng cấu trúc liên quan đến độ đúng đắn và dư thừa.
+- **Kết quả tác giả báo cáo:** Trên GPQA với vết suy luận DS-Qw14B, độ chính xác dự đoán đúng/sai của đáp án cuối đạt 65.4%, tăng +7.8 điểm phần trăm (pp) so với baseline Logistic Regression theo độ dài (57.6%) và +2.5 pp so với baseline cây LCoT2Tree (62.9%); trên 600 bài MMLU-Pro (N=5), CoT2Graph đạt 54.5% và graph+entropy đạt 56.1%, so với ORM-Best (50.8%), ORM+uncertainty (51.6%) và mean (43.2%); phân tích GNNExplainer giải thích bộ dự đoán GNN chứ không phải cơ chế nhân quả nội tại của LLM.
+- **Đóng góp:** Minh họa rằng cấu trúc liên kết đồ thị của vết suy luận mang tín hiệu dự đoán hữu ích cho tính đúng đắn và độ dư thừa; đề xuất phương pháp phân tích vết giải dưới dạng đồ thị.
+- **Giới hạn:** Cấu trúc đồ thị phản ánh tốt tính dư thừa và kế hoạch nhưng ít mang tín hiệu về lỗi hallucination nội bộ bước; phụ thuộc vào parser trích xuất đồ thị phụ thuộc.
+- **Vị trí nguồn:** OpenReview forum:wFTJZ8fvns, §4.2, Table 1, §5.6, Figure 7
+
+Khóa BibTeX: `rra3_cot2graph` trong [references.bib](../overleaf/references.bib).
+
+### rra3-zebralogic
+
+**[ZebraLogic: On the Scaling Limits of LLMs for Logical Reasoning](https://arxiv.org/abs/2502.01100v2)**
+
+Tác giả: Bill Yuchen Lin; Ronan Le Bras; Kyle Richardson; Ashish Sabharwal; Radha Poovendran; Peter Clark; Yejin Choi.
+Vai trò chính: **A3**; vai trò phụ: A4; nhóm nhỏ: A3.3: Combinatorial Scaling Limits & Overthinking Mechanics; phạm vi: **Nghiên cứu suy luận liên quan**.
+Nguồn đã dùng: [v2](https://arxiv.org/abs/2502.01100v2); Author-reported ICML 2025; arXiv:2502.01100v2.
+
+- **Bài toán:** Khảo sát ranh giới mở rộng (scaling limits) của LLMs và reasoning models trong bài toán suy luận logic thỏa mãn ràng buộc khi không gian tìm kiếm tăng theo cấp số nhân.
+- **Phương pháp:** Thiết kế khuôn khổ câu đố lưới logic ZebraLogic dựa trên bài toán CSP với không gian tìm kiếm định lượng chính xác (<10^3 đến >10^9 ứng viên); đánh giá tác động của scaling tham số và scaling tính toán suy luận (Best-of-N, Self-Refinement).
+- **Kết quả tác giả báo cáo:** Ghi nhận hiện tượng Lời nguyền phức tạp (Curse of Complexity): độ chính xác giảm sút nghiêm trọng khi không gian tìm kiếm vượt 10^6; Llama-3.1-405B đạt 32.6% tổng thể nhưng giảm về 1.5% ở mức Large và 0.0% ở X-Large; reasoning models (o1-full 42.5%, DeepSeek-R1 28.5% ở X-Large) cũng suy giảm mạnh; scaling test-time chỉ cải thiện cận biên trên các mô hình được thử nghiệm.
+- **Đóng góp:** Định lượng ranh giới suy luận logic hình thức có không gian tìm kiếm tổ hợp lớn; chỉ ra điểm nghẽn của scaling tham số và suy luận trước độ phức tạp cấp số nhân.
+- **Giới hạn:** Khảo sát trên dạng bài toán câu đố lưới CSP cụ thể; không trực tiếp nghiên cứu vết suy luận mở rộng dạng tự do (scope adjacent_reasoning, primary A3, secondary A4).
+- **Vị trí nguồn:** arXiv:2502.01100v2, §3.1, Table 1, §3.2, §5, Figure 6
+
+Khóa BibTeX: `rra3_zebralogic` trong [references.bib](../overleaf/references.bib).
+
+### rra3-overthinking
+
+**[Revisiting Overthinking in Long Chain-of-Thought from the Perspective of Self-Doubt](https://arxiv.org/abs/2505.23480v1)**
+
+Tác giả: Keqin Peng; Liang Ding; Yuanxin Ouyang; Meng Fang; Dacheng Tao.
+Vai trò chính: **A3**; vai trò phụ: A2; nhóm nhỏ: A3.3: Combinatorial Scaling Limits & Overthinking Mechanics; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [v1](https://arxiv.org/abs/2505.23480v1); Preprint (arXiv:2505.23480v1).
+
+- **Bài toán:** Hiện tượng các mô hình reasoning tiêu tốn lượng token khổng lồ cho các bước suy luận thừa thãi mà không làm tăng độ chính xác; cần định lượng cơ chế hành vi cụ thể.
+- **Phương pháp:** Phân tích hành vi suy luận dưới góc nhìn tự nghi ngờ (self-doubt) — xu hướng kiểm tra lại liên tục các kết luận trung gian đã đúng; khảo sát trên 4 mô hình với GSM8K, MATH-500 và bộ đề thiếu tiền đề (Missing Premise); đề xuất prompt can thiệp kiểm tra tiền đề.
+- **Kết quả tác giả báo cáo:** Self-doubt chiếm tỷ lệ lớn trong các bước overthinking thừa thãi; prompt can thiệp kiểm tra tiền đề giúp giảm 35%–45% số token trong khi bảo toàn hoặc tăng nhẹ độ chính xác trên mô hình thử nghiệm; trên bài thiếu tiền đề, tỷ lệ từ chối giải đúng tăng từ 30-50% lên 75-97%.
+- **Đóng góp:** Đưa ra phân tích hành vi chỉ ra self-doubt là nhân tố dẫn đến overthinking; đề xuất giải pháp can thiệp tiền đề đơn giản giúp tiết kiệm token.
+- **Giới hạn:** Can thiệp dựa trên prompt mang tính heuristic; chưa giải quyết triệt để overthinking bắt nguồn từ cơ chế tối ưu hóa RL nội tại.
+- **Vị trí nguồn:** arXiv:2505.23480v1, §2, Figure 1, §5, Table 1, Table 3, §6
+
+Khóa BibTeX: `rra3_overthinking` trong [references.bib](../overleaf/references.bib).
+
+### rra3-lanham-faithfulness
+
+**[Measuring Faithfulness in Chain-of-Thought Reasoning](https://arxiv.org/abs/2307.13702v1)**
+
+Tác giả: Tamera Lanham; Anna Chen; Ansh Radhakrishnan; Benoit Steiner; Carson Denison; Danny Hernandez; Dustin Li; Esin Durmus; Evan Hubinger; Jackson Kernion; Kamilė Lukošiūtė; Karina Nguyen; Newton Cheng; Nicholas Joseph; Nicholas Schiefer; Oliver Rausch; Robin Larson; Sam McCandlish; Sandipan Kundu; Saurav Kadavath; Shannon Yang; Thomas Henighan; Timothy Maxwell; Timothy Telleen-Lawton; Tristan Hume; Zac Hatfield-Dodds; Jared Kaplan; Jan Brauner; Samuel R. Bowman; Ethan Perez.
+Vai trò chính: **A3**; vai trò phụ: không gán; nhóm nhỏ: A3.1: Discourse Graph Structures vs Mechanistic Causality; phạm vi: **Công trình nền tảng**.
+Nguồn đã dùng: [v1](https://arxiv.org/abs/2307.13702v1); Preprint (arXiv:2307.13702v1).
+
+- **Bài toán:** Khảo sát xem chuỗi suy luận từng bước có thực sự phản ánh tiến trình tính toán nội tại (tính trung thực) hay chỉ là sự hợp lý hóa sau khi đã có định kiến đáp án.
+- **Phương pháp:** Thực hiện các can thiệp phản thực nghiệm (counterfactual perturbations) trên chuỗi CoT của các mô hình lên tới 175B tham số: trả lời sớm, chèn lỗi bước trung gian, diễn đạt lại, và thay thế CoT bằng filler tokens " ...".
+- **Kết quả tác giả báo cáo:** Với các filler tokens, mô hình thử nghiệm không cải thiện độ chính xác so với direct answer; tác giả nêu giả thuyết hiệu ứng lệch phân phối (OOD) như một khả năng giải thích hiệu năng giảm, không phải nguyên nhân đã đo đạc độc lập.
+- **Đóng góp:** Đặt nền tảng phương pháp luận cho việc kiểm tra tính trung thực của CoT bằng can thiệp phản thực nghiệm; ghi nhận trong các thiết lập thử nghiệm này, filler tokens không cải thiện độ chính xác.
+- **Giới hạn:** Kết quả thực hiện trên các mô hình pre-o1 và prompt-based CoT; không tự động khái quát thành quy luật phủ định cho mọi nghiên cứu filler-token hay latent reasoning sau này. Scope foundational.
+- **Vị trí nguồn:** arXiv:2307.13702v1, §2.1, §2.3, §2.5.1, Figure 5, Table 2
+
+Khóa BibTeX: `rra3_lanham_faithfulness` trong [references.bib](../overleaf/references.bib).
+
+## A4 Evaluation/Benchmark
+
+| Nhóm nhỏ đề xuất | Paper đại diện |
+| --- | --- |
+| A4.1 — Long-Horizon Dependency & Scaling Breakdown Benchmarks | [LongCoT: Benchmarking Long-Horizon Chain-of-Thought Reasoning](#rra4-longcot); [SPaRC: A Spatial Pathfinding Reasoning Challenge](#rra4-sparc) |
+| A4.2 — Graph-Driven Automated Efficiency & Redundancy Frameworks | [CoTJudger: A Graph-Driven Framework for Automatic Evaluation of Chain-of-Thought Efficiency and Redundancy in LRMs](#rra4-cotjudger) |
+| A4.3 — Step-Level Process Supervision & Critique-Correction Benchmarks | [ProcessBench: Identifying Process Errors in Mathematical Reasoning](#rra4-processbench); [CriticBench: Benchmarking LLMs for Critique-Correct Reasoning](#rra4-criticbench) |
+
+### rra4-longcot
+
+**[LongCoT: Benchmarking Long-Horizon Chain-of-Thought Reasoning](https://arxiv.org/abs/2604.14140v1)**
+
+Tác giả: Sumeet Ramesh Motwani; Daniel Nichols; Charles London; Peggy Li; Fabio Pizzati; Acer Blake; Hasan Hammoud; Tavish McDonald; Akshat Naik; Alesia Ivanova; Vignesh Baskaran; Ivan Laptev; Ruben Glatt; Tal Ben-Nun; Philip Torr; Natasha Jaques; Ameya Prabhu; Brian Bartoldson; Bhavya Kailkhura; Christian Schroeder de Witt.
+Vai trò chính: **A4**; vai trò phụ: A3; nhóm nhỏ: A4.1: Long-Horizon Dependency & Scaling Breakdown Benchmarks; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [v1](https://arxiv.org/abs/2604.14140v1); Author-reported ICML 2026; arXiv:2604.14140v1.
+
+- **Bài toán:** Các benchmark hiện tại chủ yếu đo suy luận ngắn hoặc bão hòa; thiếu chuẩn đo lường năng lực duy trì trạng thái qua chuỗi phụ thuộc dài hạn với độ dài biến thiên (10k đến hơn 100k tokens).
+- **Phương pháp:** Xây dựng benchmark LongCoT gồm 2,500 bài toán dựa trên template tham số hóa do chuyên gia thiết kế trên 5 miền (Toán, Hóa, CS, Cờ vua, Logic); tiến hành phân tích riêng rẽ thực nghiệm DAG phụ thuộc tuần tự (1 đến 35 nút từ Omni-Math) và bộ benchmark tổng hợp; đánh giá frontier models và scaffolding RLM.
+- **Kết quả tác giả báo cáo:** Trên 2,000 bài vừa và khó, các frontier models được thử nghiệm đạt độ chính xác khiêm tốn (GPT 5.2 đạt 9.83%, Gemini 3 Pro 6.08%, Grok 4.1 2.04%); trong thực nghiệm DAG phụ thuộc, độ chính xác sụt giảm nhanh hơn đường cơ sở lỗi độc lập lý thuyết (p^N), đặc biệt sau 15 nút; scaffolding RLM thuần suy luận không cải thiện hiệu năng.
+- **Đóng góp:** Cung cấp benchmark chuyên biệt đánh giá chuỗi suy luận dài hạn với cấu trúc phụ thuộc kiểm soát được; ghi nhận hiện tượng suy giảm hiệu năng khi chuỗi phụ thuộc kéo dài.
+- **Giới hạn:** Hiện tượng suy giảm được tác giả giải thích như giả thuyết về mất mát trạng thái ngữ cảnh, chưa phải can thiệp nhân quả đo đạc trực tiếp cơ chế attention nội tại.
+- **Vị trí nguồn:** arXiv:2604.14140v1, §3, §4.1, Figure 4, §4.2, Figure 6
+
+Khóa BibTeX: `rra4_longcot` trong [references.bib](../overleaf/references.bib).
+
+### rra4-cotjudger
+
+**[CoTJudger: A Graph-Driven Framework for Automatic Evaluation of Chain-of-Thought Efficiency and Redundancy in LRMs](https://arxiv.org/abs/2603.07078v1)**
+
+Tác giả: Siyi Li; Jiajun Shi; Shiwen Ni; Ge Zhang; Shuaimin Li; Shijian Wang; Zhoufutu Wen; Yizhi Li; Hamid Alinejad-Rokny; Jiaheng Liu; Min Yang; Wenhao Huang.
+Vai trò chính: **A4**; vai trò phụ: A3; nhóm nhỏ: A4.2: Graph-Driven Automated Efficiency & Redundancy Frameworks; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [v1](https://arxiv.org/abs/2603.07078v1); Author-reported ACL 2026 Main Conference; arXiv:2603.07078v1.
+
+- **Bài toán:** Đánh giá CoT truyền thống phụ thuộc vào so khớp đáp án cuối hoặc gán nhãn thủ công từng bước tốn kém; thiếu khung tự động để đo lường độ dư thừa và hiệu quả logic.
+- **Phương pháp:** Khung CoTJudger phân đoạn vết giải, phân loại nút nguyên tử, xây dựng CoT Graph, và trích xuất Shortest Effective Path (SEP) bằng DFS forward kết hợp kiểm tra tính nhất quán qua LLM; định nghĩa Redundancy Ratio R=(|V|-L_eff)/|V|.
+- **Kết quả tác giả báo cáo:** Đánh giá trên 21 reasoning models ghi nhận tỷ lệ đáng kể các nút/bước suy luận nằm ngoài đường dẫn hiệu quả ngắn nhất SEP; phần lớn bước nằm ngoài SEP tập trung ở các vòng lặp tự kiểm tra sau khi đã đạt trạng thái có thể kết luận; mô hình chưng cất thể hiện mối tương quan về độ dài vết giải tương tự giáo viên nhưng mật độ nút hiệu quả trên bước suy luận thấp hơn.
+- **Đóng góp:** Đề xuất khung đánh giá tự động dựa trên đồ thị cho phép đo lường chuẩn hóa tỷ lệ nút/bước suy luận nằm ngoài SEP của vết CoT mà không cần nhãn người cấp bước.
+- **Giới hạn:** SEP là một structural proxy phụ thuộc vào mô hình thẩm định (judge-dependent) chứ không chứng minh mọi bước bị loại bỏ đều không cần thiết về mặt ngữ nghĩa; quan hệ giáo viên - học sinh là tương quan quan sát được, không phải bằng chứng nhân quả về sự kế thừa.
+- **Vị trí nguồn:** arXiv:2603.07078v1, §4.1–4.6, Figure 2, §5, Figure 3
+
+Khóa BibTeX: `rra4_cotjudger` trong [references.bib](../overleaf/references.bib).
+
+### rra4-sparc
+
+**[SPaRC: A Spatial Pathfinding Reasoning Challenge](https://arxiv.org/abs/2505.16686v2)**
+
+Tác giả: Lars Benedikt Kaesberg; Jan Philip Wahle; Terry Ruas; Bela Gipp.
+Vai trò chính: **A4**; vai trò phụ: A3; nhóm nhỏ: A4.1: Long-Horizon Dependency & Scaling Breakdown Benchmarks; phạm vi: **Long-CoT trực tiếp**.
+Nguồn đã dùng: [v2](https://arxiv.org/abs/2505.16686v2); Author-reported EMNLP 2025 Main Conference; arXiv:2505.16686v2.
+
+- **Bài toán:** Thiếu chuẩn đánh giá năng lực lập kế hoạch không gian nhiều bước trong không gian tìm kiếm mở và khả năng thích ứng phân bổ compute theo độ khó bài toán.
+- **Phương pháp:** Giới thiệu SPaRC gồm 1,000 bài toán tìm đường lưới 2D chia theo 5 cấp độ khó; đánh giá 3 mô hình instruct, 4 reasoning models (o4-mini, o3-mini, QwQ-32B, R1-Distill-70B) và 6 người giải.
+- **Kết quả tác giả báo cáo:** Người giải đạt 98.0% tổng thể và 94.5% ở Level 5; mô hình reasoning cao nhất (o4-mini) đạt 15.8% tổng thể và 1.1% ở Level 5 (trên 50% đường đi vi phạm luật); trong khi người giải tăng thời gian suy nghĩ theo độ khó, mô hình thử nghiệm (như QwQ-32B) phát ra lượng token tương đương giữa các mức khó (14,433 tokens mức 1 vs 13,114 tokens mức 5).
+- **Đóng góp:** Cung cấp benchmark tìm đường không gian có thể kiểm tra tự động và định lượng độ khó; chỉ ra sự chênh lệch lớn giữa người và mô hình reasoning cùng việc thiếu khả năng phân bổ compute thích ứng theo độ khó bài toán.
+- **Giới hạn:** Giới hạn trong miền tìm đường lưới 2D biểu diễn bằng văn bản; kết luận về phân bổ compute áp dụng cho các mô hình và cấu hình prompt được khảo sát.
+- **Vị trí nguồn:** arXiv:2505.16686v2, §3, Figure 2, Table 1, Table 2
+
+Khóa BibTeX: `rra4_sparc` trong [references.bib](../overleaf/references.bib).
+
+### rra4-processbench
+
+**[ProcessBench: Identifying Process Errors in Mathematical Reasoning](https://arxiv.org/abs/2412.06559v4)**
+
+Tác giả: Chujie Zheng; Zhenru Zhang; Beichen Zhang; Runji Lin; Keming Lu; Bowen Yu; Dayiheng Liu; Jingren Zhou; Junyang Lin.
+Vai trò chính: **A4**; vai trò phụ: không gán; nhóm nhỏ: A4.3: Step-Level Process Supervision & Critique-Correction Benchmarks; phạm vi: **Nghiên cứu suy luận liên quan**.
+Nguồn đã dùng: [v4](https://arxiv.org/abs/2412.06559v4); Author-reported ACL 2025 Main Conference; arXiv:2412.06559v4.
+
+- **Bài toán:** Giám sát quá trình đóng vai trò quan trọng trong suy luận nhiều bước, nhưng thiếu chuẩn đo lường có nhãn chuyên gia cấp bước trên các tập bài toán toán học đa dạng để định vị bước lỗi đầu tiên.
+- **Phương pháp:** Xây dựng ProcessBench gồm 3,400 trường hợp kiểm thử (test cases) kèm lời giải từng bước từ 4 tập dữ liệu toán (GSM8K, MATH, OlympiadBench, Omni-MATH); chuyên gia gán nhãn xác định bước lỗi sớm nhất; đánh giá PRMs và LLM Critics qua điểm F1 trung bình trên 4 tập con.
+- **Kết quả tác giả báo cáo:** Skywork-PRM-7B đạt điểm F1 trung bình 42.1% trên 4 tập con; các reasoning models đóng vai trò critic đạt F1 trung bình: QwQ-32B-Preview đạt 71.5%, GPT-4o đạt 61.9%, và o1-mini đạt 87.9%.
+- **Đóng góp:** Cung cấp benchmark gán nhãn chuyên gia cấp bước chuẩn hóa để đánh giá khả năng phát hiện lỗi suy luận toán học; đóng vai trò làm dữ liệu đối chứng cho giám sát quá trình.
+- **Giới hạn:** Giới hạn trong suy luận toán học với độ khó hỗn hợp; bài toán định vị bước lỗi đầu tiên chưa mô tả toàn bộ cấu trúc lỗi của vết giải nhiều nhánh. Phạm vi adjacent_reasoning.
+- **Vị trí nguồn:** arXiv:2412.06559v4, §3.1, §4.2, Table 2, Table 3
+
+Khóa BibTeX: `rra4_processbench` trong [references.bib](../overleaf/references.bib).
+
+### rra4-criticbench
+
+**[CriticBench: Benchmarking LLMs for Critique-Correct Reasoning](https://arxiv.org/abs/2402.14809v4)**
+
+Tác giả: Zicheng Lin; Zhibin Gou; Tian Liang; Ruilin Luo; Haowei Liu; Yujiu Yang.
+Vai trò chính: **A4**; vai trò phụ: A3; nhóm nhỏ: A4.3: Step-Level Process Supervision & Critique-Correction Benchmarks; phạm vi: **Nghiên cứu suy luận liên quan**.
+Nguồn đã dùng: [v4](https://arxiv.org/abs/2402.14809v4); Author-reported Findings of ACL 2024; arXiv:2402.14809v4.
+
+- **Bài toán:** Năng lực phê phán và tự sửa lỗi là cốt lõi của suy luận nhiều lượt nhưng thường bị đánh giá tách rời; thiếu chuẩn đo lường có hệ thống về toàn bộ chu trình Sinh - Phê phán - Sửa sai (GQC) qua nhiều miền.
+- **Phương pháp:** CriticBench bao phủ 5 miền suy luận (Toán, Code, Thuật toán, Logic đời thường, Suy luận ký hiệu) tích hợp từ 15 datasets; đánh giá 17 LLMs qua 3 giai đoạn: tự sinh (G), phê phán (Q), và sửa sai dựa trên critique (C).
+- **Kết quả tác giả báo cáo:** Ghi nhận mối tương quan giữa độ chính xác phê phán và tỷ lệ sửa sai thành công; các bài toán lập trình và thuật toán có tỷ lệ sửa sai cao hơn nhờ phản hồi rõ ràng; các mô hình nhỏ khi tự phê phán có xu hướng bảo thủ nếu thiếu verifier ngoài.
+- **Đóng góp:** Đề xuất benchmark toàn diện đánh giá chu trình GQC tương hỗ trong suy luận nhiều bước; khảo sát trên diện rộng 17 mô hình ngôn ngữ.
+- **Giới hạn:** Đánh giá trên các prompt-based LLMs thế hệ trước; chưa chuyên biệt hóa cho các vết Long-CoT hàng vạn token của reasoning models mới (scope adjacent_reasoning).
+- **Vị trí nguồn:** arXiv:2402.14809v4, §3, §4.1, Table 1, Figure 6
+
+Khóa BibTeX: `rra4_criticbench` trong [references.bib](../overleaf/references.bib).

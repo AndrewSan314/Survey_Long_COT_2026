@@ -1,0 +1,88 @@
+% =========================================================================
+% Section: Related Work & Prior Taxonomy Comparison
+% Working Draft (Assignment 5/11 Synthesis)
+% Date: 2026-11-06
+% =========================================================================
+
+\section{Related Work and Taxonomy Comparison}
+\label{sec:related_work}
+
+The surge in reasoning models has prompted several survey efforts to categorize the literature on Long Chain-of-Thought (Long-CoT) and inference-time compute scaling. Rather than organizing literature solely along model families, existing surveys propose diverse structuring principles centered on cognitive frameworks, search formulations, multi-dimensional scaling axes, and evaluation criteria. In this section, we examine six representative surveys \cite{survey_chen2025reasoning, survey_li2025system, survey_zhang2025testtime, survey_wei2026treesearch, survey_lee2025evaluating, survey_ji2025testtime} and describe how their organizing frameworks relate to the technical research roles (\textbf{A1 Training/Data}, \textbf{A2 Inference/Control}, \textbf{A3 Analysis}, \textbf{A4 Evaluation/Benchmark}) utilized in this synthesis.
+
+\subsection{Organizing Principles of Prior Surveys}
+\label{subsec:survey_organizing_principles}
+
+The six examined surveys address reasoning literature from complementary technical perspectives, as summarized in Table~\ref{tab:survey_comparison}.
+
+\paragraph{Reflective Dynamics and Exploration.}
+Chen et al.~\cite{survey_chen2025reasoning} structure literature around three primary capabilities: \emph{Deep Reasoning} (format design and training paradigms), \emph{Feasible Reflection} (subdivided into \emph{Feedback} for error identification and \emph{Refinement} for corrective trajectory adjustment), and \emph{Extensive Exploration} (inference scaling via internal deliberation and external tool interaction). Separating feedback from refinement provides an effective conceptual distinction between identifying an error and successfully generating a valid revision.
+
+\paragraph{Dual-Process Cognitive Transitions.}
+Li et al.~\cite{survey_li2025system} frame reasoning through a System 1 to System 2 cognitive transition blueprint spanning three interrelated dimensions: \emph{Features} (observable output behaviors and reasoning patterns), \emph{Methods} (core algorithmic approaches comprising Structure Search, Reward Modeling, Self Improvement, Macro Action, and Reinforced Fine-Tuning [RFT]), and \emph{Evolution} (developmental progression from intuitive generation to deliberate inference).
+
+\paragraph{Multi-Dimensional Test-Time Scaling (4W).}
+Zhang et al.~\cite{survey_zhang2025testtime} formalize test-time compute scaling across four fundamental questions:
+\begin{enumerate}
+    \item \textbf{What to scale}: Parallel sampling (e.g., Best-of-$N$, self-consistency), sequential refinement (iterative revision, budget forcing), hybrid search, and internal scaling (model-controlled compute allocation learned through training).
+    \item \textbf{How to scale}: Tuning-based approaches (reinforcement learning, process supervision) versus inference-based prompting and algorithmic search scaffolding.
+    \item \textbf{Where to scale}: Distinct task domains categorized into \emph{Reasoning-intensive Tasks} (mathematics, formal logic), \emph{Agentic Tasks} (tool use, multi-step planning), and \emph{Others} (general question answering, domain tasks).
+    \item \textbf{How well to scale}: Evaluation criteria covering \emph{Performance} (accuracy, pass@$k$), \emph{Efficiency} (token budget, computational cost), \emph{Controllability} (budget compliance, stopping behavior), and \emph{Scalability} (empirical saturation exponents and scaling boundaries). Crucially, \S8.2 explicitly discusses open questions regarding termination criteria and the challenge of differentiating trajectory length from logical sufficiency.
+\end{enumerate}
+
+\begin{table*}[t]
+\centering
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.2cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{4.6cm}}
+\toprule
+\textbf{Survey} & \textbf{Scope \& Organizing Principle} & \textbf{Useful Comparison} \\
+\midrule
+\textbf{Chen et al.} (2025) \cite{survey_chen2025reasoning} &
+\textbf{Deep Reasoning}: Format, Learning.\newline
+\textbf{Feasible Reflection}: Feedback, Refinement.\newline
+\textbf{Extensive Exploration}: Scaling, Internal, External. &
+Decouples error identification (\emph{Feedback}) from corrective trajectory steering (\emph{Refinement}). \\
+\addlinespace
+\textbf{Li et al.} (2025) \cite{survey_li2025system} &
+\textbf{System 2 Blueprint}: Features, Methods, Evolution.\newline
+\textbf{Core Methods}: Structure Search, Reward Modeling, Self Improvement, Macro Action, RFT. &
+Connects observable cognitive patterns directly to algorithmic techniques across training and search. \\
+\addlinespace
+\textbf{Zhang et al.} (2025) \cite{survey_zhang2025testtime} &
+\textbf{What}: Parallel, Sequential, Hybrid, Internal.\newline
+\textbf{How}: Tuning-based, Inference-based.\newline
+\textbf{Where}: Reasoning-intensive, Agentic, Others.\newline
+\textbf{How Well}: Performance, Efficiency, Controllability, Scalability. &
+Comprehensive multi-dimensional taxonomy balancing task domains against compute budgets and scaling saturation. \\
+\addlinespace
+\textbf{Wei et al.} (2026) \cite{survey_wei2026treesearch} &
+\textbf{Search Architecture}: Node Representation (Trace-based, State--Action, Terminal-State), Evaluation Function, MCTS Dynamics, Compute Reporting. &
+Systematizes tree search algorithms, node representation granularities, and credit assignment mechanisms. \\
+\addlinespace
+\textbf{Lee \& Hockenmaier} (2025) \cite{survey_lee2025evaluating} &
+\textbf{Criteria}: Factuality, Validity, Coherence, Utility.\newline
+\textbf{Evaluator Types}: Rule-based, Intrinsic, External; Meta-evaluation benchmarks. &
+Classifies evaluation metrics and verification architectures for step-by-step reasoning traces. \\
+\addlinespace
+\textbf{Ji et al.} (2025) \cite{survey_ji2025testtime} &
+\textbf{Cognitive Shift}: System-1 adaptation (model, input, representation, output) versus System-2 deliberate reasoning (feedback, search). &
+Contrasts fast intuitive generation against deliberate search and compute budgeting trade-offs. \\
+\bottomrule
+\end{tabularx}
+\caption{Systematic comparison of prior survey taxonomies on Long Chain-of-Thought and test-time reasoning.}
+\label{tab:survey_comparison}
+\end{table*}
+
+\paragraph{Inference as Search.}
+Wei et al.~\cite{survey_wei2026treesearch} conceptualize reasoning through the lens of heuristic search, structuring methodologies by \emph{Node Representation and Granularity} (categorized into \emph{Trace-based}, \emph{State--Action}, and \emph{Terminal-State} representations), \emph{Evaluation Function} (value networks, process reward models, self-evaluation), and \emph{MCTS Dynamics} (selection, expansion, simulation, backpropagation), alongside standardized compute reporting protocols.
+
+\paragraph{Evaluating Step-by-Step Traces.}
+Lee \& Hockenmaier \cite{survey_lee2025evaluating} focus specifically on the evaluation of intermediate reasoning derivations, classifying assessments across four primary dimensions: \emph{Factuality} (factual accuracy of premises), \emph{Validity} (formal logical entailment between steps), \emph{Coherence} (discourse organization and flow), and \emph{Utility} (contribution toward the final solution). They further organize evaluators into rule-based systems, intrinsic model-based verifiers, and external judges, supported by meta-evaluation benchmarks.
+
+\paragraph{Deliberate Compute Allocation.}
+Ji et al.~\cite{survey_ji2025testtime} analyze test-time scaling by contrasting \emph{System-1 adaptation} (modifications to models, inputs, representations, and output token distributions) with \emph{System-2 deliberate reasoning} (incorporating external feedback loops, tree/graph search policies, and dynamic compute budgeting).
+
+\subsection{Relationship to Research Roles (A1--A4)}
+\label{subsec:relationship_research_roles}
+
+Rather than superseding prior taxonomies, the fourfold research role framework used in this survey provides a modular, functional lens focused on the primary technical contribution of each work: \textbf{A1 Training/Data} isolates training objectives and data curation recipes; \textbf{A2 Inference/Control} analyzes test-time execution and search control; \textbf{A3 Analysis} encompasses analytical, behavioral, and mechanistic methodologies; and \textbf{A4 Evaluation/Benchmark} covers evaluation protocols and stress-test benchmarks. In team discussions, functional dependency concepts (such as dependency formation, state carrying, and verification) have also been discussed as complementary descriptive lenses for analyzing long-horizon reasoning trajectories. These lenses serve as parallel organizational tools to structure literature analysis rather than competing paradigms or empirically validated stages.

@@ -1,0 +1,43 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[margin=1in]{geometry}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{url}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage[colorlinks=true,linkcolor=blue!70!black,citecolor=blue!70!black,urlcolor=blue!70!black]{hyperref}
+
+\title{\textbf{Research Roles and Related Work --- Working Draft}}
+\author{}
+\date{November 6, 2026}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This working draft synthesizes recent literature on Long Chain-of-Thought (Long-CoT) reasoning in large language models. We structure 20 representative studies across four technical research roles: A1 (Training and Data Strategies), A2 (Inference and Test-Time Control), A3 (Analysis and Mechanistic Understanding), and A4 (Evaluation Frameworks and Benchmarks). In addition, we review six prior survey taxonomies, examining their organizing principles, scoping frameworks, and comparative perspectives.
+\end{abstract}
+
+\vspace{1.5em}
+
+% -------------------------------------------------------------------------
+% Input Sections
+% -------------------------------------------------------------------------
+
+\input{related-work}
+
+\input{research-role}
+
+% -------------------------------------------------------------------------
+% Bibliography
+% -------------------------------------------------------------------------
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\end{document}

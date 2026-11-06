@@ -1,0 +1,323 @@
+% =========================================================================
+% Unified BibTeX Bibliography for Long-CoT Research Roles & Related Work
+% Assignment 5/11: Research Roles A1-A4 & Related Work Synthesis
+% Date: 2026-11-06
+% Total Entries: 26 (6 Prior Surveys + 20 Primary Literature Papers)
+% =========================================================================
+
+% -------------------------------------------------------------------------
+% Core Surveys on Long-CoT & Test-Time Reasoning (Related Work)
+% -------------------------------------------------------------------------
+
+@article{survey_chen2025reasoning,
+  author        = {Chen, Qiguang and Qin, Libo and Liu, Jinhao and Peng, Dengyun and Guan, Jiannan and Wang, Peng and Hu, Mengkang and Zhou, Yuhang and Gao, Te and Che, Wanxiang},
+  title         = {Towards Reasoning Era: A Survey of Long Chain-of-Thought for Reasoning Large Language Models},
+  journal       = {arXiv preprint arXiv:2503.09567},
+  year          = {2025},
+  eprint        = {2503.09567v5},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2503.09567v5}
+}
+
+@article{survey_li2025system,
+  author        = {Li, Zhong-Zhi and Zhang, Duzhen and Zhang, Ming-Liang and Zhang, Jiaxin and Liu, Zengyan and Yao, Yuxuan and Xu, Haotian and Zheng, Junhao and Wang, Pei-Jie and Chen, Xiuyi and Zhang, Yingying and Yin, Fei and Dong, Jiahua and Li, Zhiwei and Bi, Bao-Long and Mei, Ling-Rui and Fang, Junfeng and Liang, Xiao and Guo, Zhijiang and Song, Le and Liu, Cheng-Lin},
+  title         = {From System 1 to System 2: A Survey of Reasoning Large Language Models},
+  journal       = {arXiv preprint arXiv:2502.17419},
+  year          = {2025},
+  eprint        = {2502.17419v6},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2502.17419v6}
+}
+
+@article{survey_zhang2025testtime,
+  author        = {Zhang, Qiyuan and Lyu, Fuyuan and Sun, Zexu and Wang, Lei and Zhang, Weixu and Hua, Wenyue and Wu, Haolun and Guo, Zhihan and Wang, Yufei and Muennighoff, Niklas and King, Irwin and Liu, Xue and Ma, Chen},
+  title         = {A Survey on Test-Time Scaling in Large Language Models: What, How, Where, and How Well?},
+  journal       = {arXiv preprint arXiv:2503.24235},
+  year          = {2025},
+  eprint        = {2503.24235v3},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2503.24235v3}
+}
+
+@article{survey_wei2026treesearch,
+  author        = {Wei, Jiaqi and Zhang, Xiang and Yang, Yuejin and Huang, Wenxuan and Cao, Juntai and Xu, Sheng and Zhuang, Xiang and Gao, Zhangyang and Abdul-Mageed, Muhammad and Lakshmanan, Laks V. S. and You, Chenyu and Ouyang, Wanli and Sun, Siqi},
+  title         = {When {LLM} Meets Tree Search: A Systematic View of Inference as Search in Large Language Models},
+  journal       = {arXiv preprint arXiv:2608.30395},
+  year          = {2026},
+  eprint        = {2608.30395v1},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.AI},
+  note          = {Author-reported EMNLP 2026 Findings},
+  url           = {https://arxiv.org/abs/2608.30395v1}
+}
+
+@article{survey_lee2025evaluating,
+  author        = {Lee, Jinu and Hockenmaier, Julia},
+  title         = {Evaluating Step-by-step Reasoning Traces: A Survey},
+  journal       = {arXiv preprint arXiv:2502.12289},
+  year          = {2025},
+  eprint        = {2502.12289v3},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  note          = {Author-reported EMNLP 2025 Findings},
+  url           = {https://arxiv.org/abs/2502.12289v3}
+}
+
+@article{survey_ji2025testtime,
+  author        = {Ji, Yixin and Li, Juntao and Xiang, Yang and Ye, Hai and Wu, Kaixin and Yao, Kai and Xu, Jia and Mo, Linjian and Zhang, Min},
+  title         = {A Survey of Test-Time Compute: From Intuitive Inference to Deliberate Reasoning},
+  journal       = {arXiv preprint arXiv:2501.02497},
+  year          = {2025},
+  eprint        = {2501.02497v3},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2501.02497v3}
+}
+
+% -------------------------------------------------------------------------
+% Research Role A1: Training / Data
+% -------------------------------------------------------------------------
+
+@article{rra1_deepseek_r1,
+  author        = {{DeepSeek-AI}},
+  title         = {{DeepSeek-R1}: Incentivizing Reasoning Capability in {LLMs} via Reinforcement Learning},
+  journal       = {arXiv preprint arXiv:2501.12948},
+  year          = {2025},
+  eprint        = {2501.12948v2},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2501.12948v2}
+}
+
+@article{rra1_s1,
+  author        = {Muennighoff, Niklas and Yang, Zitong and Shi, Weijia and Li, Xiang Lisa and Li, Fei-Fei and Hajishirzi, Hannaneh and Zettlemoyer, Luke and Liang, Percy and Cand{\`e}s, Emmanuel and Hashimoto, Tatsunori},
+  title         = {s1: Simple test-time scaling},
+  journal       = {arXiv preprint arXiv:2501.19393},
+  year          = {2025},
+  eprint        = {2501.19393v3},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2501.19393v3}
+}
+
+@article{rra1_kimi_k15,
+  author        = {{Kimi Team}},
+  title         = {Kimi k1.5: Scaling Reinforcement Learning with {LLMs}},
+  journal       = {arXiv preprint arXiv:2501.12599},
+  year          = {2025},
+  eprint        = {2501.12599v4},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2501.12599v4}
+}
+
+@article{rra1_limo,
+  author        = {Ye, Yixin and Huang, Zhen and Xiao, Yang and Chern, Ethan and Xia, Shijie and Liu, Pengfei},
+  title         = {{LIMO}: Less is More for Reasoning},
+  journal       = {arXiv preprint arXiv:2502.03387},
+  year          = {2025},
+  eprint        = {2502.03387v3},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2502.03387v3}
+}
+
+@article{rra1_light_r1,
+  author        = {Wen, Liang and Cai, Yunke and Xiao, Fenrui and He, Xin and An, Qi and Duan, Zhenyu and Du, Yimin and Liu, Junchen and Tang, Lifu and Lv, Xiaowei and Zou, Haosheng and Deng, Yongchao and Jia, Shousheng and Zhang, Xiangzheng},
+  title         = {Light-{R1}: Curriculum {SFT}, {DPO} and {RL} for Long {COT} from Scratch and Beyond},
+  journal       = {arXiv preprint arXiv:2503.10460},
+  year          = {2025},
+  eprint        = {2503.10460v4},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  note          = {Author-reported ACL 2025 Industry Track},
+  url           = {https://arxiv.org/abs/2503.10460v4}
+}
+
+% -------------------------------------------------------------------------
+% Research Role A2: Inference / Control
+% -------------------------------------------------------------------------
+
+@article{rra2_taar,
+  author        = {Chen, Kang and Yu, Fan and Nian, Junjie and Zhao, Shihan and Feng, Zhuoka and Yao, Zijun and Wang, Heng and Yu, Minshen and Cao, Yixin},
+  title         = {Thinking Traps in Long Chain-of-Thought: A Measurable Study and Trap-Aware Adaptive Restart},
+  journal       = {arXiv preprint arXiv:2601.11940},
+  year          = {2026},
+  eprint        = {2601.11940v1},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  note          = {Author-reported Findings of ACL 2026},
+  url           = {https://arxiv.org/abs/2601.11940v1}
+}
+
+@article{rra2_dtsr,
+  author        = {Xiang, Yang and Ji, Yixin and Xu, Ruotao and Qiao, Dan and Yang, Zheming and Li, Juntao and Zhang, Min},
+  title         = {When Is Thinking Enough? Early Exit via Sufficiency Assessment for Efficient Reasoning},
+  journal       = {arXiv preprint arXiv:2604.06787},
+  year          = {2026},
+  eprint        = {2604.06787v1},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  note          = {Author-reported ACL 2026 Main Conference},
+  url           = {https://arxiv.org/abs/2604.06787v1}
+}
+
+@article{rra2_refrain,
+  author        = {Sun, Renliang and Cheng, Wei and Li, Dawei and Chen, Haifeng and Wang, Wei},
+  title         = {Stop When Enough: Adaptive Early-Stopping for Chain-of-Thought Reasoning},
+  journal       = {arXiv preprint arXiv:2510.10103},
+  year          = {2025},
+  eprint        = {2510.10103v1},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2510.10103v1}
+}
+
+@article{rra2_recursive_models,
+  author        = {Yang, Chenxiao and Srebro, Nathan and Li, Zhiyuan},
+  title         = {Recursive Models for Long-Horizon Reasoning},
+  journal       = {arXiv preprint arXiv:2603.02112},
+  year          = {2026},
+  eprint        = {2603.02112v2},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.AI},
+  note          = {Author-reported ICML 2026},
+  url           = {https://arxiv.org/abs/2603.02112v2}
+}
+
+@article{rra2_mctsr,
+  author        = {Zhang, Di and Huang, Xiaoshui and Zhou, Dongzhan and Li, Yuqiang and Ouyang, Wanli},
+  title         = {Accessing {GPT-4} Level Mathematical Olympiad Solutions via {Monte} {Carlo} Tree Self-refine with {LLaMa-3} 8B},
+  journal       = {arXiv preprint arXiv:2406.07394},
+  year          = {2024},
+  eprint        = {2406.07394v2},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2406.07394v2}
+}
+
+% -------------------------------------------------------------------------
+% Research Role A3: Analysis
+% -------------------------------------------------------------------------
+
+@article{rra3_reasoningflow,
+  author        = {Lee, Jinu and Agarwal, Shivam and Parulekar, Amruta and Madala, Siddarth and Hakkani-T{"u}r, Dilek and Hockenmaier, Julia},
+  title         = {{ReasoningFlow}: Discourse Structures for Understanding {LLM} Reasoning Traces},
+  journal       = {arXiv preprint arXiv:2606.05402},
+  year          = {2026},
+  eprint        = {2606.05402v2},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  note          = {Author-reported EMNLP 2026 Oral},
+  url           = {https://arxiv.org/abs/2606.05402v2}
+}
+
+@article{rra3_cot2graph,
+  author        = {Banfi, Tommaso Felice and Akhtar, Mubashara and Ni, Jingwei and Sachan, Mrinmaya},
+  title         = {Understanding Failures in {LLM} Reasoning by Learning Structured Representations of Chain-of-Thought},
+  journal       = {OpenReview preprint forum:wFTJZ8fvns},
+  year          = {2026},
+  note          = {Author-reported Findings of EMNLP 2026},
+  url           = {https://openreview.net/forum?id=wFTJZ8fvns}
+}
+
+@article{rra3_zebralogic,
+  author        = {Lin, Bill Yuchen and Le Bras, Ronan and Richardson, Kyle and Sabharwal, Ashish and Poovendran, Radha and Clark, Peter and Choi, Yejin},
+  title         = {{ZebraLogic}: On the Scaling Limits of {LLMs} for Logical Reasoning},
+  journal       = {arXiv preprint arXiv:2502.01100},
+  year          = {2025},
+  eprint        = {2502.01100v2},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.AI},
+  note          = {Author-reported ICML 2025},
+  url           = {https://arxiv.org/abs/2502.01100v2}
+}
+
+@article{rra3_overthinking,
+  author        = {Peng, Keqin and Ding, Liang and Ouyang, Yuanxin and Fang, Meng and Tao, Dacheng},
+  title         = {Revisiting Overthinking in Long Chain-of-Thought from the Perspective of Self-Doubt},
+  journal       = {arXiv preprint arXiv:2505.23480},
+  year          = {2025},
+  eprint        = {2505.23480v1},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  url           = {https://arxiv.org/abs/2505.23480v1}
+}
+
+@article{rra3_lanham_faithfulness,
+  author        = {Lanham, Tamera and Chen, Anna and Radhakrishnan, Ansh and Steiner, Benoit and Denison, Carson and Hernandez, Danny and Li, Dustin and Durmus, Esin and Hubinger, Evan and Kernion, Jackson and Lukosiute, Kamile and Nguyen, Karina and Cheng, Newton and Joseph, Nicholas and Schiefer, Nicholas and Rausch, Oliver and Larson, Robin and McCandlish, Sam and Kundu, Sandipan and Kadavath, Saurav and Yang, Shannon and Henighan, Thomas and Maxwell, Timothy and Telleen-Lawton, Timothy and Hume, Tristan and Hatfield-Dodds, Zac and Kaplan, Jared and Brauner, Jan and Bowman, Samuel R. and Perez, Ethan},
+  title         = {Measuring Faithfulness in Chain-of-Thought Reasoning},
+  journal       = {arXiv preprint arXiv:2307.13702},
+  year          = {2023},
+  eprint        = {2307.13702v1},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.AI},
+  url           = {https://arxiv.org/abs/2307.13702v1}
+}
+
+% -------------------------------------------------------------------------
+% Research Role A4: Evaluation & Benchmark
+% -------------------------------------------------------------------------
+
+@article{rra4_longcot,
+  author        = {Motwani, Sumeet Ramesh and Nichols, Daniel and London, Charles and Li, Peggy and Pizzati, Fabio and Blake, Acer and Hammoud, Hasan and McDonald, Tavish and Naik, Akshat and Ivanova, Alesia and Baskaran, Vignesh and Laptev, Ivan and Glatt, Ruben and Ben-Nun, Tal and Torr, Philip and Jaques, Natasha and Prabhu, Ameya and Bartoldson, Brian and Kailkhura, Bhavya and Schroeder de Witt, Christian},
+  title         = {{LongCoT}: Benchmarking Long-Horizon Chain-of-Thought Reasoning},
+  journal       = {arXiv preprint arXiv:2604.14140},
+  year          = {2026},
+  eprint        = {2604.14140v1},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  note          = {Author-reported ICML 2026},
+  url           = {https://arxiv.org/abs/2604.14140v1}
+}
+
+@article{rra4_cotjudger,
+  author        = {Li, Siyi and Shi, Jiajun and Ni, Shiwen and Zhang, Ge and Li, Shuaimin and Wang, Shijian and Wen, Zhoufutu and Li, Yizhi and Alinejad-Rokny, Hamid and Liu, Jiaheng and Yang, Min and Huang, Wenhao},
+  title         = {{CoTJudger}: A Graph-Driven Framework for Automatic Evaluation of Chain-of-Thought Efficiency and Redundancy in {LRMs}},
+  journal       = {arXiv preprint arXiv:2603.07078},
+  year          = {2026},
+  eprint        = {2603.07078v1},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  note          = {Author-reported ACL 2026 Main Conference},
+  url           = {https://arxiv.org/abs/2603.07078v1}
+}
+
+@article{rra4_sparc,
+  author        = {Kaesberg, Lars Benedikt and Wahle, Jan Philip and Ruas, Terry and Gipp, Bela},
+  title         = {{SPaRC}: A Spatial Pathfinding Reasoning Challenge},
+  journal       = {arXiv preprint arXiv:2505.16686},
+  year          = {2025},
+  eprint        = {2505.16686v2},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.AI},
+  note          = {Author-reported EMNLP 2025},
+  url           = {https://arxiv.org/abs/2505.16686v2}
+}
+
+@article{rra4_processbench,
+  author        = {Zheng, Chujie and Zhang, Zhenru and Zhang, Beichen and Lin, Runji and Lu, Keming and Yu, Bowen and Liu, Dayiheng and Zhou, Jingren and Lin, Junyang},
+  title         = {{ProcessBench}: Identifying Process Errors in Mathematical Reasoning},
+  journal       = {arXiv preprint arXiv:2412.06559},
+  year          = {2025},
+  eprint        = {2412.06559v4},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  note          = {Author-reported ACL 2025 Main Conference},
+  url           = {https://arxiv.org/abs/2412.06559v4}
+}
+
+@article{rra4_criticbench,
+  author        = {Lin, Zicheng and Gou, Zhibin and Liang, Tian and Luo, Ruilin and Liu, Haowei and Yang, Yujiu},
+  title         = {{CriticBench}: Benchmarking {LLMs} for Critique-Correct Reasoning},
+  journal       = {arXiv preprint arXiv:2402.14809},
+  year          = {2024},
+  eprint        = {2402.14809v4},
+  archiveprefix = {arXiv},
+  primaryclass  = {cs.CL},
+  note          = {Author-reported Findings of ACL 2024},
+  url           = {https://arxiv.org/abs/2402.14809v4}
+}

@@ -1,5 +1,15 @@
 # Long-CoT Survey Papers
 
+Danh mục làm việc cho phần **Research Role (A) & Related Work**, cập nhật ngày 06/11/2026:
+
+- [Paper theo A1 Training/Data, A2 Inference/Control, A3 Analysis, A4 Evaluation/Benchmark](papers/research-role.md): bài toán, phương pháp, kết quả, đóng góp, giới hạn và vị trí nguồn.
+- [Bản thảo LaTeX/BibTeX để nhập Overleaf](overleaf/README.md) và [PDF xem trước](overleaf/draft-main.pdf).
+- [Hướng dẫn bổ sung paper qua pull request](CONTRIBUTING.md).
+
+Các nhóm nhỏ là đề xuất tổ chức literature của nhóm, có thể điều chỉnh khi thêm paper. Danh mục phân biệt paper Long-CoT trực tiếp, nghiên cứu suy luận liên quan và công trình nền tảng; số liệu là kết quả tác giả báo cáo, chưa được nhóm tái lập.
+
+## Survey dùng để đối chiếu taxonomy
+
 Tập hợp 5 survey chính (S1–S5) và 1 survey bổ sung (S0) được dùng trong báo cáo đối chiếu taxonomy Long-CoT và LHDM.
 
 Các PDF được tải trực tiếp từ arXiv ngày 05/11/2026, giữ đúng phiên bản đã dùng trong báo cáo. Mã S0–S5 khớp với danh mục tài liệu tham khảo.
