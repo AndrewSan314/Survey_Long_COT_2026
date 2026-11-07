@@ -10,6 +10,8 @@ Số liệu dưới đây là kết quả tác giả báo cáo trong các thiế
 
 **Quy tắc phạm vi:** Long-CoT ở đây là suy luận có deliberation mở rộng, khám phá hoặc tự kiểm tra; không đặt một ngưỡng token chung và không đồng nhất với đầu vào long-context. Chọn A1 khi đóng góp chính thay đổi dữ liệu/trọng số; A2 khi thay đổi thực thi lúc suy luận; A3 khi giải thích/kiểm tra một hiện tượng; A4 khi cung cấp benchmark hoặc giao thức/chỉ số đánh giá. Ví dụ s1 thuộc A1 nhưng budget forcing dẫn chéo A2; ZebraLogic có primary A3 và secondary A4. Không đếm lại paper khi dẫn chéo.
 
+**Cách đọc bản mở rộng:** “Đọc phương pháp” giải thích cơ chế cần phân biệt; “Nhận xét đối chiếu của nhóm” là diễn giải/điều kiện so sánh do nhóm tổng hợp, không phải kết quả thực nghiệm mới. [Phân tích hướng nghiên cứu](research-directions.md) trình bày đủ 15 subgroup, các bảng so sánh và 8 RQ đề xuất.
+
 ## A1 Training/Data
 
 | Nhóm nhỏ đề xuất | Paper đại diện |
@@ -34,6 +36,9 @@ Nguồn đã dùng: [v2](https://arxiv.org/abs/2501.12948v2); Preprint (arXiv:25
 - **Giới hạn:** Gặp khó khăn trong tác vụ tổng quát, pha trộn ngôn ngữ khi huấn luyện pure RL thuần túy, nhạy cảm với reward hacking nếu thiếu verifier tất định.
 - **Vị trí nguồn:** arXiv:2501.12948v2, §2.1–2.3, §3, Table 2, Appendix B.3.3 và F. Không trộn số liệu/đánh số mục với v1.
 
+- **Đọc phương pháp:** Tách hai thí nghiệm: R1-Zero khảo sát RL từ base không có SFT khởi động; R1 là pipeline nhiều giai đoạn để tăng tính hữu dụng. GRPO dùng so sánh reward trong nhóm rollout, không có nghĩa training không cần nhiều mẫu sinh.
+- **Nhận xét đối chiếu của nhóm:** Dùng làm mốc cho capability-oriented RL và distillation. Không suy ra RL đã tạo toàn bộ tri thức từ đầu; base model và verifier vẫn là điều kiện thiết yếu. So sánh phải giữ đúng bản v2 và phân biệt Pass@1 với self-consistency.
+
 Khóa BibTeX: `rra1_deepseek_r1` trong [references.bib](../overleaf/references.bib).
 
 ### rra1-s1
@@ -50,6 +55,9 @@ Nguồn đã dùng: [v3](https://arxiv.org/abs/2501.19393v3); Preprint (arXiv:25
 - **Đóng góp:** Minh chứng hiệu quả mẫu cao của phương pháp SFT tinh chọn tối giản trong thiết lập thử nghiệm; đề xuất cơ chế budget forcing đơn giản lúc suy luận.
 - **Giới hạn:** Kết quả phụ thuộc vào base model và chất lượng vết giải từ teacher trong thiết lập đã thử; không chứng minh cơ chế tri thức của mọi mô hình.
 - **Vị trí nguồn:** arXiv:2501.19393, §2.1, §3.1, §4.1, Table 1
+
+- **Đọc phương pháp:** SFT trên s1K và budget forcing là hai thành phần khác nhau: phần đầu thay trọng số, phần sau ép kéo dài hoặc kết thúc generation. Chất lượng lựa chọn dữ liệu quan trọng hơn việc chỉ báo cáo số mẫu nhỏ.
+- **Nhận xét đối chiếu của nhóm:** Dùng để nối A1 với A2: cần ablation SFT-only, control-only và kết hợp trên cùng checkpoint. Số mẫu fine-tuning không bao gồm chi phí tạo/lọc dữ liệu teacher; không xem đây là tổng chi phí xây dựng reasoning model.
 
 Khóa BibTeX: `rra1_s1` trong [references.bib](../overleaf/references.bib).
 
@@ -68,6 +76,9 @@ Nguồn đã dùng: [v4](https://arxiv.org/abs/2501.12599v4); Preprint (arXiv:25
 - **Giới hạn:** Tiêu tốn chi phí hạ tầng tính toán lớn; CoT-RM đòi hỏi thêm compute khi chấm điểm so với outcome RM thông thường.
 - **Vị trí nguồn:** arXiv:2501.12599v4, §2.2, §2.3.2, §2.3.5, Table 2, Figure 10
 
+- **Đọc phương pháp:** Phân biệt context scaling trong RL với Long2short sau đó. CoT-RM dùng lập luận để chấm độ đúng đáp án cuối; tên gọi này không đồng nghĩa có nhãn reward đúng/sai ở từng bước của policy.
+- **Nhận xét đối chiếu của nhóm:** Dùng để thảo luận chuyển giao năng lực từ long sang short traces. Accuracy của reward model trên mẫu spot-check không phải accuracy giải bài; cần tách compute của policy, rollout và reward model khi so sánh chi phí.
+
 Khóa BibTeX: `rra1_kimi_k15` trong [references.bib](../overleaf/references.bib).
 
 ### rra1-limo
@@ -84,6 +95,9 @@ Nguồn đã dùng: [v3](https://arxiv.org/abs/2502.03387v3); Preprint (arXiv:25
 - **Đóng góp:** Báo cáo hiệu quả mẫu của SFT trên mô hình nền mạnh trong thiết lập đã thử; đề xuất rubric bốn chiều để tinh chọn vết giải.
 - **Giới hạn:** Hiệu quả mẫu phụ thuộc vào năng lực của base model được thử nghiệm; thực nghiệm không cung cấp bằng chứng trực tiếp về cơ chế tiền huấn luyện.
 - **Vị trí nguồn:** arXiv:2502.03387v3, §3, §3.1, §6.2, Table 1, §6.3.3
+
+- **Đọc phương pháp:** LIMO lọc cả độ khó câu hỏi lẫn chất lượng vết giải. Một bộ dữ liệu nhỏ nhưng có self-verification và exploration khác với cắt ngẫu nhiên một tập SFT lớn xuống cùng số mẫu.
+- **Nhận xét đối chiếu của nhóm:** Dùng để đối chiếu giả thuyết elicitation trên base mạnh với việc học năng lực mới. Thí nghiệm đổi base làm thay đổi nhiều yếu tố đồng thời; chưa cô lập được tri thức pretraining, instruction tuning và kiến trúc.
 
 Khóa BibTeX: `rra1_limo` trong [references.bib](../overleaf/references.bib).
 
@@ -102,6 +116,9 @@ Nguồn đã dùng: [v4](https://arxiv.org/abs/2503.10460v4); Author-reported AC
 - **Giới hạn:** Khởi tạo từ checkpoint instruct mạnh đã qua căn chỉnh; phụ thuộc vào dữ liệu thi đấu chất lượng cao ở Stage 2.
 - **Vị trí nguồn:** arXiv:2503.10460v4, §3.1.2, §3.2, Table 2, Table 7
 
+- **Đọc phương pháp:** Phân tích pipeline theo từng bước SFT-1, SFT-2, DPO và merging; chữ from scratch ở đây không phải huấn luyện từ trọng số ngẫu nhiên. Kiểm tra decontamination là một phần của bằng chứng về chất lượng dữ liệu.
+- **Nhận xét đối chiếu của nhóm:** Dùng để thảo luận curriculum và trade-off giữa toán với miền khác: AIME tăng qua các stage nhưng GPQA không tăng đơn điệu. Không quy toàn bộ gain cho một stage nếu không kiểm soát thay đổi dữ liệu, budget và checkpoint.
+
 Khóa BibTeX: `rra1_light_r1` trong [references.bib](../overleaf/references.bib).
 
 ### rra1-efficient-rl
@@ -116,6 +133,9 @@ Vai trò chính: **A1**; phụ: A2, A3; nhóm nhỏ: **A1.4**; phạm vi: **Long
 - **Đóng góp:** Học đường đánh đổi accuracy–compute thay vì chỉ cắt chuỗi.
 - **Giới hạn:** Nén có thể giảm accuracy và faithfulness; bảo đảm lý thuyết cần các giả định lý tưởng.
 - **Nguồn:** v4, §4, §5.3.1–5.3.2, Figure 3; khóa `rra1_efficient_rl`.
+
+- **Đọc phương pháp:** Length penalty thay đổi mục tiêu tối ưu của policy, không chỉ đặt max_tokens khi decode. Cùng một alpha có thể tạo mức nén khác nhau giữa tác vụ dễ và khó.
+- **Nhận xét đối chiếu của nhóm:** Dùng làm đại diện learned compute allocation. Cần báo accuracy–cost frontier và faithfulness cùng nhau; mệnh đề tối ưu ở population level không bảo đảm một lần huấn luyện hữu hạn giữ nguyên độ đúng.
 
 ## A2 Inference/Control
 
@@ -141,6 +161,9 @@ Nguồn đã dùng: [v1](https://arxiv.org/abs/2601.11940v1); Author-reported Fi
 - **Giới hạn:** Không đo trực tiếp cơ chế chú ý (attention mechanism); trên mô hình biên giới rất lớn (120B) có thể cắt nhầm đường dẫn gần đúng làm giảm độ chính xác.
 - **Vị trí nguồn:** arXiv:2601.11940v1, §3.1, Figure 4, §5.2, Table 2
 
+- **Đọc phương pháp:** Đơn vị can thiệp là prefix được chẩn đoán mắc bẫy: cắt trước đoạn lỗi rồi sinh lại. Khác với tự phản tư chỉ nối thêm token vào cùng prefix sai, nhưng cần policy chẩn đoán đã huấn luyện.
+- **Nhận xét đối chiếu của nhóm:** Dùng để nối phân tích lỗi A3 với recovery A2. Cùng K=4 chưa đồng nghĩa cùng tổng token hoặc thời gian; phải tính phần prefix bị bỏ, lượt chẩn đoán và rollout sinh lại. Kết quả trên 120B cho thấy restart không luôn có lợi.
+
 Khóa BibTeX: `rra2_taar` trong [references.bib](../overleaf/references.bib).
 
 ### rra2-dtsr
@@ -157,6 +180,9 @@ Nguồn đã dùng: [v1](https://arxiv.org/abs/2604.06787v1); Author-reported AC
 - **Đóng góp:** Đề xuất phương pháp metacognitive sufficiency check không cần huấn luyện giúp tiết kiệm đáng kể chi phí token lúc suy luận.
 - **Giới hạn:** Hiệu năng tự đánh giá độ đủ suy luận phụ thuộc vào quy mô mô hình; mô hình nhỏ hơn có thể dừng sớm khi chưa giải quyết trọn vẹn bài toán.
 - **Vị trí nguồn:** arXiv:2604.06787v1, §2.2, §3.2, Table 1
+
+- **Đọc phương pháp:** Tách thời điểm kiểm tra khỏi tiêu chuẩn dừng: tín hiệu phản tư/chu kỳ kiểm tra quyết định khi nào hỏi, sufficiency assessment quyết định có đủ để kết luận hay chưa.
+- **Nhận xét đối chiếu của nhóm:** Dùng để so với fixed-budget truncation và confidence stopping. Accuracy trung bình gần nhau chưa chứng minh từng bài đều được giữ đúng; cần phân tích correct→wrong khi dừng sớm và đo latency gồm các lần sufficiency check.
 
 Khóa BibTeX: `rra2_dtsr` trong [references.bib](../overleaf/references.bib).
 
@@ -175,6 +201,9 @@ Nguồn đã dùng: [v1](https://arxiv.org/abs/2510.10103v1); Preprint (arXiv:25
 - **Giới hạn:** Dư thừa phản tư dựa trên embedding ngữ nghĩa không đồng nhất hoàn toàn với độ đủ logic hình thức; phụ thuộc vào chất lượng mô hình embedding câu.
 - **Vị trí nguồn:** arXiv:2510.10103v1, §3.2, §3.4, §5.1, Table 1
 
+- **Đọc phương pháp:** REFRAIN kết hợp đáp án hiện có, trigger phản tư và similarity; SW-UCB cập nhật ngưỡng từ reward gồm answer-only likelihood và phạt độ dài. Tín hiệu quality này là proxy không cần ground-truth test.
+- **Nhận xét đối chiếu của nhóm:** Dùng để phân biệt online adaptation của controller với cập nhật trọng số LLM. Similarity có thể nhầm phép kiểm tra hữu ích với lặp thừa; likelihood cao cũng không bảo đảm correctness. Xem §3.3–3.6 cho cơ chế reward.
+
 Khóa BibTeX: `rra2_refrain` trong [references.bib](../overleaf/references.bib).
 
 ### rra2-recursive-models
@@ -192,6 +221,9 @@ Nguồn đã dùng: [v2](https://arxiv.org/abs/2603.02112v2); Author-reported IC
 - **Giới hạn:** Đòi hỏi định dạng bài toán có thể phân rã cấu trúc đệ quy rõ ràng; chi phí quản lý stack và chuyển ngữ cảnh ngoài bộ nhớ.
 - **Vị trí nguồn:** arXiv:2603.02112v2, §3, §5.1, Table 1, Table 2
 
+- **Đọc phương pháp:** Mô hình đệ quy thay đổi cách mang trạng thái: mỗi call có local context, chỉ return kết quả cho parent. Rút gọn context hoạt động khác với việc toàn bộ quá trình dùng ít token hơn.
+- **Nhận xét đối chiếu của nhóm:** Dùng để mở rộng A2 từ stopping sang memory/state management. So sánh cần cả tổng token, peak context và chi phí stack; bài toán phải có decomposition hợp lệ. Không đồng nhất framework đã fine-tune với prompting đệ quy cho model bất kỳ.
+
 Khóa BibTeX: `rra2_recursive_models` trong [references.bib](../overleaf/references.bib).
 
 ### rra2-mctsr
@@ -208,6 +240,9 @@ Nguồn đã dùng: [v2](https://arxiv.org/abs/2406.07394v2); Preprint (arXiv:24
 - **Đóng góp:** Đề xuất phương pháp kết hợp tìm kiếm cây MCTS với khả năng phản biện văn bản ở cấp độ lời giải hoàn chỉnh; minh họa khả năng thu hẹp khoảng cách hiệu năng qua test-time search.
 - **Giới hạn:** Tìm kiếm ở cấp độ cả lời giải (coarse granularity) tiêu tốn nhiều lượt sinh văn bản hoàn chỉnh; điểm số tự đánh giá có thể thiếu tin cậy ở bài toán quá khó. Scope thuộc adjacent_reasoning.
 - **Vị trí nguồn:** arXiv:2406.07394v2, §3, §4.3, Table 2, §4.4, Table 3
+
+- **Đọc phương pháp:** Nút search là một lời giải hoàn chỉnh được refine; số rollout đếm các lần mở rộng/tinh chỉnh chứ không phải độ dài một chain. Self-evaluation là nguồn tín hiệu chọn nhánh.
+- **Nhận xét đối chiếu của nhóm:** Dùng làm đối chiếu search bên ngoài cho Long-CoT nội sinh. Gain trên LLaMA-3-8B không chứng minh cùng mức tiết kiệm với early exit; cần cộng token cho critique, rewrite, evaluation và mọi nhánh search.
 
 Khóa BibTeX: `rra2_mctsr` trong [references.bib](../overleaf/references.bib).
 
@@ -235,6 +270,9 @@ Nguồn đã dùng: [v2](https://arxiv.org/abs/2606.05402v2); Author-reported EM
 - **Giới hạn:** Tỷ lệ đúng của bước sửa lỗi là quan sát tương quan hành vi trên tập vết giải, không phải can thiệp nhân quả có đối chứng độc lập; chú ý Thought Anchors chỉ kiểm tra trên mô hình và tác vụ cụ thể.
 - **Vị trí nguồn:** arXiv:2606.05402v2, §3, §6.1, Figure 5, §8, Finding 4
 
+- **Đọc phương pháp:** Schema discourse mô tả quan hệ giữa các bước ở mức văn bản. Thí nghiệm Thought Anchors kiểm tra một câu hỏi khác: thao tác attention có thay đổi phân phối dự đoán bước sau hay không.
+- **Nhận xét đối chiếu của nhóm:** Dùng để phân biệt representation và mechanism. Cạnh diễn ngôn, điểm can thiệp và tỷ lệ sửa đúng là ba loại bằng chứng khác nhau; alignment yếu trong một setup không phủ nhận mọi phương pháp mechanistic analysis.
+
 Khóa BibTeX: `rra3_reasoningflow` trong [references.bib](../overleaf/references.bib).
 
 ### rra3-cot2graph
@@ -251,6 +289,9 @@ Nguồn đã dùng: [OpenReview](https://openreview.net/forum?id=wFTJZ8fvns); Au
 - **Đóng góp:** Minh họa rằng cấu trúc liên kết đồ thị của vết suy luận mang tín hiệu dự đoán hữu ích cho tính đúng đắn và độ dư thừa; đề xuất phương pháp phân tích vết giải dưới dạng đồ thị.
 - **Giới hạn:** Cấu trúc đồ thị phản ánh tốt tính dư thừa và kế hoạch nhưng ít mang tín hiệu về lỗi hallucination nội bộ bước; phụ thuộc vào parser trích xuất đồ thị phụ thuộc.
 - **Vị trí nguồn:** OpenReview forum:wFTJZ8fvns, §4.2, Table 1, §5.6, Figure 7
+
+- **Đọc phương pháp:** GNN nhận đồ thị được trích từ trace rồi dự đoán tính đúng/sai; GNNExplainer phân tích bộ dự đoán đó. Best-of-N selection là ứng dụng riêng của tín hiệu cấu trúc.
+- **Nhận xét đối chiếu của nhóm:** Dùng để đánh giá lợi ích của topology so với length-only features. Phải phân biệt accuracy của correctness predictor với accuracy giải bài sau selection; chi phí parser/GNN/judge và khả năng đổi model/domain là phần cần kiểm tra.
 
 Khóa BibTeX: `rra3_cot2graph` trong [references.bib](../overleaf/references.bib).
 
@@ -269,6 +310,9 @@ Nguồn đã dùng: [v2](https://arxiv.org/abs/2502.01100v2); Author-reported IC
 - **Giới hạn:** Khảo sát trên dạng bài toán câu đố lưới CSP cụ thể; không trực tiếp nghiên cứu vết suy luận mở rộng dạng tự do (scope adjacent_reasoning, primary A3, secondary A4).
 - **Vị trí nguồn:** arXiv:2502.01100v2, §3.1, Table 1, §3.2, §5, Figure 6
 
+- **Đọc phương pháp:** Độ phức tạp được thao tác qua câu đố CSP, giúp khảo sát scaling thay vì chỉ nhóm câu hỏi theo độ dài output. Kích thước search space và độ dài vết giải không phải cùng đại lượng.
+- **Nhận xét đối chiếu của nhóm:** Dùng làm adjacent evidence cho scaling limits, không là bằng chứng riêng rằng Long-CoT vô hiệu. Kết luận nên gắn với puzzle family và mô hình đã thử; cần tách combinatorial difficulty khỏi tải ghi nhớ trạng thái.
+
 Khóa BibTeX: `rra3_zebralogic` trong [references.bib](../overleaf/references.bib).
 
 ### rra3-overthinking
@@ -285,6 +329,9 @@ Nguồn đã dùng: [v1](https://arxiv.org/abs/2505.23480v1); Preprint (arXiv:25
 - **Đóng góp:** Đưa ra phân tích hành vi chỉ ra self-doubt là nhân tố dẫn đến overthinking; đề xuất giải pháp can thiệp tiền đề đơn giản giúp tiết kiệm token.
 - **Giới hạn:** Can thiệp dựa trên prompt mang tính heuristic; chưa giải quyết triệt để overthinking bắt nguồn từ cơ chế tối ưu hóa RL nội tại.
 - **Vị trí nguồn:** arXiv:2505.23480v1, §2, Figure 1, §5, Table 1, Table 3, §6
+
+- **Đọc phương pháp:** Self-doubt được xem ở mức hành vi: kiểm lại kết luận đã có. Bộ đề thiếu tiền đề đặt thêm câu hỏi liệu mô hình có nhận ra bài không đủ điều kiện để giải.
+- **Nhận xét đối chiếu của nhóm:** Dùng để tách unnecessary verification khỏi productive reflection. Prompt kiểm tra tiền đề có thể đổi chiến lược trả lời hoặc từ chối; tiết kiệm token trên dạng đề này chưa phải cải thiện chung cho mọi bài toán có đáp án.
 
 Khóa BibTeX: `rra3_overthinking` trong [references.bib](../overleaf/references.bib).
 
@@ -303,6 +350,9 @@ Nguồn đã dùng: [v1](https://arxiv.org/abs/2307.13702v1); Preprint (arXiv:23
 - **Giới hạn:** Kết quả thực hiện trên các mô hình pre-o1 và prompt-based CoT; không tự động khái quát thành quy luật phủ định cho mọi nghiên cứu filler-token hay latent reasoning sau này. Scope foundational.
 - **Vị trí nguồn:** arXiv:2307.13702v1, §2.1, §2.3, §2.5.1, Figure 5, Table 2
 
+- **Đọc phương pháp:** Các phép truncation, chèn lỗi và filler tạo can thiệp trên vết suy luận. Chúng kiểm tra mức phụ thuộc của đáp án vào trace, không chỉ độ thuyết phục mà người đọc cảm nhận.
+- **Nhận xét đối chiếu của nhóm:** Dùng làm nền tảng thiết kế thí nghiệm faithfulness. Can thiệp có thể đưa model ra ngoài phân phối; cần matched controls. Kết quả ở model pre-o1 không thay thế kiểm chứng trên reasoning model và kiến trúc latent sau này.
+
 Khóa BibTeX: `rra3_lanham_faithfulness` trong [references.bib](../overleaf/references.bib).
 
 ### rra3-chen-overthinking
@@ -318,6 +368,9 @@ Vai trò chính: **A3**; phụ: A1, A4; nhóm nhỏ: **A3.4**; phạm vi: **Long
 - **Giới hạn:** Giảm token vẫn có thể mất accuracy, nhất là bài khó.
 - **Nguồn:** v2, §2–3, Table 4; khóa `rra3_chen_overthinking`.
 
+- **Đọc phương pháp:** Phân biệt efficiency theo outcome với phần tiến trình thực sự đóng góp; self-training chọn trace ngắn rồi vẫn giữ reflection để tránh loại cả suy nghĩ hữu ích.
+- **Nhận xét đối chiếu của nhóm:** Dùng để giải thích vì sao shorter không tự động better. MATH500 tiết kiệm token lớn nhưng accuracy giảm nhẹ; chưa thể gọi là tương đương thống kê nếu thiếu uncertainty. First-correct solution trong construction dùng đáp án đúng, không phải oracle sẵn có lúc triển khai.
+
 ### rra3-underthinking
 
 **[Thoughts Are All Over the Place: On the Underthinking of o1-Like LLMs](https://arxiv.org/abs/2501.18585v2)** — Yue Wang et al. (2025).
@@ -331,6 +384,9 @@ Vai trò chính: **A3**; phụ: A2, A4; nhóm nhỏ: **A3.4**; phạm vi: **Long
 - **Giới hạn:** Phụ thuộc token chuyển hướng và siêu tham số; không mặc nhiên tiết kiệm compute.
 - **Nguồn:** v2, §2–3, Tables 2–3; khóa `rra3_underthinking`.
 
+- **Đọc phương pháp:** Underthinking nói về thiếu độ sâu trên một hướng, không nhất thiết tổng trace ngắn. TIP chỉ điều chỉnh xác suất chuyển hướng trong một cửa sổ, không có verifier xác nhận hướng hiện tại đúng.
+- **Nhận xét đối chiếu của nhóm:** Dùng làm phản biện việc luôn khuyến khích suy nghĩ ngắn hơn. Kiểm tra cùng sampling và budget; penalty quá mạnh có thể giữ model trong nhánh sai. Không so trực tiếp số greedy ở bảng khác với Pass@1 ước lượng từ nhiều mẫu.
+
 ### rra3-effective-reasoning
 
 **[What Characterizes Effective Reasoning? Revisiting Length, Review, and Structure of CoT](https://arxiv.org/abs/2509.19284v1)** — Yunzhen Feng et al. (2025).
@@ -343,6 +399,9 @@ Vai trò chính: **A3**; phụ: A2, A4; nhóm nhỏ: **A3.2**; phạm vi: **Long
 - **Đóng góp:** Đưa cấu trúc nhánh vào phân tích và điều khiển.
 - **Giới hạn:** FSF phụ thuộc judge; nhánh bỏ dở không đồng nghĩa bước sai logic.
 - **Nguồn:** v1, §3.2, §4–5, Table 1; khóa `rra3_effective_reasoning`.
+
+- **Đọc phương pháp:** FSF là tỷ lệ nút thuộc các nhánh bị bỏ dở trong graph do judge trích. Selection trên tập ứng viên cố định và continuation sau branch editing là hai thí nghiệm khác nhau.
+- **Nhận xét đối chiếu của nhóm:** Dùng để nối phân tích cấu trúc với kiểm soát context. Cần tính chi phí sinh ứng viên và graph judge; bỏ nhánh thành công trong thiết lập này không chứng minh mọi exploration thất bại đều vô ích đối với học hoặc kiểm chứng.
 
 ## A4 Evaluation/Benchmark
 
@@ -367,6 +426,9 @@ Nguồn đã dùng: [v1](https://arxiv.org/abs/2604.14140v1); Author-reported IC
 - **Giới hạn:** Hiện tượng suy giảm được tác giả giải thích như giả thuyết về mất mát trạng thái ngữ cảnh, chưa phải can thiệp nhân quả đo đạc trực tiếp cơ chế attention nội tại.
 - **Vị trí nguồn:** arXiv:2604.14140v1, §3, §4.1, Figure 4, §4.2, Figure 6
 
+- **Đọc phương pháp:** Tách bộ benchmark template đa miền khỏi thí nghiệm DAG tăng số dependency. Độ dài solution của benchmark và số nút DAG là hai cách thao tác horizon khác nhau.
+- **Nhận xét đối chiếu của nhóm:** Dùng để stress-test state carrying. Accuracy thấp trên bộ vừa/khó không đại diện cho mọi reasoning task; đường p^N chỉ là baseline độc lập giản lược, chưa định danh duy nhất nguyên nhân suy giảm là attention hay memory loss.
+
 Khóa BibTeX: `rra4_longcot` trong [references.bib](../overleaf/references.bib).
 
 ### rra4-cotjudger
@@ -383,6 +445,9 @@ Nguồn đã dùng: [v1](https://arxiv.org/abs/2603.07078v1); Author-reported AC
 - **Đóng góp:** Đề xuất khung đánh giá tự động dựa trên đồ thị cho phép đo lường chuẩn hóa tỷ lệ nút/bước suy luận nằm ngoài SEP của vết CoT mà không cần nhãn người cấp bước.
 - **Giới hạn:** SEP là một structural proxy phụ thuộc vào mô hình thẩm định (judge-dependent) chứ không chứng minh mọi bước bị loại bỏ đều không cần thiết về mặt ngữ nghĩa; quan hệ giáo viên - học sinh là tương quan quan sát được, không phải bằng chứng nhân quả về sự kế thừa.
 - **Vị trí nguồn:** arXiv:2603.07078v1, §4.1–4.6, Figure 2, §5, Figure 3
+
+- **Đọc phương pháp:** Đơn vị của redundancy ratio là nút/step sau segmentation, không phải token. SEP được tìm trên graph đã trích và có kiểm tra nhất quán; preprocessing thay đổi có thể thay đổi mẫu số lẫn đường hiệu quả.
+- **Nhận xét đối chiếu của nhóm:** Dùng làm structural efficiency metric, bổ sung cho accuracy và cost. Một bước ngoài SEP có thể là exploratory work cần thiết để phát hiện lời giải; muốn khẳng định có thể bỏ an toàn cần ablation tiếp tục sinh hoặc đánh giá lại đáp án.
 
 Khóa BibTeX: `rra4_cotjudger` trong [references.bib](../overleaf/references.bib).
 
@@ -401,6 +466,9 @@ Nguồn đã dùng: [v2](https://arxiv.org/abs/2505.16686v2); Author-reported EM
 - **Giới hạn:** Giới hạn trong miền tìm đường lưới 2D biểu diễn bằng văn bản; kết luận về phân bổ compute áp dụng cho các mô hình và cấu hình prompt được khảo sát.
 - **Vị trí nguồn:** arXiv:2505.16686v2, §3, Figure 2, Table 1, Table 2
 
+- **Đọc phương pháp:** Bài toán tìm đường cho phép kiểm tra tính hợp lệ của từng move, không chỉ chuỗi mô tả nghe hợp lý. Phân tầng độ khó hỗ trợ phân tích compute adaptation.
+- **Nhận xét đối chiếu của nhóm:** Dùng để bổ sung planning/state constraints ngoài toán. Phải giữ cách mã hóa grid, luật di chuyển và prompt; số token gần như không đổi là quan sát về allocation, chưa đủ để giải thích vì sao mô hình thất bại.
+
 Khóa BibTeX: `rra4_sparc` trong [references.bib](../overleaf/references.bib).
 
 ### rra4-processbench
@@ -418,6 +486,9 @@ Nguồn đã dùng: [v4](https://arxiv.org/abs/2412.06559v4); Author-reported AC
 - **Giới hạn:** Giới hạn trong suy luận toán học với độ khó hỗn hợp; bài toán định vị bước lỗi đầu tiên chưa mô tả toàn bộ cấu trúc lỗi của vết giải nhiều nhánh. Phạm vi adjacent_reasoning.
 - **Vị trí nguồn:** arXiv:2412.06559v4, §3.1, §4.2, Table 2, Table 3
 
+- **Đọc phương pháp:** Nhiệm vụ là xác định bước lỗi sớm nhất hoặc nhận ra lời giải không lỗi, không phải viết lời giải mới. F1 ở đây là harmonic mean giữa accuracy trên mẫu có lỗi và mẫu đúng (§4.1).
+- **Nhận xét đối chiếu của nhóm:** Dùng để kiểm định verifier/critic trước khi dùng cho A1/A2. Điểm trung bình qua bốn subset không phải một accuracy gộp; cần báo riêng miền khó và quy tắc chọn threshold. Phát hiện lỗi đúng chưa bảo đảm sửa được lỗi.
+
 Khóa BibTeX: `rra4_processbench` trong [references.bib](../overleaf/references.bib).
 
 ### rra4-criticbench
@@ -434,5 +505,8 @@ Nguồn đã dùng: [v4](https://arxiv.org/abs/2402.14809v4); Author-reported Fi
 - **Đóng góp:** Đề xuất benchmark toàn diện đánh giá chu trình GQC tương hỗ trong suy luận nhiều bước; khảo sát trên diện rộng 17 mô hình ngôn ngữ.
 - **Giới hạn:** Đánh giá trên các prompt-based LLMs thế hệ trước; chưa chuyên biệt hóa cho các vết Long-CoT hàng vạn token của reasoning models mới (scope adjacent_reasoning).
 - **Vị trí nguồn:** arXiv:2402.14809v4, §3, §4.1, Table 1, Figure 6
+
+- **Đọc phương pháp:** Thiết kế Generation–Critique–Correction tách năng lực giải ban đầu, nhận xét và sửa sau phản hồi. Đây là đối chiếu cho self-correction, không phải benchmark chuyên cho horizon rất dài.
+- **Nhận xét đối chiếu của nhóm:** Dùng để đánh giá chất lượng phản hồi thay vì chỉ đếm reflection tokens. Tương quan critique–correction không cô lập tác động nhân quả; cần giữ cùng lời giải đầu vào, feedback source và compute khi so critic.
 
 Khóa BibTeX: `rra4_criticbench` trong [references.bib](../overleaf/references.bib).

@@ -97,9 +97,64 @@ Ji et al.~\cite{survey_ji2025testtime} analyze test-time scaling by contrasting 
 \paragraph{Efficient and Adaptive Reasoning.}
 Qu et al.~\cite{survey_qu2025efficient} organize methods across inference, SFT, RL, and pretraining; inference includes length budgeting, system/model switching, and parallel search. Sui et al.~\cite{survey_sui2025overthinking} instead group interventions by their target: model, reasoning output, or input prompt. Zhu and Li~\cite{survey_zhu2025adaptive} separate training-free prompting, pipelines, decoding, and merging from training-based fine-tuning and RL. Their stated scope excludes general model compression, architectural optimization, and multimodal efficiency. Together these surveys establish that shortening and adapting reasoning already have substantial coverage; our role-based organization complements their lifecycle, intervention-target, and training-requirement axes.
 
+\subsection{What the Taxonomies Classify}
+\label{subsec:taxonomy_units}
+
+The organizing units differ across these surveys. Capability-oriented taxonomies ask which reasoning behavior is being supported; lifecycle taxonomies ask when an intervention occurs; search taxonomies describe computational structures; evaluation taxonomies separate assessment criteria from evaluator implementations. Comparing only their top-level headings can therefore exaggerate differences or hide substantial overlap.
+
+\paragraph{Capabilities versus research contributions.}
+Deep reasoning, reflection, and exploration in Chen et al. describe properties or capabilities of extended deliberation~\cite{survey_chen2025reasoning}. A paper can train a capability, control it during generation, analyze when it occurs, or build a benchmark that measures it. These correspond to different research roles while retaining the same capability descriptor. Feedback and refinement are particularly useful distinctions: recognizing an error, producing an effective correction, and measuring the success of that correction are separate contributions.
+
+Li et al.'s features, methods, and evolution provide a broader account of reasoning models~\cite{survey_li2025system}. The System 1--2 framing organizes the literature; it is not by itself evidence that a model implements human cognitive mechanisms. Likewise, Ji et al.'s adaptation scope includes test-time methods outside explicit long reasoning traces~\cite{survey_ji2025testtime}. Their frameworks help situate adjacent work without requiring every included method to become direct Long-CoT evidence.
+
+\paragraph{Compute axes versus execution structures.}
+Zhang et al.'s four questions can assign several descriptors to the same study: a compute form, an implementation approach, a task domain, and an evaluation criterion~\cite{survey_zhang2025testtime}. Parallel sampling can increase compute without lengthening an individual trace. Wei et al. add the granularity of search nodes and evaluator dynamics~\cite{survey_wei2026treesearch}; a whole-solution node in one method is not interchangeable with an atomic reasoning step in another. A review should preserve these units before comparing depth, rollout count, or efficiency.
+
+\paragraph{Evaluation criteria versus evaluator types.}
+Lee and Hockenmaier's factuality, validity, coherence, and utility specify what is assessed, whereas rule-based, intrinsic, and external evaluators specify how it is assessed~\cite{survey_lee2025evaluating}. A single criterion can have several evaluator implementations. A fluent trace need not be valid; a valid step need not be useful; useful visible reasoning need not disclose every factor that influenced the answer. These distinctions motivate the separation of process quality and faithfulness in our A3/A4 discussion.
+
+\paragraph{Lifecycle, intervention target, and training requirement.}
+The efficiency surveys are complementary rather than interchangeable. Qu et al. organize by inference, SFT, RL, and pretraining; Sui et al. by model, reasoning output, and input prompts; Zhu and Li by training-free and training-based methods~\cite{survey_qu2025efficient,survey_sui2025overthinking,survey_zhu2025adaptive}. One pipeline can change several targets and include both learned and runtime components. Training-free should not be interpreted as having no auxiliary modules, calibration requirements, or runtime cost. Scope exclusions explicitly stated by a survey, such as Zhu and Li's exclusions, should be reported as author choices rather than treated as demonstrated shortcomings.
+
+\begin{table}[p]
+\centering\small
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
+\toprule
+\textbf{Survey lens} & \textbf{Primary organizing unit} & \textbf{Question retained in A1--A4} \\
+\midrule
+Chen et al. & Long-CoT capabilities & Is the contribution learning, controlling, explaining, or measuring that capability? \\
+Li et al. & Features, methods, evolution & Is the evidence about an algorithm, behavior, or developmental recipe? \\
+Zhang et al. & What, how, where, how well & Which resource, implementation, task, and evaluation budget are involved? \\
+Wei et al. & Nodes, evaluators, search dynamics & What is a search step and how does feedback change execution? \\
+Lee \& Hockenmaier & Criteria and evaluator types & Which property is measured and how is the evaluator checked? \\
+Ji et al. & Adaptation and deliberate reasoning & Is the study direct Long-CoT evidence or broader compute context? \\
+Qu et al. & Lifecycle stages & Is cost reduced overall or shifted between training and inference? \\
+Sui et al. & Intervention targets & Are input, model, output, or multiple components changed? \\
+Zhu \& Li & Training requirements & What is learned beforehand and what adapts during use? \\
+\bottomrule
+\end{tabularx}
+\caption{Our interpretive crosswalk between survey organizing units and research-role questions. This is not a binary coverage score or a claim that each survey assigns these labels itself.}
+\label{tab:survey_crosswalk}
+\end{table}
+
 \subsection{Relationship to Research Roles (A1--A4)}
 \label{subsec:relationship_research_roles}
 
-Rather than superseding prior taxonomies, the fourfold research role framework used in this survey provides a modular, functional lens focused on the primary technical contribution of each work: \textbf{A1 Training/Data} isolates training objectives and data curation recipes; \textbf{A2 Inference/Control} analyzes test-time execution and search control; \textbf{A3 Analysis} encompasses analytical, behavioral, and mechanistic methodologies; and \textbf{A4 Evaluation/Benchmark} covers evaluation protocols and stress-test benchmarks. In team discussions, functional dependency concepts (such as dependency formation, state carrying, and verification) have also been discussed as complementary descriptive lenses for analyzing long-horizon reasoning trajectories. These lenses serve as parallel organizational tools to structure literature analysis rather than competing paradigms or empirically validated stages.
+The fourfold framework classifies the primary technical contribution of each work: \textbf{A1 Training/Data} covers objectives and data recipes; \textbf{A2 Inference/Control} covers execution and search control; \textbf{A3 Analysis} covers explanatory and diagnostic studies; and \textbf{A4 Evaluation/Benchmark} covers evaluation artifacts and protocols. These roles preserve useful descriptors from prior surveys rather than replacing them. A paper receives one primary record with secondary roles, so cross-cutting contributions remain visible without inflating the literature count.
+
+\paragraph{Worked crosswalk examples.}
+We assign s1 to A1 because its curated SFT recipe is a central contribution, and retain A2 for budget forcing~\cite{rra1_s1}. It can additionally be described using sequential scaling and tuning/decoding descriptors from prior survey frameworks. TAAR receives primary A2 for its adaptive restart method and secondary A3 for trap diagnosis~\cite{rra2_taar}. CoTJudger receives primary A4 for its evaluator, although its graph analysis also informs A3~\cite{rra4_cotjudger}. These are our assignments; they do not assert that every prior survey explicitly labels these papers in the same way.
 
 Our proposed emphasis is the connection between how reasoning is learned, how it is controlled, what empirical analyses explain, and what evaluation evidence supports. These are synthesis choices, not a claim that previous surveys omit analysis or evaluation. Comparisons should separately record final-answer accuracy, process quality, efficiency, and faithfulness, with explicit model, split, sampling, and compute budgets. A token reduction alone does not quantify end-to-end latency or establish causal faithfulness.
+
+\subsection{Review Boundaries and Positioning}
+\label{subsec:review_boundaries}
+
+\paragraph{Selection and extraction.}
+This working collection prioritizes direct studies of extended deliberation and retains adjacent or foundational work when it clarifies a method, failure mode, or evaluation protocol. We record a pinned source, central problem, method, reported result, contribution, and limitation for each study. Search terms and citation expansion identify representative directions; this process is not an exhaustive systematic-review protocol and supplies no completeness guarantee. Later model, venue, or dataset updates may require a separate versioned record.
+
+\paragraph{Interpreting gaps.}
+The comparison motivates questions about objective trade-offs, controller signals and actions, levels of analytical evidence, and evaluation units. These are organizing opportunities for this draft, not proof that prior surveys ignore them. A stronger novelty claim, such as being the first survey to cover all four roles, would require a broader survey corpus and an explicit coverage criterion. We therefore position the contribution as an evidence-aware research-role synthesis with a reusable paper catalog.
+
+\paragraph{Practical use of the synthesis.}
+The next section first describes the representative methods, then compares their assumptions and measurements, and finally proposes testable cross-role research questions. The catalog distinguishes author-reported findings from our comparative interpretation. This makes it possible to expand the repository through new evidence, including negative results or conflicting findings, without treating the current subgroup boundaries as fixed facts.

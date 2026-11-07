@@ -11,7 +11,7 @@
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage[colorlinks=true,linkcolor=blue!70!black,citecolor=blue!70!black,urlcolor=blue!70!black]{hyperref}
 
-\title{\textbf{Research Roles and Related Work --- Working Draft}}
+\title{\textbf{Research Roles and Related Work --- Extended Working Draft}}
 \author{}
 \date{November 7, 2026}
 
@@ -20,7 +20,7 @@
 \maketitle
 
 \begin{abstract}
-This working draft synthesizes recent literature on Long Chain-of-Thought (Long-CoT) reasoning in large language models. We structure 24 representative studies across four technical research roles: A1 (Training and Data Strategies), A2 (Inference and Test-Time Control), A3 (Analysis and Mechanistic Understanding), and A4 (Evaluation Frameworks and Benchmarks). In addition, we review nine prior survey taxonomies, examining their organizing principles, scoping frameworks, and comparative perspectives. The collection prioritizes direct Long-CoT studies while marking adjacent and foundational evidence.
+This working draft synthesizes recent literature on Long Chain-of-Thought (Long-CoT) reasoning in large language models. We organize 24 representative studies into 15 methodological subgroups under four research roles: A1 (Training/Data), A2 (Inference/Control), A3 (Analysis), and A4 (Evaluation/Benchmark). We compare nine prior survey taxonomies by scope and organizing unit, and explain how they relate to research-role assignments. Beyond reporting methods and outcomes, the extended synthesis examines training and inference trade-offs, levels of analytical evidence, evaluation units, sampling, and full-system compute accounting. Eight proposed research questions connect these roles through concrete experimental designs. The collection prioritizes direct Long-CoT studies while marking adjacent and foundational evidence; it is selective, and reported experiments have not been independently reproduced.
 \end{abstract}
 
 \vspace{1.5em}
@@ -31,7 +31,13 @@ This working draft synthesizes recent literature on Long Chain-of-Thought (Long-
 
 \input{related-work}
 
+\clearpage
+
 \input{research-role}
+
+\input{research-synthesis}
+
+\clearpage
 
 % -------------------------------------------------------------------------
 % Bibliography
