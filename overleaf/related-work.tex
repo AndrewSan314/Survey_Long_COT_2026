@@ -1,18 +1,18 @@
 % =========================================================================
 % Section: Related Work & Prior Taxonomy Comparison
 % Working Draft (Assignment 5/11 Synthesis)
-% Date: 2026-11-06
+% Date: 2026-11-07
 % =========================================================================
 
 \section{Related Work and Taxonomy Comparison}
 \label{sec:related_work}
 
-The surge in reasoning models has prompted several survey efforts to categorize the literature on Long Chain-of-Thought (Long-CoT) and inference-time compute scaling. Rather than organizing literature solely along model families, existing surveys propose diverse structuring principles centered on cognitive frameworks, search formulations, multi-dimensional scaling axes, and evaluation criteria. In this section, we examine six representative surveys \cite{survey_chen2025reasoning, survey_li2025system, survey_zhang2025testtime, survey_wei2026treesearch, survey_lee2025evaluating, survey_ji2025testtime} and describe how their organizing frameworks relate to the technical research roles (\textbf{A1 Training/Data}, \textbf{A2 Inference/Control}, \textbf{A3 Analysis}, \textbf{A4 Evaluation/Benchmark}) utilized in this synthesis.
+The surge in reasoning models has prompted surveys organized around cognitive frameworks, search, compute scaling, evaluation, and efficiency. We compare nine representative surveys \cite{survey_chen2025reasoning, survey_li2025system, survey_zhang2025testtime, survey_wei2026treesearch, survey_lee2025evaluating, survey_ji2025testtime, survey_qu2025efficient, survey_sui2025overthinking, survey_zhu2025adaptive} with our research roles: \textbf{A1 Training/Data}, \textbf{A2 Inference/Control}, \textbf{A3 Analysis}, and \textbf{A4 Evaluation/Benchmark}. We cite pinned preprint versions; the publication year or taxonomy of a later version may differ. Our comparison is selective and does not establish priority over every prior survey.
 
 \subsection{Organizing Principles of Prior Surveys}
 \label{subsec:survey_organizing_principles}
 
-The six examined surveys address reasoning literature from complementary technical perspectives, as summarized in Table~\ref{tab:survey_comparison}.
+The examined surveys address reasoning literature from complementary technical perspectives, as summarized in Table~\ref{tab:survey_comparison}.
 
 \paragraph{Reflective Dynamics and Exploration.}
 Chen et al.~\cite{survey_chen2025reasoning} structure literature around three primary capabilities: \emph{Deep Reasoning} (format design and training paradigms), \emph{Feasible Reflection} (subdivided into \emph{Feedback} for error identification and \emph{Refinement} for corrective trajectory adjustment), and \emph{Extensive Exploration} (inference scaling via internal deliberation and external tool interaction). Separating feedback from refinement provides an effective conceptual distinction between identifying an error and successfully generating a valid revision.
@@ -29,7 +29,7 @@ Zhang et al.~\cite{survey_zhang2025testtime} formalize test-time compute scaling
     \item \textbf{How well to scale}: Evaluation criteria covering \emph{Performance} (accuracy, pass@$k$), \emph{Efficiency} (token budget, computational cost), \emph{Controllability} (budget compliance, stopping behavior), and \emph{Scalability} (empirical saturation exponents and scaling boundaries). Crucially, \S8.2 explicitly discusses open questions regarding termination criteria and the challenge of differentiating trajectory length from logical sufficiency.
 \end{enumerate}
 
-\begin{table*}[t]
+\begin{table*}[p]
 \centering
 \small
 \renewcommand{\arraystretch}{1.2}
@@ -67,6 +67,18 @@ Classifies evaluation metrics and verification architectures for step-by-step re
 \textbf{Ji et al.} (2025) \cite{survey_ji2025testtime} &
 \textbf{Cognitive Shift}: System-1 adaptation (model, input, representation, output) versus System-2 deliberate reasoning (feedback, search). &
 Contrasts fast intuitive generation against deliberate search and compute budgeting trade-offs. \\
+\addlinespace
+\textbf{Qu et al.} (2025) \cite{survey_qu2025efficient} &
+\textbf{Lifecycle}: Inference, SFT, RL, pretraining; inefficiency patterns and future evaluation. &
+Connects compute allocation at inference (A2) with learned efficiency (A1). \\
+\addlinespace
+\textbf{Sui et al.} (2025) \cite{survey_sui2025overthinking} &
+\textbf{Intervention target}: Model, reasoning output, input prompts; data/compression and evaluation. &
+Organizes overthinking remedies by where they intervene. \\
+\addlinespace
+\textbf{Zhu \& Li} (2025) \cite{survey_zhu2025adaptive} &
+\textbf{Training requirement}: Training-free versus training-based concise/adaptive thinking. &
+Separates deployment controls (A2) from learned reasoning policies (A1). \\
 \bottomrule
 \end{tabularx}
 \caption{Systematic comparison of prior survey taxonomies on Long Chain-of-Thought and test-time reasoning.}
@@ -82,7 +94,12 @@ Lee \& Hockenmaier \cite{survey_lee2025evaluating} focus specifically on the eva
 \paragraph{Deliberate Compute Allocation.}
 Ji et al.~\cite{survey_ji2025testtime} analyze test-time scaling by contrasting \emph{System-1 adaptation} (modifications to models, inputs, representations, and output token distributions) with \emph{System-2 deliberate reasoning} (incorporating external feedback loops, tree/graph search policies, and dynamic compute budgeting).
 
+\paragraph{Efficient and Adaptive Reasoning.}
+Qu et al.~\cite{survey_qu2025efficient} organize methods across inference, SFT, RL, and pretraining; inference includes length budgeting, system/model switching, and parallel search. Sui et al.~\cite{survey_sui2025overthinking} instead group interventions by their target: model, reasoning output, or input prompt. Zhu and Li~\cite{survey_zhu2025adaptive} separate training-free prompting, pipelines, decoding, and merging from training-based fine-tuning and RL. Their stated scope excludes general model compression, architectural optimization, and multimodal efficiency. Together these surveys establish that shortening and adapting reasoning already have substantial coverage; our role-based organization complements their lifecycle, intervention-target, and training-requirement axes.
+
 \subsection{Relationship to Research Roles (A1--A4)}
 \label{subsec:relationship_research_roles}
 
 Rather than superseding prior taxonomies, the fourfold research role framework used in this survey provides a modular, functional lens focused on the primary technical contribution of each work: \textbf{A1 Training/Data} isolates training objectives and data curation recipes; \textbf{A2 Inference/Control} analyzes test-time execution and search control; \textbf{A3 Analysis} encompasses analytical, behavioral, and mechanistic methodologies; and \textbf{A4 Evaluation/Benchmark} covers evaluation protocols and stress-test benchmarks. In team discussions, functional dependency concepts (such as dependency formation, state carrying, and verification) have also been discussed as complementary descriptive lenses for analyzing long-horizon reasoning trajectories. These lenses serve as parallel organizational tools to structure literature analysis rather than competing paradigms or empirically validated stages.
+
+Our proposed emphasis is the connection between how reasoning is learned, how it is controlled, what empirical analyses explain, and what evaluation evidence supports. These are synthesis choices, not a claim that previous surveys omit analysis or evaluation. Comparisons should separately record final-answer accuracy, process quality, efficiency, and faithfulness, with explicit model, split, sampling, and compute budgets. A token reduction alone does not quantify end-to-end latency or establish causal faithfulness.

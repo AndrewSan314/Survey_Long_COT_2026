@@ -1,12 +1,14 @@
 # Paper theo Research Role A1–A4
 
-Cập nhật: **06/11/2026**. Danh mục làm việc gồm **20 paper**: 5 paper có vai trò chính trong mỗi nhóm, với **15 Long-CoT trực tiếp, 4 nghiên cứu liên quan, 1 công trình nền tảng**. Các nhóm nhỏ là đề xuất tổng hợp của nhóm, không phải taxonomy do từng paper đặt ra.
+Cập nhật: **07/11/2026**. Danh mục làm việc gồm **24 paper**: **A1: 6, A2: 5, A3: 8, A4: 5**, với **19 Long-CoT trực tiếp, 4 nghiên cứu liên quan, 1 công trình nền tảng**. Các nhóm nhỏ là đề xuất tổng hợp của nhóm, không phải taxonomy do từng paper đặt ra.
 
 Mỗi paper có một vai trò chính theo đóng góp trung tâm và có thể có vai trò phụ. Danh mục ưu tiên Long-CoT; MCTSr, ZebraLogic, ProcessBench và CriticBench cung cấp đối chiếu về tìm kiếm, độ phức tạp, phát hiện lỗi và phê phán; Lanham et al. cung cấp phương pháp can thiệp để khảo sát tính trung thực của CoT.
 
 Số liệu dưới đây là kết quả tác giả báo cáo trong các thiết lập đã ghi, chưa được nhóm tái lập. Không dùng số đường đi thay cho tổng token/FLOPs; không đồng nhất tương quan quan sát hoặc đồ thị trích xuất với cơ chế nhân quả nội tại. `pp` là điểm phần trăm.
 
 Đi tới: [A1](#a1-trainingdata) · [A2](#a2-inferencecontrol) · [A3](#a3-analysis) · [A4](#a4-evaluationbenchmark). Xem [bản thảo Related Work](../overleaf/related-work.tex), [PDF](../overleaf/draft-main.pdf) và [hướng dẫn đóng góp](../CONTRIBUTING.md).
+
+**Quy tắc phạm vi:** Long-CoT ở đây là suy luận có deliberation mở rộng, khám phá hoặc tự kiểm tra; không đặt một ngưỡng token chung và không đồng nhất với đầu vào long-context. Chọn A1 khi đóng góp chính thay đổi dữ liệu/trọng số; A2 khi thay đổi thực thi lúc suy luận; A3 khi giải thích/kiểm tra một hiện tượng; A4 khi cung cấp benchmark hoặc giao thức/chỉ số đánh giá. Ví dụ s1 thuộc A1 nhưng budget forcing dẫn chéo A2; ZebraLogic có primary A3 và secondary A4. Không đếm lại paper khi dẫn chéo.
 
 ## A1 Training/Data
 
@@ -15,6 +17,7 @@ Số liệu dưới đây là kết quả tác giả báo cáo trong các thiế
 | A1.1 — RL-Driven Long-CoT Emergence & Scale | [DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning](#rra1-deepseek-r1); [Kimi k1.5: Scaling Reinforcement Learning with LLMs](#rra1-kimi-k15) |
 | A1.2 — Minimalist Data-Centric SFT | [s1: Simple test-time scaling](#rra1-s1); [LIMO: Less is More for Reasoning](#rra1-limo) |
 | A1.3 — Multi-Stage Curriculum Pipelines & Hybrid Recipes | [Light-R1: Curriculum SFT, DPO and RL for Long COT from Scratch and Beyond](#rra1-light-r1) |
+| A1.4 — Efficiency-Aware RL & Learned Compute Allocation | [Training Language Models to Reason Efficiently](#rra1-efficient-rl); dẫn chéo Long2short của [Kimi k1.5](#rra1-kimi-k15) và self-training của [Chen et al.](#rra3-chen-overthinking) |
 
 ### rra1-deepseek-r1
 
@@ -29,7 +32,7 @@ Nguồn đã dùng: [v2](https://arxiv.org/abs/2501.12948v2); Preprint (arXiv:25
 - **Kết quả tác giả báo cáo:** R1-Zero đạt 77.9% AIME24 và 95.9% MATH-500; DeepSeek-R1 (671B MoE) đạt 79.8% AIME24, 97.3% MATH-500, 71.5% GPQA Diamond; Distill-Qwen-32B đạt 72.6% AIME24.
 - **Đóng góp:** Báo cáo hành vi tự kiểm chứng và tự phản tư phát sinh nội sinh trong thiết lập pure RL; đề xuất quy trình multi-stage giải quyết vấn đề đọc hiểu và ngôn ngữ; xác nhận hiệu quả chưng cất cho mô hình nhỏ.
 - **Giới hạn:** Gặp khó khăn trong tác vụ tổng quát, pha trộn ngôn ngữ khi huấn luyện pure RL thuần túy, nhạy cảm với reward hacking nếu thiếu verifier tất định.
-- **Vị trí nguồn:** arXiv:2501.12948, §2.1, §2.2, Table 2, Table 3, Table 8
+- **Vị trí nguồn:** arXiv:2501.12948v2, §2.1–2.3, §3, Table 2, Appendix B.3.3 và F. Không trộn số liệu/đánh số mục với v1.
 
 Khóa BibTeX: `rra1_deepseek_r1` trong [references.bib](../overleaf/references.bib).
 
@@ -101,6 +104,19 @@ Nguồn đã dùng: [v4](https://arxiv.org/abs/2503.10460v4); Author-reported AC
 
 Khóa BibTeX: `rra1_light_r1` trong [references.bib](../overleaf/references.bib).
 
+### rra1-efficient-rl
+
+**[Training Language Models to Reason Efficiently](https://arxiv.org/abs/2502.04463v4)** — Daman Arora; Andrea Zanette (2025).
+
+Vai trò chính: **A1**; phụ: A2, A3; nhóm nhỏ: **A1.4**; phạm vi: **Long-CoT trực tiếp**.
+
+- **Bài toán:** Học phân bổ compute theo độ khó.
+- **Phương pháp:** RL với reward kết hợp độ đúng và phạt độ dài, điều chỉnh bằng hệ số alpha.
+- **Kết quả:** Với DeepSeek-R1-Distill-Qwen-7B, alpha=0.2 giảm token 83% trên GSM8K nhưng 27% trên AIME24; đây là hai mức tiết kiệm theo tác vụ, không phải cùng độ chính xác.
+- **Đóng góp:** Học đường đánh đổi accuracy–compute thay vì chỉ cắt chuỗi.
+- **Giới hạn:** Nén có thể giảm accuracy và faithfulness; bảo đảm lý thuyết cần các giả định lý tưởng.
+- **Nguồn:** v4, §4, §5.3.1–5.3.2, Figure 3; khóa `rra1_efficient_rl`.
+
 ## A2 Inference/Control
 
 | Nhóm nhỏ đề xuất | Paper đại diện |
@@ -108,6 +124,7 @@ Khóa BibTeX: `rra1_light_r1` trong [references.bib](../overleaf/references.bib)
 | A2.1 — Dynamic Early-Stopping & Sufficiency Control | [When Is Thinking Enough? Early Exit via Sufficiency Assessment for Efficient Reasoning](#rra2-dtsr); [Stop When Enough: Adaptive Early-Stopping for Chain-of-Thought Reasoning](#rra2-refrain) |
 | A2.2 — Error Trap Detection & Adaptive Restarts | [Thinking Traps in Long Chain-of-Thought: A Measurable Study and Trap-Aware Adaptive Restart](#rra2-taar); [Accessing GPT-4 level Mathematical Olympiad Solutions via Monte Carlo Tree Self-refine with LLaMa-3 8B](#rra2-mctsr) |
 | A2.3 — Modular Context Isolation & State Management | [Recursive Models for Long-Horizon Reasoning](#rra2-recursive-models) |
+| A2.4 — Budget Forcing & Exploration-Depth Control | Dẫn chéo [s1 / budget forcing](#rra1-s1), [Underthinking / TIP](#rra3-underthinking) và [FSF / branch pruning](#rra3-effective-reasoning); các paper giữ primary role gốc |
 
 ### rra2-taar
 
@@ -199,8 +216,9 @@ Khóa BibTeX: `rra2_mctsr` trong [references.bib](../overleaf/references.bib).
 | Nhóm nhỏ đề xuất | Paper đại diện |
 | --- | --- |
 | A3.1 — Discourse Graph Structures vs Mechanistic Causality | [ReasoningFlow: Discourse Structures for Understanding LLM Reasoning Traces](#rra3-reasoningflow); [Measuring Faithfulness in Chain-of-Thought Reasoning](#rra3-lanham-faithfulness) |
-| A3.2 — Structural Graph Representations & Failure Mode Diagnosis | [Understanding Failures in LLM Reasoning by Learning Structured Representations of Chain-of-Thought](#rra3-cot2graph) |
-| A3.3 — Combinatorial Scaling Limits & Overthinking Mechanics | [ZebraLogic: On the Scaling Limits of LLMs for Logical Reasoning](#rra3-zebralogic); [Revisiting Overthinking in Long Chain-of-Thought from the Perspective of Self-Doubt](#rra3-overthinking) |
+| A3.2 — Structural Graph Representations & Failure Mode Diagnosis | [CoT2Graph](#rra3-cot2graph); [What Characterizes Effective Reasoning? / FSF](#rra3-effective-reasoning) |
+| A3.3 — Combinatorial Scaling Limits | [ZebraLogic](#rra3-zebralogic) |
+| A3.4 — Overthinking, Underthinking & Self-Doubt | [Do NOT Think That Much for 2+3=?](#rra3-chen-overthinking); [Thoughts Are All Over the Place](#rra3-underthinking); [Self-Doubt](#rra3-overthinking) |
 
 ### rra3-reasoningflow
 
@@ -241,7 +259,7 @@ Khóa BibTeX: `rra3_cot2graph` trong [references.bib](../overleaf/references.bib
 **[ZebraLogic: On the Scaling Limits of LLMs for Logical Reasoning](https://arxiv.org/abs/2502.01100v2)**
 
 Tác giả: Bill Yuchen Lin; Ronan Le Bras; Kyle Richardson; Ashish Sabharwal; Radha Poovendran; Peter Clark; Yejin Choi.
-Vai trò chính: **A3**; vai trò phụ: A4; nhóm nhỏ: A3.3: Combinatorial Scaling Limits & Overthinking Mechanics; phạm vi: **Nghiên cứu suy luận liên quan**.
+Vai trò chính: **A3**; vai trò phụ: A4; nhóm nhỏ: A3.3: Combinatorial Scaling Limits; phạm vi: **Nghiên cứu suy luận liên quan**.
 Nguồn đã dùng: [v2](https://arxiv.org/abs/2502.01100v2); Author-reported ICML 2025; arXiv:2502.01100v2.
 
 - **Bài toán:** Khảo sát ranh giới mở rộng (scaling limits) của LLMs và reasoning models trong bài toán suy luận logic thỏa mãn ràng buộc khi không gian tìm kiếm tăng theo cấp số nhân.
@@ -258,7 +276,7 @@ Khóa BibTeX: `rra3_zebralogic` trong [references.bib](../overleaf/references.bi
 **[Revisiting Overthinking in Long Chain-of-Thought from the Perspective of Self-Doubt](https://arxiv.org/abs/2505.23480v1)**
 
 Tác giả: Keqin Peng; Liang Ding; Yuanxin Ouyang; Meng Fang; Dacheng Tao.
-Vai trò chính: **A3**; vai trò phụ: A2; nhóm nhỏ: A3.3: Combinatorial Scaling Limits & Overthinking Mechanics; phạm vi: **Long-CoT trực tiếp**.
+Vai trò chính: **A3**; vai trò phụ: A2; nhóm nhỏ: A3.4: Overthinking, Underthinking & Self-Doubt; phạm vi: **Long-CoT trực tiếp**.
 Nguồn đã dùng: [v1](https://arxiv.org/abs/2505.23480v1); Preprint (arXiv:2505.23480v1).
 
 - **Bài toán:** Hiện tượng các mô hình reasoning tiêu tốn lượng token khổng lồ cho các bước suy luận thừa thãi mà không làm tăng độ chính xác; cần định lượng cơ chế hành vi cụ thể.
@@ -286,6 +304,45 @@ Nguồn đã dùng: [v1](https://arxiv.org/abs/2307.13702v1); Preprint (arXiv:23
 - **Vị trí nguồn:** arXiv:2307.13702v1, §2.1, §2.3, §2.5.1, Figure 5, Table 2
 
 Khóa BibTeX: `rra3_lanham_faithfulness` trong [references.bib](../overleaf/references.bib).
+
+### rra3-chen-overthinking
+
+**[Do NOT Think That Much for 2+3=? On the Overthinking of o1-Like LLMs](https://arxiv.org/abs/2412.21187v2)** — Xingyu Chen et al. (2024; v2: 2025).
+
+Vai trò chính: **A3**; phụ: A1, A4; nhóm nhỏ: **A3.4**; phạm vi: **Long-CoT trực tiếp**.
+
+- **Bài toán:** Định lượng tính toán thừa sau khi đã có lời giải.
+- **Phương pháp:** Chỉ số outcome/process efficiency; self-training với preference cho lời giải ngắn và giữ phản tư.
+- **Kết quả:** QwQ-32B-Preview, MATH500: SimPO FCS+Reflection giảm 2407.9 xuống 1330.7 token; accuracy 93.0% xuống 92.8%.
+- **Đóng góp:** Liên kết chẩn đoán overthinking với dữ liệu huấn luyện tiết kiệm.
+- **Giới hạn:** Giảm token vẫn có thể mất accuracy, nhất là bài khó.
+- **Nguồn:** v2, §2–3, Table 4; khóa `rra3_chen_overthinking`.
+
+### rra3-underthinking
+
+**[Thoughts Are All Over the Place: On the Underthinking of o1-Like LLMs](https://arxiv.org/abs/2501.18585v2)** — Yue Wang et al. (2025).
+
+Vai trò chính: **A3**; phụ: A2, A4; nhóm nhỏ: **A3.4**; phạm vi: **Long-CoT trực tiếp**.
+
+- **Bài toán:** Chuỗi dài nhưng đổi hướng quá sớm.
+- **Phương pháp:** Underthinking score và TIP: phạt logits chuyển hướng trong một cửa sổ giải mã.
+- **Kết quả:** QwQ-32B-Preview, AIME24: Pass@1 tăng 38.3% lên 44.1%, ước lượng từ 32 mẫu/bài; alpha=3, beta=600, chọn trên AIME22–23.
+- **Đóng góp:** Phân biệt độ dài tổng với độ sâu khám phá từng hướng.
+- **Giới hạn:** Phụ thuộc token chuyển hướng và siêu tham số; không mặc nhiên tiết kiệm compute.
+- **Nguồn:** v2, §2–3, Tables 2–3; khóa `rra3_underthinking`.
+
+### rra3-effective-reasoning
+
+**[What Characterizes Effective Reasoning? Revisiting Length, Review, and Structure of CoT](https://arxiv.org/abs/2509.19284v1)** — Yunzhen Feng et al. (2025).
+
+Vai trò chính: **A3**; phụ: A2, A4; nhóm nhỏ: **A3.2**; phạm vi: **Long-CoT trực tiếp**.
+
+- **Bài toán:** Cấu trúc nào dự đoán suy luận hiệu quả?
+- **Phương pháp:** Trích đồ thị, đo Failed-Step Fraction (FSF), chọn ứng viên và can thiệp loại nhánh bỏ dở.
+- **Kết quả:** Trên 10 LRM, FSF dự đoán correctness nhất quán hơn length/review; thử bỏ nhánh trên các trace HARP sai của R1 và GPT-oss-120B cải thiện khả năng tiếp tục giải đúng.
+- **Đóng góp:** Đưa cấu trúc nhánh vào phân tích và điều khiển.
+- **Giới hạn:** FSF phụ thuộc judge; nhánh bỏ dở không đồng nghĩa bước sai logic.
+- **Nguồn:** v1, §3.2, §4–5, Table 1; khóa `rra3_effective_reasoning`.
 
 ## A4 Evaluation/Benchmark
 

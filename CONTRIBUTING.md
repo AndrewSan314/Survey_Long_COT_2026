@@ -2,6 +2,8 @@
 
 Danh sách làm việc của nhóm nằm ở [`papers/research-role.md`](papers/research-role.md). Thêm hoặc sửa paper bằng một pull request; nếu đã có quyền ghi, có thể dùng nhánh riêng rồi mở pull request để các thành viên đối chiếu nguồn.
 
+Survey và đối chiếu taxonomy nằm ở [`papers/related-work.md`](papers/related-work.md). Với thành viên chưa có quyền ghi, fork repo rồi gửi pull request; không cần được thêm collaborator để đề xuất paper.
+
 ## Thông tin cần có
 
 - Tên chính xác, tác giả, năm, phiên bản đã đọc và URL nguồn sơ cấp ổn định (arXiv, proceedings hoặc trang chính thức của paper).
@@ -17,5 +19,6 @@ Danh sách làm việc của nhóm nằm ở [`papers/research-role.md`](papers/
 1. Kiểm tra paper đã có theo DOI/arXiv ID; paper liên quan nhiều nhóm dùng một bản ghi chính và dẫn chéo thay vì đếm thành nhiều paper.
 2. Kèm link và vị trí nguồn cho nhận xét được thêm/sửa. Khi thay vai trò hoặc nhóm nhỏ, giải thích ngắn lý do trong pull request.
 3. Nếu trích paper trong bản thảo LaTeX, thêm entry tương ứng vào [`overleaf/references.bib`](overleaf/references.bib) và dùng khóa trích dẫn duy nhất. Phần LaTeX là bản nháp để nhóm hiệu chỉnh; thay đổi paper list không tự đồng bộ vào dự án Overleaf.
+4. Khi thêm paper/survey, cập nhật số lượng và bảng tổng hợp ở README, phần mở đầu paper list và abstract trong `overleaf/draft-main.tex`. Build local bằng lệnh trong [`overleaf/README.md`](overleaf/README.md); kiểm tra citation và bảng sau khi biên dịch.
 
 README dẫn đến danh mục paper và các tệp LaTeX. Giữ các tài liệu survey đã có khi bổ sung nghiên cứu mới.

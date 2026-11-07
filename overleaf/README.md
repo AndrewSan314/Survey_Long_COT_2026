@@ -1,13 +1,26 @@
-# Bản thảo Research Role & Related Work
+# Bản thảo Research Role & Related Work — build local
 
 Đây là bản nháp tiếng Anh để nhóm biên tập, gồm hai phần và thư mục tài liệu tham khảo:
 
 - `research-role.tex`: A1 Training/Data, A2 Inference/Control, A3 Analysis, A4 Evaluation/Benchmark.
-- `related-work.tex`: phạm vi và cách phân loại literature của sáu survey.
+- `related-work.tex`: phạm vi và cách phân loại literature của chín survey.
 - `references.bib`: BibTeX dùng chung.
 - `draft-main.tex`: tài liệu độc lập để biên dịch và xem trước bằng `draft-main.pdf`.
 
-## Nhập vào Overleaf
+## Build local
+
+Từ thư mục `overleaf`, chạy lần lượt:
+
+```powershell
+pdflatex -interaction=nonstopmode -halt-on-error draft-main.tex
+bibtex draft-main
+pdflatex -interaction=nonstopmode -halt-on-error draft-main.tex
+pdflatex -interaction=nonstopmode -halt-on-error draft-main.tex
+```
+
+PDF đầu ra là `draft-main.pdf`; không cần dịch vụ Overleaf. Bản ngày 07/11/2026 gồm 24 paper và 9 survey, dùng chung 33 entry BibTeX. Nếu đã có Perl, có thể thay chuỗi trên bằng `latexmk -pdf draft-main.tex`; MiKTeX trên máy hiện tại chưa có Perl nên dùng chuỗi lệnh trực tiếp.
+
+## Tích hợp vào template LaTeX / Overleaf (nếu cần)
 
 Với project mới, tải các tệp `.tex` và `.bib` trong thư mục này lên, chọn `draft-main.tex` làm Main document và dùng pdfLaTeX. Biên dịch cục bộ tương đương: `pdflatex draft-main`, `bibtex draft-main`, rồi chạy `pdflatex draft-main` hai lần.
 
