@@ -2,9 +2,9 @@
 
 Đây là bản thảo tiếng Việt để nhóm biên tập, gồm hai phần và thư mục tài liệu tham khảo. Terminology, tên paper/model, tên dataset, prompt và các ký hiệu kỹ thuật được giữ nguyên khi cần để đối chiếu nguồn.
 
-- `research-role.tex`: phần chính có đúng bốn nhóm A1–A4, 16 hướng nhỏ và 24 paper; từng paper ghi rõ bài toán, phương pháp, kết quả, đóng góp và hạn chế.
+- `research-role.tex`: phần chính có bốn nhóm A1–A4, 16 hướng nhỏ và 24 paper; từng paper có bài toán, phương pháp, thiết lập/metric, kết quả, đóng góp, hạn chế, nhận xét và vị trí nguồn. Mỗi subgroup có phân tích cơ chế/ranh giới, cuối từng nhóm có bảng đối chiếu.
 - `research-synthesis.tex`: phân tích mở rộng và 8 RQ của bản trước, được giữ làm tài liệu bổ sung; **không được nhập vào PDF chính**.
-- `related-work.tex`: phạm vi và cách phân loại literature của chín survey.
+- `related-work.tex`: chín survey được đối chiếu theo phạm vi, taxonomy, đơn vị phân loại, cách sử dụng và giới hạn; có vị trí nguồn và bảng crosswalk.
 - `references.bib`: BibTeX dùng chung.
 - `draft-main.tex`: bản độc lập, nhập `research-role.tex` trước và `related-work.tex` sau; biên dịch thành `draft-main.pdf`.
 

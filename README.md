@@ -2,7 +2,7 @@
 
 Danh mục làm việc cho phần **Research Role (A) & Related Work**, cập nhật bản tiếng Việt ngày 08/11/2026: **24 paper nghiên cứu** (19 Long-CoT trực tiếp) và **9 survey** đối chiếu taxonomy.
 
-- **[Đọc trước: Tổng hợp literature theo A1–A4](papers/literature-review.md)** — 24 paper, 16 hướng nhỏ; mỗi paper có bài toán, phương pháp, kết quả, đóng góp và hạn chế.
+- **[Đọc trước: Tổng hợp chi tiết literature theo A1–A4](papers/literature-review.md)** — 24 paper, 16 hướng nhỏ; có cơ chế phương pháp, thiết lập/metric, kết quả, đóng góp, hạn chế, nhận xét đối chiếu và vị trí nguồn.
 - [Hồ sơ paper đầy đủ và vị trí nguồn](papers/research-role.md): số liệu chi tiết, scope, nhận xét phương pháp và primary/secondary role.
 - [Phân tích bổ sung và 8 câu hỏi nghiên cứu](papers/research-directions.md): tài liệu mở rộng, không thay thế đầu ra literature review.
 - [Related Work: phạm vi, taxonomy và cách dùng 9 survey](papers/related-work.md).
@@ -13,10 +13,12 @@ Các nhóm nhỏ là đề xuất tổ chức literature của nhóm, có thể 
 
 **Bố cục PDF theo phân công:** Literature Review nằm trước, gồm đúng bốn nhóm A1–A4; mỗi nhóm có hướng nhỏ, paper tiêu biểu và tổng hợp kết quả/hạn chế. Related Work nằm sau, tập trung vào phạm vi và cách phân loại của chín survey. Phần RQ/phân tích mở rộng được giữ trong tài liệu bổ sung, không đưa vào PDF chính.
 
+**Mức chi tiết hiện tại:** 24 hồ sơ trong PDF/Markdown đều nêu model, benchmark và cách đọc metric theo thiết lập đã báo cáo, kèm vị trí nguồn. Có 16 phân tích subgroup, bốn bảng đối chiếu trong A1–A4 và bảng crosswalk chín survey. Nhận xét tổng hợp được ghi riêng với kết quả tác giả; không dùng chênh lệch điểm giữa các setup khác nhau để xếp hạng phương pháp.
+
 | Yêu cầu | Đầu ra để kiểm tra |
 | --- | --- |
 | Paper theo A1–A4, ưu tiên Long-CoT trực tiếp | [Bản tổng hợp 24 paper](papers/literature-review.md), có nhãn phạm vi |
-| Bài toán, phương pháp, kết quả, đóng góp | Bốn trường ghi rõ cho từng paper trong Markdown và PDF; kèm hạn chế |
+| Bài toán, phương pháp, kết quả, đóng góp | Bốn trường ghi rõ cho từng paper; bổ sung thiết lập/metric, hạn chế, nhận xét và vị trí nguồn |
 | Hướng nhỏ dựa trên phương pháp | 16 subgroup; distillation và data synthesis/selection được nêu tường minh |
 | Survey cho Related Work | [Chín survey](papers/related-work.md), tách scope và taxonomy |
 | Bản thảo LaTeX để ghép vào bài nhóm | [Nguồn và cách build](overleaf/README.md), [PDF](overleaf/draft-main.pdf) |

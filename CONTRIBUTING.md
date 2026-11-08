@@ -14,6 +14,7 @@ Viết nội dung giải thích bằng tiếng Việt; giữ terminology và tê
 - Vai trò chính: **A1 Training/Data**, **A2 Inference/Control**, **A3 Analysis**, hoặc **A4 Evaluation/Benchmark**. Có thể ghi vai trò phụ; chọn vai trò chính theo đóng góp trung tâm của paper.
 - Phạm vi: trực tiếp nghiên cứu Long-CoT, nghiên cứu suy luận liên quan, hoặc công trình nền tảng. Nêu lý do nếu mối liên hệ với Long-CoT chỉ gián tiếp.
 - Bốn ghi chú ngắn: **bài toán**, **phương pháp**, **kết quả**, **đóng góp**; thêm giới hạn quan trọng và vị trí nguồn (mục/bảng/hình/trang).
+- Bản chính chi tiết cần có thêm **thiết lập và metric**: model/checkpoint, benchmark/split, cách lấy mẫu hoặc budget nếu đã xác minh; phân biệt accuracy của generator, verifier, predictor và selector. Ghi **nhận xét đối chiếu** riêng với kết quả tác giả; không tự điền thông số nguồn chưa báo.
 - Nếu có số liệu, giữ đúng model, dataset/split, metric, baseline và ngân sách thử nghiệm. Ghi rõ đó là kết quả tác giả báo cáo; phân biệt điểm phần trăm với phần trăm tương đối.
 - Tách **đơn vị đánh giá** (bài, trace, bước, node, token), **nguồn nhãn/verifier**, **chi phí phụ** và **cấp bằng chứng** (quan sát, dự đoán, can thiệp trace, can thiệp nội tại). Nếu paper không báo một chi phí hay uncertainty cần thiết, ghi “chưa báo/không xác minh”, không điền suy đoán.
 - Ghi nhận xét so sánh của nhóm riêng với claim tác giả. Một feature dự đoán correctness không mặc nhiên là nguyên nhân của correctness; một gain khi đổi controller không chứng minh cơ chế nhận thức tổng quát.
