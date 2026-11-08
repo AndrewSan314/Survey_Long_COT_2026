@@ -4,7 +4,9 @@ Danh sách làm việc của nhóm nằm ở [`papers/research-role.md`](papers/
 
 Survey và đối chiếu taxonomy nằm ở [`papers/related-work.md`](papers/related-work.md). Với thành viên chưa có quyền ghi, fork repo rồi gửi pull request; không cần được thêm collaborator để đề xuất paper.
 
-Phân tích subgroup, bảng so sánh và RQ nằm ở [`papers/research-directions.md`](papers/research-directions.md); phần tiếng Anh tương ứng ở `overleaf/research-synthesis.tex`. Khi thêm phương pháp, ghi nó bổ sung, phản biện hoặc thay đổi kết luận nào của subgroup.
+Phân tích subgroup, bảng so sánh và RQ nằm ở [`papers/research-directions.md`](papers/research-directions.md); phần LaTeX tiếng Việt tương ứng ở `overleaf/research-synthesis.tex`. Khi thêm phương pháp, ghi nó bổ sung, phản biện hoặc thay đổi kết luận nào của subgroup.
+
+Viết nội dung giải thích bằng tiếng Việt; giữ terminology và tên riêng kỹ thuật để tra cứu được nguồn. Không dịch lại tên paper, model, dataset, prompt literal hoặc khóa BibTeX. Wrapper LaTeX dùng UTF-8, encoding `T5` và `babel[vietnamese]`.
 
 ## Thông tin cần có
 

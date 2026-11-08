@@ -1,6 +1,6 @@
 # Long-CoT Survey Papers
 
-Danh mục làm việc cho phần **Research Role (A) & Related Work**, cập nhật ngày 07/11/2026: **24 paper nghiên cứu** (19 Long-CoT trực tiếp) và **9 survey** đối chiếu taxonomy.
+Danh mục làm việc cho phần **Research Role (A) & Related Work**, cập nhật bản tiếng Việt ngày 08/11/2026: **24 paper nghiên cứu** (19 Long-CoT trực tiếp) và **9 survey** đối chiếu taxonomy.
 
 - [Paper theo A1 Training/Data, A2 Inference/Control, A3 Analysis, A4 Evaluation/Benchmark](papers/research-role.md): bài toán, phương pháp, kết quả, đóng góp, giới hạn và vị trí nguồn.
 - [Phân tích mở rộng 15 hướng nhỏ, bảng so sánh và 8 câu hỏi nghiên cứu](papers/research-directions.md): cơ chế, giả định, cấp bằng chứng, đơn vị đánh giá và thiết kế thực nghiệm đề xuất.
@@ -11,6 +11,8 @@ Danh mục làm việc cho phần **Research Role (A) & Related Work**, cập nh
 Các nhóm nhỏ là đề xuất tổ chức literature của nhóm, có thể điều chỉnh khi thêm paper. Danh mục phân biệt paper Long-CoT trực tiếp, nghiên cứu suy luận liên quan và công trình nền tảng; số liệu là kết quả tác giả báo cáo, chưa được nhóm tái lập.
 
 **Bản mở rộng:** Mỗi hồ sơ trong 24 paper có thêm phần đọc phương pháp và nhận xét đối chiếu; Related Work có phân tích riêng cho cả 9 survey và crosswalk giữa các trục taxonomy. PDF bổ sung so sánh A1–A4, giải thích metric/sampling/compute, và 8 RQ có thiết kế kiểm chứng. Nhận xét tổng hợp và đề xuất của nhóm được ghi riêng với kết quả tác giả.
+
+**Ngôn ngữ:** Nội dung LaTeX/PDF, bảng và chú thích dùng tiếng Việt; giữ terminology, tên paper/model/dataset và ký hiệu chuyên môn. Nguồn và số liệu vẫn theo bản tổng hợp ngày 07/11/2026; chuyển ngôn ngữ không đồng nghĩa đã cập nhật literature mới.
 
 | Nhóm | Số paper chính | Các hướng nhỏ và paper tiêu biểu |
 | --- | --- | --- |

@@ -1,32 +1,29 @@
-% =========================================================================
-% Section: Related Work & Prior Taxonomy Comparison
-% Working Draft (Assignment 5/11 Synthesis)
-% Date: 2026-11-07
-% =========================================================================
+% Related Work và đối chiếu taxonomy.
+% Bản tiếng Việt: 2026-11-08; giữ terminology và nguồn của bản trước.
 
-\section{Related Work and Taxonomy Comparison}
+\section{Related Work và đối chiếu taxonomy}
 \label{sec:related_work}
 
-The surge in reasoning models has prompted surveys organized around cognitive frameworks, search, compute scaling, evaluation, and efficiency. We compare nine representative surveys \cite{survey_chen2025reasoning, survey_li2025system, survey_zhang2025testtime, survey_wei2026treesearch, survey_lee2025evaluating, survey_ji2025testtime, survey_qu2025efficient, survey_sui2025overthinking, survey_zhu2025adaptive} with our research roles: \textbf{A1 Training/Data}, \textbf{A2 Inference/Control}, \textbf{A3 Analysis}, and \textbf{A4 Evaluation/Benchmark}. We cite pinned preprint versions; the publication year or taxonomy of a later version may differ. Our comparison is selective and does not establish priority over every prior survey.
+Sự phát triển của reasoning model đã dẫn đến nhiều survey tổ chức literature theo khung nhận thức, search, compute scaling, evaluation và efficiency. Chúng tôi đối chiếu chín survey tiêu biểu \cite{survey_chen2025reasoning, survey_li2025system, survey_zhang2025testtime, survey_wei2026treesearch, survey_lee2025evaluating, survey_ji2025testtime, survey_qu2025efficient, survey_sui2025overthinking, survey_zhu2025adaptive} với bốn vai trò nghiên cứu: \textbf{A1 Training/Data}, \textbf{A2 Inference/Control}, \textbf{A3 Analysis} và \textbf{A4 Evaluation/Benchmark}. Trích dẫn được ghim theo phiên bản preprint; năm xuất bản hoặc taxonomy của bản mới hơn có thể khác. Đây là đối chiếu chọn lọc, không xác lập tính tiên phong so với mọi survey trước.
 
-\subsection{Organizing Principles of Prior Surveys}
+\subsection{Nguyên tắc tổ chức của các survey trước}
 \label{subsec:survey_organizing_principles}
 
-The examined surveys address reasoning literature from complementary technical perspectives, as summarized in Table~\ref{tab:survey_comparison}.
+Các survey tiếp cận literature từ những góc nhìn kỹ thuật bổ sung cho nhau, được tổng hợp trong Bảng~\ref{tab:survey_comparison}.
 
-\paragraph{Reflective Dynamics and Exploration.}
-Chen et al.~\cite{survey_chen2025reasoning} structure literature around three primary capabilities: \emph{Deep Reasoning} (format design and training paradigms), \emph{Feasible Reflection} (subdivided into \emph{Feedback} for error identification and \emph{Refinement} for corrective trajectory adjustment), and \emph{Extensive Exploration} (inference scaling via internal deliberation and external tool interaction). Separating feedback from refinement provides an effective conceptual distinction between identifying an error and successfully generating a valid revision.
+\paragraph{Reflection và exploration.}
+Chen và cộng sự~\cite{survey_chen2025reasoning} tổ chức theo ba năng lực: \emph{Deep Reasoning} (thiết kế định dạng và cách training), \emph{Feasible Reflection} (\emph{Feedback} để nhận diện lỗi và \emph{Refinement} để điều chỉnh trajectory), \emph{Extensive Exploration} (inference scaling qua deliberation nội tại và tương tác công cụ bên ngoài). Tách feedback khỏi refinement giúp phân biệt việc tìm được lỗi với việc thực sự sinh ra bản sửa hợp lệ.
 
-\paragraph{Dual-Process Cognitive Transitions.}
-Li et al.~\cite{survey_li2025system} frame reasoning through a System 1 to System 2 cognitive transition blueprint spanning three interrelated dimensions: \emph{Features} (observable output behaviors and reasoning patterns), \emph{Methods} (core algorithmic approaches comprising Structure Search, Reward Modeling, Self Improvement, Macro Action, and Reinforced Fine-Tuning [RFT]), and \emph{Evolution} (developmental progression from intuitive generation to deliberate inference).
+\paragraph{Chuyển đổi theo khung dual-process.}
+Li và cộng sự~\cite{survey_li2025system} đặt suy luận trong khung chuyển đổi từ System 1 sang System 2, với ba chiều liên hệ nhau: \emph{Features} mô tả hành vi đầu ra và mẫu suy luận quan sát được; \emph{Methods} gồm Structure Search, Reward Modeling, Self Improvement, Macro Action và Reinforced Fine-Tuning (RFT); \emph{Evolution} mô tả tiến trình từ sinh đáp án trực giác đến inference có deliberation.
 
-\paragraph{Multi-Dimensional Test-Time Scaling (4W).}
-Zhang et al.~\cite{survey_zhang2025testtime} formalize test-time compute scaling across four fundamental questions:
+\paragraph{Test-Time Scaling đa chiều (4W).}
+Zhang và cộng sự~\cite{survey_zhang2025testtime} tổ chức test-time compute scaling theo bốn câu hỏi:
 \begin{enumerate}
-    \item \textbf{What to scale}: Parallel sampling (e.g., Best-of-$N$, self-consistency), sequential refinement (iterative revision, budget forcing), hybrid search, and internal scaling (model-controlled compute allocation learned through training).
-    \item \textbf{How to scale}: Tuning-based approaches (reinforcement learning, process supervision) versus inference-based prompting and algorithmic search scaffolding.
-    \item \textbf{Where to scale}: Distinct task domains categorized into \emph{Reasoning-intensive Tasks} (mathematics, formal logic), \emph{Agentic Tasks} (tool use, multi-step planning), and \emph{Others} (general question answering, domain tasks).
-    \item \textbf{How well to scale}: Evaluation criteria covering \emph{Performance} (accuracy, pass@$k$), \emph{Efficiency} (token budget, computational cost), \emph{Controllability} (budget compliance, stopping behavior), and \emph{Scalability} (empirical saturation exponents and scaling boundaries). Crucially, \S8.2 explicitly discusses open questions regarding termination criteria and the challenge of differentiating trajectory length from logical sufficiency.
+    \item \textbf{What to scale}: Parallel sampling như Best-of-$N$, self-consistency; sequential refinement như sửa lặp, budget forcing; hybrid search; và internal scaling, tức phân bổ compute do model học qua training.
+    \item \textbf{How to scale}: Tuning-based như RL, process supervision; đối chiếu với inference-based prompting và search scaffolding.
+    \item \textbf{Where to scale}: \emph{Reasoning-intensive Tasks} như toán và logic hình thức; \emph{Agentic Tasks} như dùng công cụ và planning nhiều bước; \emph{Others} như hỏi đáp tổng quát và tác vụ chuyên miền.
+    \item \textbf{How well to scale}: \emph{Performance} như accuracy, pass@$k$; \emph{Efficiency} như token budget, compute cost; \emph{Controllability} như tuân thủ budget, hành vi dừng; \emph{Scalability} như số mũ bão hòa thực nghiệm và giới hạn scaling. \S8.2 còn thảo luận tiêu chuẩn kết thúc và khó khăn khi phân biệt độ dài trajectory với logical sufficiency.
 \end{enumerate}
 
 \begin{table*}[p]
@@ -35,126 +32,126 @@ Zhang et al.~\cite{survey_zhang2025testtime} formalize test-time compute scaling
 \renewcommand{\arraystretch}{1.2}
 \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.2cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{4.6cm}}
 \toprule
-\textbf{Survey} & \textbf{Scope \& Organizing Principle} & \textbf{Useful Comparison} \\
+\textbf{Survey} & \textbf{Phạm vi và trục tổ chức} & \textbf{Giá trị đối chiếu} \\
 \midrule
-\textbf{Chen et al.} (2025) \cite{survey_chen2025reasoning} &
+\textbf{Chen và cộng sự} (2025) \cite{survey_chen2025reasoning} &
 \textbf{Deep Reasoning}: Format, Learning.\newline
 \textbf{Feasible Reflection}: Feedback, Refinement.\newline
 \textbf{Extensive Exploration}: Scaling, Internal, External. &
-Decouples error identification (\emph{Feedback}) from corrective trajectory steering (\emph{Refinement}). \\
+Tách nhận diện lỗi (\emph{Feedback}) khỏi điều chỉnh trajectory (\emph{Refinement}). \\
 \addlinespace
-\textbf{Li et al.} (2025) \cite{survey_li2025system} &
+\textbf{Li và cộng sự} (2025) \cite{survey_li2025system} &
 \textbf{System 2 Blueprint}: Features, Methods, Evolution.\newline
-\textbf{Core Methods}: Structure Search, Reward Modeling, Self Improvement, Macro Action, RFT. &
-Connects observable cognitive patterns directly to algorithmic techniques across training and search. \\
+\textbf{Phương pháp}: Structure Search, Reward Modeling, Self Improvement, Macro Action, RFT. &
+Liên hệ mẫu hành vi quan sát được với kỹ thuật training và search. \\
 \addlinespace
-\textbf{Zhang et al.} (2025) \cite{survey_zhang2025testtime} &
+\textbf{Zhang và cộng sự} (2025) \cite{survey_zhang2025testtime} &
 \textbf{What}: Parallel, Sequential, Hybrid, Internal.\newline
 \textbf{How}: Tuning-based, Inference-based.\newline
 \textbf{Where}: Reasoning-intensive, Agentic, Others.\newline
 \textbf{How Well}: Performance, Efficiency, Controllability, Scalability. &
-Comprehensive multi-dimensional taxonomy balancing task domains against compute budgets and scaling saturation. \\
+Taxonomy đa chiều kết nối miền tác vụ, compute budget và hiện tượng bão hòa scaling. \\
 \addlinespace
-\textbf{Wei et al.} (2026) \cite{survey_wei2026treesearch} &
-\textbf{Search Architecture}: Node Representation (Trace-based, State--Action, Terminal-State), Evaluation Function, MCTS Dynamics, Compute Reporting. &
-Systematizes tree search algorithms, node representation granularities, and credit assignment mechanisms. \\
+\textbf{Wei và cộng sự} (2026) \cite{survey_wei2026treesearch} &
+\textbf{Cấu trúc search}: Node Representation (Trace-based, State--Action, Terminal-State), Evaluation Function, MCTS Dynamics, Compute Reporting. &
+Hệ thống hóa tree search, độ hạt của node và cơ chế credit assignment. \\
 \addlinespace
-\textbf{Lee \& Hockenmaier} (2025) \cite{survey_lee2025evaluating} &
-\textbf{Criteria}: Factuality, Validity, Coherence, Utility.\newline
-\textbf{Evaluator Types}: Rule-based, Intrinsic, External; Meta-evaluation benchmarks. &
-Classifies evaluation metrics and verification architectures for step-by-step reasoning traces. \\
+\textbf{Lee và Hockenmaier} (2025) \cite{survey_lee2025evaluating} &
+\textbf{Tiêu chí}: Factuality, Validity, Coherence, Utility.\newline
+\textbf{Evaluator}: Rule-based, Intrinsic, External; benchmark meta-evaluation. &
+Phân loại metric và kiến trúc verification cho trace suy luận từng bước. \\
 \addlinespace
-\textbf{Ji et al.} (2025) \cite{survey_ji2025testtime} &
-\textbf{Cognitive Shift}: System-1 adaptation (model, input, representation, output) versus System-2 deliberate reasoning (feedback, search). &
-Contrasts fast intuitive generation against deliberate search and compute budgeting trade-offs. \\
+\textbf{Ji và cộng sự} (2025) \cite{survey_ji2025testtime} &
+\textbf{Chuyển đổi nhận thức}: System-1 adaptation (model, input, representation, output) và System-2 deliberate reasoning (feedback, search). &
+Đối chiếu generation trực giác nhanh với deliberate search và đánh đổi compute budget. \\
 \addlinespace
-\textbf{Qu et al.} (2025) \cite{survey_qu2025efficient} &
-\textbf{Lifecycle}: Inference, SFT, RL, pretraining; inefficiency patterns and future evaluation. &
-Connects compute allocation at inference (A2) with learned efficiency (A1). \\
+\textbf{Qu và cộng sự} (2025) \cite{survey_qu2025efficient} &
+\textbf{Lifecycle}: Inference, SFT, RL, pretraining; các dạng inefficiency và hướng evaluation. &
+Nối phân bổ compute lúc inference (A2) với efficiency được học (A1). \\
 \addlinespace
-\textbf{Sui et al.} (2025) \cite{survey_sui2025overthinking} &
-\textbf{Intervention target}: Model, reasoning output, input prompts; data/compression and evaluation. &
-Organizes overthinking remedies by where they intervene. \\
+\textbf{Sui và cộng sự} (2025) \cite{survey_sui2025overthinking} &
+\textbf{Nơi can thiệp}: Model, reasoning output, input prompts; dữ liệu/compression và evaluation. &
+Tổ chức biện pháp giảm overthinking theo nơi can thiệp. \\
 \addlinespace
-\textbf{Zhu \& Li} (2025) \cite{survey_zhu2025adaptive} &
-\textbf{Training requirement}: Training-free versus training-based concise/adaptive thinking. &
-Separates deployment controls (A2) from learned reasoning policies (A1). \\
+\textbf{Zhu và Li} (2025) \cite{survey_zhu2025adaptive} &
+\textbf{Nhu cầu training}: Training-free và training-based cho concise/adaptive thinking. &
+Tách control khi triển khai (A2) khỏi policy suy luận được học (A1). \\
 \bottomrule
 \end{tabularx}
-\caption{Systematic comparison of prior survey taxonomies on Long Chain-of-Thought and test-time reasoning.}
+\caption{Đối chiếu taxonomy của các survey về Long-CoT và test-time reasoning.}
 \label{tab:survey_comparison}
 \end{table*}
 
-\paragraph{Inference as Search.}
-Wei et al.~\cite{survey_wei2026treesearch} conceptualize reasoning through the lens of heuristic search, structuring methodologies by \emph{Node Representation and Granularity} (categorized into \emph{Trace-based}, \emph{State--Action}, and \emph{Terminal-State} representations), \emph{Evaluation Function} (value networks, process reward models, self-evaluation), and \emph{MCTS Dynamics} (selection, expansion, simulation, backpropagation), alongside standardized compute reporting protocols.
+\paragraph{Inference dưới góc nhìn search.}
+Wei và cộng sự~\cite{survey_wei2026treesearch} tổ chức phương pháp theo \emph{Node Representation and Granularity}, gồm \emph{Trace-based}, \emph{State--Action} và \emph{Terminal-State}; \emph{Evaluation Function}, gồm value network, process reward model, self-evaluation; \emph{MCTS Dynamics}, gồm selection, expansion, simulation, backpropagation; cùng giao thức báo cáo compute.
 
-\paragraph{Evaluating Step-by-Step Traces.}
-Lee \& Hockenmaier \cite{survey_lee2025evaluating} focus specifically on the evaluation of intermediate reasoning derivations, classifying assessments across four primary dimensions: \emph{Factuality} (factual accuracy of premises), \emph{Validity} (formal logical entailment between steps), \emph{Coherence} (discourse organization and flow), and \emph{Utility} (contribution toward the final solution). They further organize evaluators into rule-based systems, intrinsic model-based verifiers, and external judges, supported by meta-evaluation benchmarks.
+\paragraph{Đánh giá trace từng bước.}
+Lee và Hockenmaier \cite{survey_lee2025evaluating} tập trung vào các bước suy luận trung gian, với bốn chiều: \emph{Factuality} là độ đúng dữ kiện của tiền đề; \emph{Validity} là quan hệ suy ra logic giữa các bước; \emph{Coherence} là tổ chức và tính mạch lạc diễn ngôn; \emph{Utility} là đóng góp cho lời giải cuối. Evaluator được chia thành rule-based, intrinsic model-based và external judge, kèm benchmark meta-evaluation.
 
-\paragraph{Deliberate Compute Allocation.}
-Ji et al.~\cite{survey_ji2025testtime} analyze test-time scaling by contrasting \emph{System-1 adaptation} (modifications to models, inputs, representations, and output token distributions) with \emph{System-2 deliberate reasoning} (incorporating external feedback loops, tree/graph search policies, and dynamic compute budgeting).
+\paragraph{Phân bổ compute cho deliberation.}
+Ji và cộng sự~\cite{survey_ji2025testtime} đối chiếu \emph{System-1 adaptation}, gồm thay đổi model, input, representation và phân phối output token, với \emph{System-2 deliberate reasoning}, gồm external feedback loop, tree/graph search policy và compute budgeting thích ứng.
 
-\paragraph{Efficient and Adaptive Reasoning.}
-Qu et al.~\cite{survey_qu2025efficient} organize methods across inference, SFT, RL, and pretraining; inference includes length budgeting, system/model switching, and parallel search. Sui et al.~\cite{survey_sui2025overthinking} instead group interventions by their target: model, reasoning output, or input prompt. Zhu and Li~\cite{survey_zhu2025adaptive} separate training-free prompting, pipelines, decoding, and merging from training-based fine-tuning and RL. Their stated scope excludes general model compression, architectural optimization, and multimodal efficiency. Together these surveys establish that shortening and adapting reasoning already have substantial coverage; our role-based organization complements their lifecycle, intervention-target, and training-requirement axes.
+\paragraph{Reasoning hiệu quả và thích ứng.}
+Qu và cộng sự~\cite{survey_qu2025efficient} tổ chức theo inference, SFT, RL và pretraining; inference gồm length budgeting, system/model switching và parallel search. Sui và cộng sự~\cite{survey_sui2025overthinking} chia theo nơi can thiệp: model, reasoning output hoặc input prompt. Zhu và Li~\cite{survey_zhu2025adaptive} tách prompting, pipeline, decoding và merging không cần training khỏi fine-tuning và RL có training. Phạm vi được tác giả nêu loại trừ general model compression, tối ưu kiến trúc và multimodal efficiency. Các survey cho thấy việc rút ngắn và thích ứng reasoning đã được khảo sát đáng kể; cách gán research role của nhóm bổ sung cho các trục lifecycle, nơi can thiệp và nhu cầu training này.
 
-\subsection{What the Taxonomies Classify}
+\subsection{Taxonomy đang phân loại đối tượng nào?}
 \label{subsec:taxonomy_units}
 
-The organizing units differ across these surveys. Capability-oriented taxonomies ask which reasoning behavior is being supported; lifecycle taxonomies ask when an intervention occurs; search taxonomies describe computational structures; evaluation taxonomies separate assessment criteria from evaluator implementations. Comparing only their top-level headings can therefore exaggerate differences or hide substantial overlap.
+Các survey có đơn vị tổ chức khác nhau. Taxonomy theo capability hỏi hành vi suy luận nào được hỗ trợ; taxonomy theo lifecycle hỏi can thiệp xảy ra ở giai đoạn nào; taxonomy về search mô tả cấu trúc tính toán; taxonomy evaluation tách tiêu chí khỏi cách hiện thực evaluator. Chỉ so tên nhánh cao nhất có thể phóng đại khác biệt hoặc che khuất phần giao nhau đáng kể.
 
-\paragraph{Capabilities versus research contributions.}
-Deep reasoning, reflection, and exploration in Chen et al. describe properties or capabilities of extended deliberation~\cite{survey_chen2025reasoning}. A paper can train a capability, control it during generation, analyze when it occurs, or build a benchmark that measures it. These correspond to different research roles while retaining the same capability descriptor. Feedback and refinement are particularly useful distinctions: recognizing an error, producing an effective correction, and measuring the success of that correction are separate contributions.
+\paragraph{Capability và đóng góp nghiên cứu.}
+Deep reasoning, reflection và exploration của Chen và cộng sự mô tả thuộc tính hoặc năng lực deliberation mở rộng~\cite{survey_chen2025reasoning}. Một paper có thể học năng lực đó, điều khiển nó lúc generation, phân tích khi nào nó xuất hiện hoặc xây benchmark đo nó. Những đóng góp này thuộc các research role khác nhau nhưng vẫn dùng chung nhãn capability. Feedback và refinement đặc biệt hữu ích: nhận ra lỗi, sinh bản sửa hiệu quả và đo chất lượng bản sửa là ba đóng góp riêng.
 
-Li et al.'s features, methods, and evolution provide a broader account of reasoning models~\cite{survey_li2025system}. The System 1--2 framing organizes the literature; it is not by itself evidence that a model implements human cognitive mechanisms. Likewise, Ji et al.'s adaptation scope includes test-time methods outside explicit long reasoning traces~\cite{survey_ji2025testtime}. Their frameworks help situate adjacent work without requiring every included method to become direct Long-CoT evidence.
+Features, methods và evolution trong Li và cộng sự cung cấp bức tranh rộng hơn về reasoning model~\cite{survey_li2025system}. Khung System 1--2 tổ chức literature, tự nó chưa chứng minh model triển khai cơ chế nhận thức của con người. Tương tự, phạm vi adaptation của Ji và cộng sự bao gồm test-time method ngoài explicit long reasoning trace~\cite{survey_ji2025testtime}. Có thể dùng các khung này để đặt adjacent work vào bối cảnh mà không coi mọi phương pháp là bằng chứng trực tiếp về Long-CoT.
 
-\paragraph{Compute axes versus execution structures.}
-Zhang et al.'s four questions can assign several descriptors to the same study: a compute form, an implementation approach, a task domain, and an evaluation criterion~\cite{survey_zhang2025testtime}. Parallel sampling can increase compute without lengthening an individual trace. Wei et al. add the granularity of search nodes and evaluator dynamics~\cite{survey_wei2026treesearch}; a whole-solution node in one method is not interchangeable with an atomic reasoning step in another. A review should preserve these units before comparing depth, rollout count, or efficiency.
+\paragraph{Trục compute và cấu trúc thực thi.}
+Bốn câu hỏi của Zhang và cộng sự có thể gán nhiều mô tả cho cùng nghiên cứu: dạng compute, cách hiện thực, miền tác vụ và tiêu chí đánh giá~\cite{survey_zhang2025testtime}. Parallel sampling có thể tăng compute mà không kéo dài từng trace. Wei và cộng sự bổ sung độ hạt của search node và cơ chế evaluator~\cite{survey_wei2026treesearch}; node là cả lời giải trong phương pháp này không tương đương một bước suy luận nguyên tử trong phương pháp khác. Cần giữ rõ các đơn vị trước khi so depth, rollout count hoặc efficiency.
 
-\paragraph{Evaluation criteria versus evaluator types.}
-Lee and Hockenmaier's factuality, validity, coherence, and utility specify what is assessed, whereas rule-based, intrinsic, and external evaluators specify how it is assessed~\cite{survey_lee2025evaluating}. A single criterion can have several evaluator implementations. A fluent trace need not be valid; a valid step need not be useful; useful visible reasoning need not disclose every factor that influenced the answer. These distinctions motivate the separation of process quality and faithfulness in our A3/A4 discussion.
+\paragraph{Tiêu chí đánh giá và loại evaluator.}
+Factuality, validity, coherence và utility của Lee và Hockenmaier xác định \emph{đánh giá điều gì}; rule-based, intrinsic và external evaluator xác định \emph{đánh giá bằng cách nào}~\cite{survey_lee2025evaluating}. Một tiêu chí có thể được hiện thực bằng nhiều evaluator. Trace trôi chảy chưa chắc valid; bước valid chưa chắc useful; reasoning hữu ích nhìn thấy được chưa chắc bộc lộ mọi yếu tố ảnh hưởng đáp án. Vì vậy phần A3/A4 tách process quality khỏi faithfulness.
 
-\paragraph{Lifecycle, intervention target, and training requirement.}
-The efficiency surveys are complementary rather than interchangeable. Qu et al. organize by inference, SFT, RL, and pretraining; Sui et al. by model, reasoning output, and input prompts; Zhu and Li by training-free and training-based methods~\cite{survey_qu2025efficient,survey_sui2025overthinking,survey_zhu2025adaptive}. One pipeline can change several targets and include both learned and runtime components. Training-free should not be interpreted as having no auxiliary modules, calibration requirements, or runtime cost. Scope exclusions explicitly stated by a survey, such as Zhu and Li's exclusions, should be reported as author choices rather than treated as demonstrated shortcomings.
+\paragraph{Lifecycle, nơi can thiệp và nhu cầu training.}
+Các survey efficiency bổ sung cho nhau. Qu và cộng sự chia theo inference, SFT, RL, pretraining; Sui và cộng sự chia theo model, reasoning output, input prompt; Zhu và Li chia theo training-free và training-based~\cite{survey_qu2025efficient,survey_sui2025overthinking,survey_zhu2025adaptive}. Một pipeline có thể thay nhiều thành phần, gồm cả phần đã học và phần chạy lúc inference. Training-free không có nghĩa không cần auxiliary module, calibration hay runtime cost. Phạm vi loại trừ được survey nêu rõ cần được ghi nhận như lựa chọn của tác giả, thay vì xem là thiếu sót đã được chứng minh.
 
 \begin{table}[p]
 \centering\small
 \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
 \toprule
-\textbf{Survey lens} & \textbf{Primary organizing unit} & \textbf{Question retained in A1--A4} \\
+\textbf{Góc nhìn survey} & \textbf{Đơn vị tổ chức chính} & \textbf{Câu hỏi giữ lại trong A1--A4} \\
 \midrule
-Chen et al. & Long-CoT capabilities & Is the contribution learning, controlling, explaining, or measuring that capability? \\
-Li et al. & Features, methods, evolution & Is the evidence about an algorithm, behavior, or developmental recipe? \\
-Zhang et al. & What, how, where, how well & Which resource, implementation, task, and evaluation budget are involved? \\
-Wei et al. & Nodes, evaluators, search dynamics & What is a search step and how does feedback change execution? \\
-Lee \& Hockenmaier & Criteria and evaluator types & Which property is measured and how is the evaluator checked? \\
-Ji et al. & Adaptation and deliberate reasoning & Is the study direct Long-CoT evidence or broader compute context? \\
-Qu et al. & Lifecycle stages & Is cost reduced overall or shifted between training and inference? \\
-Sui et al. & Intervention targets & Are input, model, output, or multiple components changed? \\
-Zhu \& Li & Training requirements & What is learned beforehand and what adapts during use? \\
+Chen và cộng sự & Capability của Long-CoT & Đóng góp là học, điều khiển, giải thích hay đo capability đó? \\
+Li và cộng sự & Features, methods, evolution & Bằng chứng nói về thuật toán, hành vi hay quy trình phát triển? \\
+Zhang và cộng sự & What, how, where, how well & Tài nguyên, cách hiện thực, tác vụ và budget đánh giá là gì? \\
+Wei và cộng sự & Node, evaluator, search dynamics & Một search step là gì; feedback đổi thực thi thế nào? \\
+Lee và Hockenmaier & Tiêu chí và loại evaluator & Đo thuộc tính nào; evaluator được kiểm tra ra sao? \\
+Ji và cộng sự & Adaptation và deliberate reasoning & Bằng chứng trực tiếp Long-CoT hay bối cảnh compute rộng hơn? \\
+Qu và cộng sự & Giai đoạn lifecycle & Chi phí giảm tổng thể hay chuyển giữa training và inference? \\
+Sui và cộng sự & Nơi can thiệp & Input, model, output hay nhiều thành phần cùng thay đổi? \\
+Zhu và Li & Nhu cầu training & Phần nào học trước, phần nào thích ứng khi sử dụng? \\
 \bottomrule
 \end{tabularx}
-\caption{Our interpretive crosswalk between survey organizing units and research-role questions. This is not a binary coverage score or a claim that each survey assigns these labels itself.}
+\caption{Crosswalk do nhóm đề xuất giữa đơn vị tổ chức của survey và câu hỏi theo research role. Đây không phải điểm coverage nhị phân hay khẳng định từng survey tự gán những nhãn này.}
 \label{tab:survey_crosswalk}
 \end{table}
 
-\subsection{Relationship to Research Roles (A1--A4)}
+\subsection{Liên hệ với Research Role A1--A4}
 \label{subsec:relationship_research_roles}
 
-The fourfold framework classifies the primary technical contribution of each work: \textbf{A1 Training/Data} covers objectives and data recipes; \textbf{A2 Inference/Control} covers execution and search control; \textbf{A3 Analysis} covers explanatory and diagnostic studies; and \textbf{A4 Evaluation/Benchmark} covers evaluation artifacts and protocols. These roles preserve useful descriptors from prior surveys rather than replacing them. A paper receives one primary record with secondary roles, so cross-cutting contributions remain visible without inflating the literature count.
+Khung bốn vai trò phân loại đóng góp kỹ thuật trung tâm: \textbf{A1 Training/Data} bao quát objective và dữ liệu; \textbf{A2 Inference/Control} bao quát thực thi và search control; \textbf{A3 Analysis} bao quát giải thích và chẩn đoán; \textbf{A4 Evaluation/Benchmark} bao quát công cụ và giao thức đánh giá. Các vai trò giữ lại mô tả hữu ích từ survey trước thay vì thay thế chúng. Mỗi paper có một bản ghi chính cùng secondary role, giúp thể hiện giao thoa mà không tăng giả số lượng literature.
 
-\paragraph{Worked crosswalk examples.}
-We assign s1 to A1 because its curated SFT recipe is a central contribution, and retain A2 for budget forcing~\cite{rra1_s1}. It can additionally be described using sequential scaling and tuning/decoding descriptors from prior survey frameworks. TAAR receives primary A2 for its adaptive restart method and secondary A3 for trap diagnosis~\cite{rra2_taar}. CoTJudger receives primary A4 for its evaluator, although its graph analysis also informs A3~\cite{rra4_cotjudger}. These are our assignments; they do not assert that every prior survey explicitly labels these papers in the same way.
+\paragraph{Ví dụ crosswalk cụ thể.}
+s1 được gán A1 vì quy trình SFT với dữ liệu chọn lọc là đóng góp trung tâm; budget forcing được giữ ở A2~\cite{rra1_s1}. Có thể mô tả thêm bằng sequential scaling và tuning/decoding trong các khung survey trước. TAAR có primary A2 cho adaptive restart, secondary A3 cho chẩn đoán thinking trap~\cite{rra2_taar}. CoTJudger có primary A4 cho evaluator, đồng thời graph analysis cung cấp bằng chứng cho A3~\cite{rra4_cotjudger}. Đây là cách gán của nhóm, không khẳng định mọi survey trước đã gán các paper như vậy.
 
-Our proposed emphasis is the connection between how reasoning is learned, how it is controlled, what empirical analyses explain, and what evaluation evidence supports. These are synthesis choices, not a claim that previous surveys omit analysis or evaluation. Comparisons should separately record final-answer accuracy, process quality, efficiency, and faithfulness, with explicit model, split, sampling, and compute budgets. A token reduction alone does not quantify end-to-end latency or establish causal faithfulness.
+Trọng tâm đề xuất là nối cách học reasoning, cách điều khiển, những gì phân tích thực nghiệm giải thích được và bằng chứng evaluation hỗ trợ. Đây là lựa chọn tổng hợp, không phải khẳng định survey trước bỏ qua analysis hoặc evaluation. So sánh cần ghi riêng final-answer accuracy, process quality, efficiency và faithfulness, cùng model, split, sampling và compute budget. Giảm token tự nó không đo được latency toàn hệ thống hay chứng minh causal faithfulness.
 
-\subsection{Review Boundaries and Positioning}
+\subsection{Giới hạn và định vị bản tổng hợp}
 \label{subsec:review_boundaries}
 
-\paragraph{Selection and extraction.}
-This working collection prioritizes direct studies of extended deliberation and retains adjacent or foundational work when it clarifies a method, failure mode, or evaluation protocol. We record a pinned source, central problem, method, reported result, contribution, and limitation for each study. Search terms and citation expansion identify representative directions; this process is not an exhaustive systematic-review protocol and supplies no completeness guarantee. Later model, venue, or dataset updates may require a separate versioned record.
+\paragraph{Chọn và trích xuất nghiên cứu.}
+Danh mục ưu tiên nghiên cứu trực tiếp deliberation mở rộng, giữ adjacent hoặc foundational work khi chúng làm rõ phương pháp, failure mode hay giao thức evaluation. Mỗi công trình có nguồn ghim phiên bản, bài toán, phương pháp, kết quả tác giả báo cáo, đóng góp và giới hạn. Từ khóa tìm kiếm và mở rộng theo trích dẫn được dùng để chọn hướng tiêu biểu; đây không phải quy trình systematic review đầy đủ và không bảo đảm coverage toàn bộ. Cập nhật model, venue hoặc dataset về sau có thể cần bản ghi phiên bản riêng.
 
-\paragraph{Interpreting gaps.}
-The comparison motivates questions about objective trade-offs, controller signals and actions, levels of analytical evidence, and evaluation units. These are organizing opportunities for this draft, not proof that prior surveys ignore them. A stronger novelty claim, such as being the first survey to cover all four roles, would require a broader survey corpus and an explicit coverage criterion. We therefore position the contribution as an evidence-aware research-role synthesis with a reusable paper catalog.
+\paragraph{Diễn giải khoảng trống nghiên cứu.}
+Đối chiếu gợi ra câu hỏi về đánh đổi objective, tín hiệu và action của controller, cấp bằng chứng phân tích và đơn vị evaluation. Đây là cơ hội tổ chức bản thảo, chưa chứng minh survey trước bỏ qua chúng. Muốn tuyên bố novelty mạnh hơn, như survey đầu tiên bao quát đủ bốn vai trò, cần corpus survey rộng hơn và tiêu chí coverage tường minh. Vì vậy đóng góp được định vị là tổng hợp theo research role có chú ý cấp bằng chứng, kèm danh mục paper tái sử dụng được.
 
-\paragraph{Practical use of the synthesis.}
-The next section first describes the representative methods, then compares their assumptions and measurements, and finally proposes testable cross-role research questions. The catalog distinguishes author-reported findings from our comparative interpretation. This makes it possible to expand the repository through new evidence, including negative results or conflicting findings, without treating the current subgroup boundaries as fixed facts.
+\paragraph{Cách sử dụng bản tổng hợp.}
+Phần sau trình bày phương pháp tiêu biểu, đối chiếu giả định và phép đo, rồi đề xuất câu hỏi nghiên cứu liên vai trò có thể kiểm chứng. Danh mục tách kết quả tác giả khỏi diễn giải so sánh của nhóm. Nhờ đó repo có thể tiếp nhận bằng chứng mới, kể cả kết quả âm hoặc mâu thuẫn, mà không coi ranh giới subgroup hiện tại là bất biến.

@@ -1,134 +1,134 @@
-% Comparative synthesis: interpretation and proposed experiments, not new results.
-\subsection{Comparative Reading of Training and Data Strategies}
+% Tổng hợp đối chiếu: diễn giải và thí nghiệm đề xuất, không phải kết quả mới.
+\subsection{Đối chiếu các chiến lược training và dữ liệu}
 \label{subsec:a1_comparison}
 
-The A1 literature addresses at least two distinct targets: acquiring effective deliberative behavior and reducing the cost of behavior already available. R1 and Kimi primarily establish capability-oriented training recipes; s1 and LIMO investigate data-efficient elicitation; Light-R1 studies staged development; efficiency-aware RL directly changes the accuracy--length objective. A high score from one target should not be treated as evidence that the same method is best for the other target.
+Literature A1 hướng đến ít nhất hai mục tiêu khác nhau: hình thành hành vi deliberation hiệu quả và giảm chi phí của hành vi đã có. R1 và Kimi chủ yếu xây dựng quy trình training hướng capability; s1 và LIMO khảo sát khả năng kích hoạt năng lực với ít dữ liệu; Light-R1 nghiên cứu phát triển qua stage; efficiency-aware RL thay đổi trực tiếp objective accuracy--length. Điểm cao ở mục tiêu này chưa chứng minh cùng phương pháp là tốt nhất cho mục tiêu kia.
 
-\paragraph{What does a small training set establish?}
-The 1,000-example s1K and 817-example LIMO settings are evidence about post-training on particular capable checkpoints, not the full cost of constructing a reasoner~\cite{rra1_s1,rra1_limo}. Teacher generation, filtering, and pretraining remain relevant. A useful comparison holds the base checkpoint, evaluation prompts, and decoding budget fixed, then varies selection quality at an equal dataset size. In s1, training and budget forcing must also be ablated separately; otherwise, a gain attributed to the dataset may partly reflect inference control. Cross-paper AIME values alone do not provide such a controlled comparison.
+\paragraph{Tập training nhỏ chứng minh điều gì?}
+Thiết lập s1K với 1,000 mẫu và LIMO với 817 mẫu là bằng chứng về post-training trên checkpoint mạnh cụ thể, không phải tổng chi phí xây một reasoning model~\cite{rra1_s1,rra1_limo}. Chi phí teacher generation, filtering và pretraining vẫn liên quan. So sánh hữu ích cần giữ base checkpoint, prompt evaluation và decoding budget, rồi thay chất lượng lựa chọn dữ liệu ở cùng số mẫu. Với s1, training và budget forcing cũng cần ablation riêng; nếu không, gain được gán cho dataset có thể một phần đến từ inference control. Chỉ lấy điểm AIME giữa các paper chưa tạo được đối chứng như vậy.
 
-\paragraph{What does RL emergence establish?}
-R1-Zero removes the cold-start SFT phase in its experimental recipe, while the final R1 adds stages to improve usability~\cite{rra1_deepseek_r1}. This distinction prevents the misleading inference that the final model is a pure-RL system or that its knowledge was acquired without a capable base. Similarly, Kimi's CoT-RM produces reasoning while judging final-answer correctness; it should not be mistaken for a policy trained with human correctness labels at every reasoning step~\cite{rra1_kimi_k15}. Rollout and reward-model compute belong in the training-cost account.
+\paragraph{Sự hình thành hành vi qua RL chứng minh điều gì?}
+R1-Zero bỏ cold-start SFT trong thiết lập của nó, còn R1 hoàn chỉnh bổ sung các stage để tăng tính hữu dụng~\cite{rra1_deepseek_r1}. Phân biệt này tránh suy ra sai rằng model cuối chỉ dùng pure RL hoặc có tri thức mà không cần base mạnh. Tương tự, CoT-RM của Kimi sinh reasoning khi chấm độ đúng đáp án cuối; không nên nhầm với policy được training bằng nhãn người đúng/sai ở từng reasoning step~\cite{rra1_kimi_k15}. Compute cho rollout và reward model phải được tính vào training cost.
 
 \begin{table}[htbp]
 \centering\small
 \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
 \toprule
-\textbf{A1 direction} & \textbf{Comparison to make} & \textbf{Confound to control} \\
+\textbf{Hướng A1} & \textbf{Đối chiếu cần thực hiện} & \textbf{Yếu tố gây nhiễu cần kiểm soát} \\
 \midrule
-Capability RL & Same base with alternative SFT/RL recipes & Verifier, rollout budget, pretraining capability \\
-Minimal SFT & Curated versus random/equal-size demonstrations & Teacher quality, filtering cost, decoding budget \\
-Curriculum & Stage removal or order changes & Data quantity, total training tokens, contamination \\
-Efficiency RL & Accuracy--cost frontiers versus cutoff/SFT/DPO & Task difficulty, length weight, faithfulness \\
+RL hướng capability & Cùng base, thay quy trình SFT/RL & Verifier, rollout budget, năng lực pretraining \\
+SFT ít dữ liệu & Demonstration chọn lọc và ngẫu nhiên cùng số mẫu & Chất lượng teacher, filtering cost, decoding budget \\
+Curriculum & Bỏ stage hoặc đổi thứ tự & Lượng dữ liệu, tổng training token, contamination \\
+RL hướng efficiency & Frontier accuracy--cost so với cutoff/SFT/DPO & Độ khó tác vụ, hệ số độ dài, faithfulness \\
 \bottomrule
 \end{tabularx}
-\caption{Proposed comparison dimensions for A1. These are review criteria, not additional experimental findings.}
+\caption{Các chiều đối chiếu đề xuất cho A1. Đây là tiêu chí đọc nghiên cứu, không phải kết quả thực nghiệm bổ sung.}
 \label{tab:a1_comparison}
 \end{table}
 
-\paragraph{Transfer and specialization.}
-Light-R1's gains across stages should be read together with its non-monotonic GPQA trajectory~\cite{rra1_light_r1}. A curriculum can improve its target domain without uniformly improving broader reasoning. Long2short and length-aware RL further motivate reporting a family of accuracy--cost operating points rather than a single compressed model. The idealized optimality result of Arora and Zanette does not guarantee that finite training preserves accuracy or faithfulness~\cite{rra1_efficient_rl}. Our synthesis therefore distinguishes capability, data efficiency, inference efficiency, and transfer as separate outcomes.
+\paragraph{Chuyển giao và chuyên biệt hóa.}
+Gain qua các stage của Light-R1 cần được đọc cùng kết quả GPQA không tăng đơn điệu~\cite{rra1_light_r1}. Curriculum có thể cải thiện miền đích mà không tăng đồng đều năng lực rộng hơn. Long2short và length-aware RL còn gợi nhu cầu báo cáo nhiều điểm đánh đổi accuracy--cost, thay vì chỉ một compressed model. Kết quả tối ưu lý tưởng của Arora và Zanette không bảo đảm training hữu hạn giữ nguyên accuracy hay faithfulness~\cite{rra1_efficient_rl}. Vì vậy chúng tôi tách capability, data efficiency, inference efficiency và transfer thành các kết quả riêng.
 
-\subsection{Comparative Reading of Inference Controllers}
+\subsection{Đối chiếu các inference controller}
 \label{subsec:a2_comparison}
 
-We describe an inference controller by four components: its observations, decision rule, action, and auxiliary cost. This decomposition separates methods sharing a surface trigger but using different stopping evidence. It also distinguishes a training-free language-model policy from a system containing a separately trained diagnostic component.
+Một inference controller được mô tả bằng bốn thành phần: quan sát, quy tắc quyết định, action và chi phí phụ. Cách tách này phân biệt các phương pháp dùng chung trigger bề mặt nhưng dựa trên bằng chứng dừng khác nhau. Nó cũng phân biệt policy LLM training-free với hệ thống có một diagnostic component được training riêng.
 
-\paragraph{Stopping under uncertainty.}
-DTSR's sufficiency assessment and REFRAIN's redundancy detector answer different operational questions~\cite{rra2_dtsr,rra2_refrain}. The former assesses whether the accumulated derivation is enough; the latter uses signals of repeated reflection to identify possible waste. REFRAIN adapts its threshold using a reward combining answer-only likelihood with a length penalty, rather than test ground-truth correctness. Its bandit adaptation changes the controller state, not the LLM weights. Both sufficiency and likelihood remain fallible proxies: a confident but incomplete derivation can stop too early, while a genuinely useful verification can resemble repetition.
+\paragraph{Quyết định dừng dưới uncertainty.}
+Sufficiency assessment của DTSR và redundancy detector của REFRAIN trả lời hai câu hỏi vận hành khác nhau~\cite{rra2_dtsr,rra2_refrain}. DTSR đánh giá phần suy luận đã đủ chưa; REFRAIN dùng tín hiệu reflection lặp lại để nhận diện lãng phí có thể có. REFRAIN điều chỉnh threshold bằng reward kết hợp answer-only likelihood và length penalty, không dùng ground-truth correctness của test. Bandit adaptation thay trạng thái controller, không thay trọng số LLM. Cả sufficiency lẫn likelihood đều là proxy có thể sai: suy luận tự tin nhưng thiếu bước có thể dừng sớm, còn verification hữu ích có thể trông giống lặp thừa.
 
-\paragraph{Repairing a prefix differs from extending it.}
-TAAR removes a diagnosed trap before restarting, whereas MCTSr allocates search over refined complete solutions~\cite{rra2_taar,rra2_mctsr}. A comparison based only on path count obscures the different lengths and evaluator calls along those paths. For TAAR, discarded prefixes and diagnostic passes must be included; for MCTSr, critique, rewrite, self-evaluation, and unsuccessful branches must be included. TAAR's weaker result on a large evaluated model also cautions against treating restart as a universally beneficial action.
+\paragraph{Sửa prefix khác với nối dài prefix.}
+TAAR loại đoạn bẫy được chẩn đoán trước khi restart; MCTSr phân bổ search trên các lời giải hoàn chỉnh được refine~\cite{rra2_taar,rra2_mctsr}. Chỉ so path count sẽ bỏ qua khác biệt về độ dài và số lần gọi evaluator trên từng path. Với TAAR phải cộng prefix bị bỏ và các lượt chẩn đoán; với MCTSr phải cộng critique, rewrite, self-evaluation và nhánh thất bại. Kết quả TAAR kém hơn trên một model lớn được thử cũng cho thấy không nên mặc định restart luôn hữu ích.
 
 \begin{table}[htbp]
 \centering\small
 \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.3cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
 \toprule
-\textbf{Controller} & \textbf{Decision and action} & \textbf{Failure to examine} \\
+\textbf{Controller} & \textbf{Quyết định và action} & \textbf{Failure mode cần xem xét} \\
 \midrule
-DTSR & Assess sufficiency; close thinking & Premature exit and assessment overhead \\
-REFRAIN & Detect redundancy; adapt stopping threshold & Similarity/likelihood mistaken for sufficiency \\
-TAAR & Diagnose trap; prune and restart & Discarded near-correct prefixes \\
-MCTSr & Score candidates; expand/refine search & Biased self-evaluation and hidden search cost \\
-Recursive models & Isolate local contexts; return subproblem state & Lost conditions in compressed return values \\
-Budget, TIP, FSF & Allocate length, exploration depth, or branches & Overthinking versus commitment to a wrong branch \\
+DTSR & Đánh giá sufficiency; kết thúc thinking & Dừng sớm và overhead đánh giá \\
+REFRAIN & Phát hiện redundancy; thích ứng threshold & Nhầm similarity/likelihood với sufficiency \\
+TAAR & Chẩn đoán trap; prune và restart & Bỏ prefix gần đúng \\
+MCTSr & Chấm ứng viên; mở rộng/refine search & Self-evaluation lệch và search cost bị bỏ sót \\
+Recursive Models & Cô lập local context; trả trạng thái subproblem & Mất điều kiện khi nén return value \\
+Budget, TIP, FSF & Phân bổ độ dài, độ sâu exploration hoặc nhánh & Overthinking hoặc bám giữ nhánh sai \\
 \bottomrule
 \end{tabularx}
-\caption{A2 controllers compared by their decisions and failure modes. Cross-referenced papers retain their original primary roles.}
+\caption{Đối chiếu A2 theo quyết định và failure mode. Paper được dẫn chéo giữ nguyên primary role.}
 \label{tab:a2_comparison}
 \end{table}
 
-\paragraph{Memory, length, and depth are different resources.}
-Recursive Models reduce the amount of active context by using local frames and return values~\cite{rra2_recursive_models}. This does not imply that the entire execution emits fewer tokens. Budget forcing regulates duration; TIP discourages premature direction changes; FSF-based selection or pruning uses structural evidence~\cite{rra1_s1,rra3_underthinking,rra3_effective_reasoning}. Their actions may be complementary, but compatibility is a hypothesis requiring a joint evaluation. A system can have a short active context, long total execution, and deep exploration of one subproblem simultaneously.
+\paragraph{Memory, độ dài và độ sâu là các tài nguyên khác nhau.}
+Recursive Models giảm active context bằng local frame và return value~\cite{rra2_recursive_models}. Điều đó không đồng nghĩa toàn bộ thực thi sinh ít token hơn. Budget forcing điều tiết thời lượng; TIP hạn chế đổi hướng sớm; selection hoặc pruning theo FSF dùng bằng chứng cấu trúc~\cite{rra1_s1,rra3_underthinking,rra3_effective_reasoning}. Các action có thể bổ sung nhau, nhưng khả năng kết hợp vẫn là giả thuyết cần đánh giá chung. Một hệ thống có thể đồng thời có active context ngắn, tổng thực thi dài và exploration sâu ở một subproblem.
 
-\subsection{Interpreting Evidence in Analysis Papers}
+\subsection{Diễn giải bằng chứng trong các paper Analysis}
 \label{subsec:a3_evidence}
 
-Analytical claims should be indexed by the object measured and the intervention performed. The text of a trace, an extracted dependency graph, a learned correctness predictor, and the internal computation of the generator are distinct objects. A successful method operating on one does not automatically explain the others.
+Claim phân tích cần gắn với đối tượng được đo và phép can thiệp. Văn bản trace, dependency graph được trích, correctness predictor được học và tính toán nội tại của generator là các đối tượng riêng. Thành công của phương pháp trên một đối tượng không tự giải thích những đối tượng còn lại.
 
 \begin{table}[htbp]
 \centering\small
 \begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.7cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
 \toprule
-\textbf{Evidence type} & \textbf{What it can support} & \textbf{What remains unresolved} \\
+\textbf{Loại bằng chứng} & \textbf{Có thể hỗ trợ kết luận} & \textbf{Vấn đề còn bỏ ngỏ} \\
 \midrule
-Trace observation & Behavioral associations in the sampled corpus & Causal direction and unobserved confounds \\
-Correctness prediction & Useful features for prediction or selection & Whether the feature is an internal mechanism \\
-Trace intervention & Sensitivity to a specified edit/continuation & Distribution shift and generalization \\
-Internal intervention & Dependence under the chosen perturbation & Equivalence to discourse dependencies \\
+Quan sát trace & Liên hệ hành vi trong corpus được lấy mẫu & Chiều nhân quả và yếu tố gây nhiễu chưa quan sát \\
+Dự đoán correctness & Feature hữu ích cho prediction hoặc selection & Feature có phải cơ chế nội tại không \\
+Can thiệp trace & Độ nhạy với edit/continuation cụ thể & Distribution shift và generalization \\
+Can thiệp nội tại & Dependency dưới perturbation đã chọn & Có tương đương dependency diễn ngôn không \\
 \bottomrule
 \end{tabularx}
-\caption{Evidence distinctions used in A3. These categories describe study designs, not a ranking that makes all interventions conclusive.}
+\caption{Phân biệt bằng chứng trong A3. Các loại mô tả thiết kế nghiên cứu, không phải thứ hạng khiến mọi can thiệp đều cho kết luận chắc chắn.}
 \label{tab:a3_evidence}
 \end{table}
 
-\paragraph{Representation is not mechanism.}
-ReasoningFlow offers a discourse schema and separately examines its alignment with intervention-based dependence~\cite{rra3_reasoningflow}. Weak alignment in the evaluated QwQ/AIME setup should be scoped to that setup. CoT2Graph's GNNExplainer attributes predictions made by a graph classifier; it does not directly explain the generator's causal computation~\cite{rra3_cot2graph}. Its correctness-prediction accuracy and the accuracy of answers selected by the predictor are also different metrics. Graph construction quality, judge dependence, and transfer across models are therefore part of the evidence, not preprocessing details that can be ignored.
+\paragraph{Biểu diễn và cơ chế.}
+ReasoningFlow cung cấp discourse schema và kiểm tra riêng mức alignment với dependency dựa trên can thiệp~\cite{rra3_reasoningflow}. Kết quả alignment yếu cần giới hạn trong setup QwQ/AIME đã thử. GNNExplainer của CoT2Graph giải thích dự đoán của graph classifier, không trực tiếp giải thích cơ chế nhân quả của generator~\cite{rra3_cot2graph}. Correctness-prediction accuracy cũng khác accuracy của đáp án được predictor chọn. Chất lượng dựng graph, mức phụ thuộc judge và khả năng transfer qua model vì vậy là một phần của bằng chứng, không chỉ là chi tiết preprocessing có thể bỏ qua.
 
-\paragraph{Contrasting overthinking and underthinking.}
-Chen, Wang, and Peng examine redundant computation, premature switching, and self-doubt, respectively~\cite{rra3_chen_overthinking,rra3_underthinking,rra3_overthinking}. These diagnoses can coexist in a single trace: the model can spend many tokens repeatedly entering shallow branches without developing any one branch far enough. Suppressing all reflection is consequently different from removing a redundant verification or delaying one premature switch. An intervention that helps one failure mode can worsen another. Claims that longer reasoning helps or hurts should specify what content was added, where it was added, and which compute budget was held fixed.
+\paragraph{Đối chiếu overthinking và underthinking.}
+Chen, Wang và Peng lần lượt khảo sát tính toán dư thừa, đổi hướng quá sớm và self-doubt~\cite{rra3_chen_overthinking,rra3_underthinking,rra3_overthinking}. Những chẩn đoán này có thể cùng xuất hiện trong một trace: model tiêu nhiều token lặp lại việc vào nhánh nông mà không phát triển nhánh nào đủ xa. Vì vậy suppress mọi reflection khác với loại một verification dư thừa hay trì hoãn một lần đổi hướng sớm. Can thiệp có ích với failure mode này có thể làm failure mode khác nặng hơn. Claim reasoning dài hơn có lợi hay hại cần chỉ rõ nội dung được thêm, vị trí thêm và compute budget được giữ cố định.
 
-\paragraph{From observation to an actionable intervention.}
-FSF-guided selection keeps the candidate pool fixed and changes the selection rule; branch editing changes the prefix and observes continuations~\cite{rra3_effective_reasoning}. The first establishes usefulness for choosing outputs, while the second probes the effect of a specific context change. Neither makes every abandoned branch semantically useless. Lanham et al.'s perturbations similarly motivate matched controls for edits that may be out of distribution~\cite{rra3_lanham_faithfulness}. ZebraLogic adds a separate complexity axis: increasing a combinatorial search space is not the same manipulation as increasing dependency horizon~\cite{rra3_zebralogic}.
+\paragraph{Từ quan sát đến can thiệp có thể sử dụng.}
+Selection theo FSF giữ nguyên tập ứng viên, thay quy tắc chọn; branch editing thay prefix và quan sát continuation~\cite{rra3_effective_reasoning}. Thiết lập đầu chứng minh tính hữu ích khi chọn output; thiết lập sau kiểm tra tác động của một thay đổi context cụ thể. Cả hai không khiến mọi nhánh bị bỏ dở đều trở nên vô ích về ngữ nghĩa. Perturbation của Lanham và cộng sự cũng gợi nhu cầu matched control cho edit có thể lệch phân phối~\cite{rra3_lanham_faithfulness}. ZebraLogic bổ sung trục độ phức tạp riêng: tăng search space tổ hợp không phải cùng thao tác với tăng dependency horizon~\cite{rra3_zebralogic}.
 
-\subsection{Evaluation Units, Metrics, and Fair Comparisons}
+\subsection{Đơn vị đánh giá, metric và so sánh công bằng}
 \label{subsec:a4_protocol}
 
-We separate final-answer correctness, process quality, efficiency, and faithfulness. A final answer may be correct despite invalid intermediate steps; a coherent trace may omit a factor that caused the answer; a compact trace may be cheap but insufficient. No single metric in the current collection replaces all four dimensions.
+Chúng tôi tách final-answer correctness, process quality, efficiency và faithfulness. Đáp án cuối có thể đúng dù bước trung gian invalid; trace mạch lạc có thể bỏ sót yếu tố gây ra đáp án; trace ngắn có thể rẻ nhưng chưa đủ lập luận. Chưa có metric đơn lẻ trong danh mục thay thế được cả bốn chiều.
 
-\paragraph{Benchmark units.}
-LongCoT includes a multi-domain template collection and a separate experiment that varies dependency DAGs; their dataset sizes and manipulation axes should not be mixed~\cite{rra4_longcot}. SPaRC enables checks of path validity and difficulty-sensitive allocation~\cite{rra4_sparc}. Low performance within these task families identifies a stress-test limitation, rather than a universal inability to reason. For CoTJudger, the redundancy unit is an extracted node or step, not a token~\cite{rra4_cotjudger}. Changing segmentation can change both the denominator and the extracted shortest path. Steps outside that path may still have helped discover or verify the solution.
+\paragraph{Đơn vị của benchmark.}
+LongCoT có tập template đa miền và một thí nghiệm riêng thay đổi dependency DAG; không nên trộn kích thước dataset và trục thao tác của chúng~\cite{rra4_longcot}. SPaRC cho phép kiểm tra path validity và phân bổ compute theo độ khó~\cite{rra4_sparc}. Điểm thấp trong các họ tác vụ này chỉ ra giới hạn trong stress test, không phải sự bất lực suy luận tổng quát. Với CoTJudger, đơn vị redundancy là node/bước được trích, không phải token~\cite{rra4_cotjudger}. Đổi segmentation có thể đổi cả mẫu số lẫn shortest path. Bước ngoài path vẫn có thể giúp tìm hoặc kiểm tra lời giải.
 
-\paragraph{ProcessBench's task-specific F1.}
-ProcessBench asks for the earliest erroneous step or a no-error decision, not a newly generated solution~\cite{rra4_processbench}. Let $a_{\mathrm{err}}$ be accuracy on erroneous samples and $a_{\mathrm{ok}}$ accuracy on correct samples. Its reported score is the harmonic mean
+\paragraph{F1 theo giao thức riêng của ProcessBench.}
+ProcessBench yêu cầu tìm bước lỗi đầu tiên hoặc quyết định no-error, không yêu cầu sinh lời giải mới~\cite{rra4_processbench}. Gọi $a_{\mathrm{err}}$ là accuracy trên mẫu có lỗi và $a_{\mathrm{ok}}$ là accuracy trên mẫu đúng. Score được báo cáo là harmonic mean:
 \begin{equation}
 F_{\mathrm{PB}}=\frac{2a_{\mathrm{err}}a_{\mathrm{ok}}}{a_{\mathrm{err}}+a_{\mathrm{ok}}}.
 \end{equation}
-This should not be described as conventional token-level or step-level binary F1. Subset averages must also be distinguished from a pooled-sample accuracy. CriticBench complements localization by separating generation, critique, and correction~\cite{rra4_criticbench}; a critic that finds an error need not provide feedback that successfully repairs it.
+Không nên mô tả score này là binary F1 thông thường ở cấp token hoặc bước. Trung bình theo subset cũng phải phân biệt với accuracy gộp mẫu. CriticBench bổ sung cho error localization bằng cách tách generation, critique và correction~\cite{rra4_criticbench}; critic tìm đúng lỗi chưa chắc tạo feedback giúp sửa được lỗi.
 
-\paragraph{Sampling and compute accounting.}
-Pass@1 estimated from multiple samples still measures expected single-attempt success. It differs from success in at least one of $k$ attempts. When applicable, the usual sample-based estimator is
+\paragraph{Sampling và cách tính compute.}
+Pass@1 được ước lượng từ nhiều mẫu vẫn đo xác suất thành công kỳ vọng của một lần thử. Nó khác với thành công trong ít nhất một trong $k$ lần thử. Khi áp dụng được, estimator dựa trên mẫu thường dùng là:
 \begin{equation}
 \widehat{\mathrm{pass@}k}=1-\frac{\binom{n-c}{k}}{\binom{n}{k}},
 \end{equation}
-where $c$ of $n$ sampled outputs are correct. A paper's mean accuracy over $k$ samples must not be relabeled Pass@$k$. We retain each source's estimator and sampling settings. For system comparisons we propose reporting total generation, judge/verifier, checking, parsing, discarded-branch, and restart costs, together with latency and peak active context. This is a reporting recommendation; not every reviewed paper measures every component.
+trong đó $c$ trong $n$ output được lấy mẫu là đúng. Không được đổi tên mean accuracy qua $k$ mẫu thành Pass@$k$. Bản tổng hợp giữ estimator và sampling setting của từng nguồn. Để so hệ thống, nhóm đề xuất báo cáo tổng chi phí generation, judge/verifier, checking, parsing, nhánh bị bỏ và restart, cùng latency và peak active context. Đây là khuyến nghị báo cáo; không phải paper nào cũng đo đủ các thành phần.
 
-Small point differences require uncertainty estimates before superiority or equivalence is claimed. Checkpoint, prompt, dataset split, model API date, and contamination policy should accompany headline scores. Matching path count alone does not match token/FLOP cost; matching output tokens does not match full-system latency.
+Chênh lệch điểm nhỏ cần uncertainty estimate trước khi tuyên bố ưu thế hay tương đương. Checkpoint, prompt, dataset split, ngày model API và chính sách contamination cần đi cùng điểm chính. Cùng path count không có nghĩa cùng token/FLOP cost; cùng output token không có nghĩa cùng latency toàn hệ thống.
 
-\subsection{Cross-Role Research Questions}
+\subsection{Câu hỏi nghiên cứu liên vai trò}
 \label{subsec:research_questions}
 
-The following questions are proposed experiments motivated by the reviewed literature. They have not been executed in this repository, and the current survey does not claim their outcomes.
+Các câu hỏi sau là thí nghiệm đề xuất từ literature đã đọc. Chúng chưa được thực hiện trong repo và bản survey không khẳng định kết quả của chúng.
 
 \begin{enumerate}
-\item \textbf{Capability acquisition or elicitation?} Hold the base and training-token budget fixed while varying curated demonstrations and RL recipes. Compare held-out difficulty, transfer, and data-generation cost to distinguish a stronger starting checkpoint from a better post-training method.
-\item \textbf{Can learned efficiency and stopping compose?} Evaluate a $2\times2$ design with/without efficiency training and with/without a controller. Report the accuracy--cost frontier, auxiliary checking cost, and the rate at which early exit turns a correct full-run answer into an incorrect one.
-\item \textbf{When is reflection productive?} From matched prefixes, continue normally, suppress reflection, or encourage it under corresponding budgets. Separate repair gains from harmful changes of a previously correct answer, rather than counting reflection tokens alone.
-\item \textbf{Are graph metrics robust to the extractor?} Parse the same traces with multiple judges and a human-annotated subset. Compare structural agreement, metric rankings, downstream selection quality, and judge cost.
-\item \textbf{Is the failure driven by horizon or combinatorics?} Vary dependency depth independently from branching/search difficulty. Report a two-dimensional accuracy surface and state-validity failures rather than treating all long outputs as equally difficult.
-\item \textbf{When should a system restart?} On the same prefixes and total budget, compare continuation, restart, and targeted pruning. Measure escape probability, discarded-correct-prefix rate, and net answer accuracy.
-\item \textbf{Does compression change faithfulness?} Use matched hints and trace perturbations before and after compression, with controls for distribution shift. Report answer accuracy alongside the explicitly defined faithfulness proxy.
-\item \textbf{Do verifiers transfer to longer horizons?} Preserve error types while increasing trace length and distance to the first error. Evaluate localization, no-error accuracy, calibration, and latency without tuning thresholds on the test set.
+\item \textbf{Học capability mới hay kích hoạt capability sẵn có?} Giữ base và training-token budget, thay demonstration được chọn lọc và quy trình RL. So độ khó held-out, transfer và chi phí sinh dữ liệu để phân biệt lợi ích của checkpoint mạnh hơn với post-training tốt hơn.
+\item \textbf{Learned efficiency có kết hợp được với stopping?} Đánh giá thiết kế $2\times2$: có/không efficiency training và có/không controller. Báo frontier accuracy--cost, checking cost và tỷ lệ early exit biến đáp án đúng của full run thành sai.
+\item \textbf{Khi nào reflection hữu ích?} Từ các prefix tương ứng, tiếp tục bình thường, suppress hoặc khuyến khích reflection dưới budget tương ứng. Tách repair gain khỏi việc sửa hỏng đáp án đã đúng, thay vì chỉ đếm reflection token.
+\item \textbf{Graph metric có ổn định khi đổi extractor?} Parse cùng trace bằng nhiều judge và một subset gán nhãn người. So structural agreement, thứ hạng metric, chất lượng selection và judge cost.
+\item \textbf{Failure do horizon hay độ phức tạp tổ hợp?} Thay dependency depth độc lập với branching/search difficulty. Báo accuracy theo hai chiều và lỗi state validity, thay vì xem mọi output dài là khó như nhau.
+\item \textbf{Khi nào hệ thống nên restart?} Trên cùng prefix và tổng budget, so continuation, restart và targeted pruning. Đo escape probability, tỷ lệ bỏ prefix đúng và accuracy ròng.
+\item \textbf{Compression có thay đổi faithfulness?} Dùng hint và trace perturbation tương ứng trước/sau compression, có đối chứng distribution shift. Báo answer accuracy cùng faithfulness proxy được định nghĩa rõ.
+\item \textbf{Verifier có transfer sang horizon dài hơn?} Giữ loại lỗi, tăng trace length và khoảng cách đến lỗi đầu tiên. Đánh giá localization, no-error accuracy, calibration và latency mà không tune threshold trên test.
 \end{enumerate}
 
-These questions connect A1 objectives, A2 decisions, A3 explanatory evidence, and A4 measurement. Their value is to make the next comparison testable, not to presume that a single method or taxonomy resolves every Long-CoT failure.
+Các câu hỏi nối objective của A1, quyết định A2, bằng chứng giải thích A3 và phép đo A4. Mục tiêu là làm phép so sánh tiếp theo có thể kiểm chứng, không mặc định một phương pháp hay taxonomy giải quyết mọi failure của Long-CoT.

@@ -1,6 +1,6 @@
 # Bản thảo Research Role & Related Work — build local
 
-Đây là bản nháp tiếng Anh để nhóm biên tập, gồm hai phần và thư mục tài liệu tham khảo:
+Đây là bản thảo tiếng Việt để nhóm biên tập, gồm hai phần và thư mục tài liệu tham khảo. Terminology, tên paper/model, tên dataset, prompt và các ký hiệu kỹ thuật được giữ nguyên khi cần để đối chiếu nguồn.
 
 - `research-role.tex`: A1 Training/Data, A2 Inference/Control, A3 Analysis, A4 Evaluation/Benchmark.
 - `research-synthesis.tex`: so sánh phương pháp, cấp bằng chứng, metric và 8 RQ đề xuất; được nhập ngay sau `research-role.tex` trong cùng section.
@@ -19,7 +19,9 @@ pdflatex -interaction=nonstopmode -halt-on-error draft-main.tex
 pdflatex -interaction=nonstopmode -halt-on-error draft-main.tex
 ```
 
-PDF đầu ra là `draft-main.pdf`; không cần dịch vụ Overleaf. Bản ngày 07/11/2026 gồm 24 paper và 9 survey, dùng chung 33 entry BibTeX. Nếu đã có Perl, có thể thay chuỗi trên bằng `latexmk -pdf draft-main.tex`; MiKTeX trên máy hiện tại chưa có Perl nên dùng chuỗi lệnh trực tiếp.
+PDF đầu ra là `draft-main.pdf`; không cần dịch vụ Overleaf. Bản tiếng Việt ngày 08/11/2026 gồm 24 paper và 9 survey, dùng chung 33 entry BibTeX. Lần chuyển ngôn ngữ giữ nguyên phạm vi tài liệu và số liệu của bản ngày 07/11/2026. Nếu đã có Perl, có thể thay chuỗi trên bằng `latexmk -pdf draft-main.tex`; MiKTeX trên máy hiện tại chưa có Perl nên dùng chuỗi lệnh trực tiếp.
+
+Wrapper dùng UTF-8, font encoding `T5` và `babel` với tùy chọn `vietnamese`; các gói hỗ trợ tiếng Việt đã có sẵn trên máy. Khi nhập vào template khác, bảo đảm template hỗ trợ dấu tiếng Việt; không nạp trùng hoặc để `T1` ghi đè `T5` đang dùng cho phần nội dung.
 
 ## Tích hợp vào template LaTeX / Overleaf (nếu cần)
 

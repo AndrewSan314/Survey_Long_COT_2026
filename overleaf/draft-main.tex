@@ -1,8 +1,10 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
 \usepackage[margin=1in]{geometry}
 \usepackage{lmodern}
+\setlength{\emergencystretch}{2em}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{booktabs}
 \usepackage{tabularx}
@@ -11,22 +13,22 @@
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage[colorlinks=true,linkcolor=blue!70!black,citecolor=blue!70!black,urlcolor=blue!70!black]{hyperref}
 
-\title{\textbf{Research Roles and Related Work --- Extended Working Draft}}
+\title{\textbf{Các vai trò nghiên cứu và Related Work\\trong Long-CoT --- Bản thảo mở rộng}}
 \author{}
-\date{November 7, 2026}
+\date{Ngày 8 tháng 11 năm 2026}
 
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
-This working draft synthesizes recent literature on Long Chain-of-Thought (Long-CoT) reasoning in large language models. We organize 24 representative studies into 15 methodological subgroups under four research roles: A1 (Training/Data), A2 (Inference/Control), A3 (Analysis), and A4 (Evaluation/Benchmark). We compare nine prior survey taxonomies by scope and organizing unit, and explain how they relate to research-role assignments. Beyond reporting methods and outcomes, the extended synthesis examines training and inference trade-offs, levels of analytical evidence, evaluation units, sampling, and full-system compute accounting. Eight proposed research questions connect these roles through concrete experimental designs. The collection prioritizes direct Long-CoT studies while marking adjacent and foundational evidence; it is selective, and reported experiments have not been independently reproduced.
+Bản thảo tổng hợp các nghiên cứu về suy luận Long Chain-of-Thought (Long-CoT) trong mô hình ngôn ngữ lớn. Chúng tôi tổ chức 24 công trình tiêu biểu thành 15 nhóm phương pháp thuộc bốn vai trò nghiên cứu: A1 (Training/Data), A2 (Inference/Control), A3 (Analysis) và A4 (Evaluation/Benchmark). Chín survey được đối chiếu theo phạm vi và đơn vị phân loại, từ đó làm rõ mối liên hệ với cách gán vai trò nghiên cứu. Ngoài phương pháp và kết quả, bản tổng hợp phân tích các đánh đổi trong training và inference, cấp bằng chứng phân tích, đơn vị đánh giá, sampling và cách tính compute của toàn hệ thống. Tám câu hỏi nghiên cứu đề xuất kết nối các vai trò này với thiết kế thực nghiệm cụ thể. Danh mục ưu tiên nghiên cứu trực tiếp Long-CoT, đồng thời đánh dấu các công trình liên quan và nền tảng; đây là tập chọn lọc, các thí nghiệm được trích dẫn chưa được nhóm tái lập độc lập.
 \end{abstract}
 
 \vspace{1.5em}
 
 % -------------------------------------------------------------------------
-% Input Sections
+% Các phần nội dung
 % -------------------------------------------------------------------------
 
 \input{related-work}
@@ -40,7 +42,7 @@ This working draft synthesizes recent literature on Long Chain-of-Thought (Long-
 \clearpage
 
 % -------------------------------------------------------------------------
-% Bibliography
+% Tài liệu tham khảo
 % -------------------------------------------------------------------------
 
 \bibliographystyle{plainnat}
