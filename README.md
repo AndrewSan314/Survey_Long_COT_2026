@@ -2,21 +2,31 @@
 
 Danh mục làm việc cho phần **Research Role (A) & Related Work**, cập nhật bản tiếng Việt ngày 08/11/2026: **24 paper nghiên cứu** (19 Long-CoT trực tiếp) và **9 survey** đối chiếu taxonomy.
 
-- [Paper theo A1 Training/Data, A2 Inference/Control, A3 Analysis, A4 Evaluation/Benchmark](papers/research-role.md): bài toán, phương pháp, kết quả, đóng góp, giới hạn và vị trí nguồn.
-- [Phân tích mở rộng 15 hướng nhỏ, bảng so sánh và 8 câu hỏi nghiên cứu](papers/research-directions.md): cơ chế, giả định, cấp bằng chứng, đơn vị đánh giá và thiết kế thực nghiệm đề xuất.
+- **[Đọc trước: Tổng hợp literature theo A1–A4](papers/literature-review.md)** — 24 paper, 16 hướng nhỏ; mỗi paper có bài toán, phương pháp, kết quả, đóng góp và hạn chế.
+- [Hồ sơ paper đầy đủ và vị trí nguồn](papers/research-role.md): số liệu chi tiết, scope, nhận xét phương pháp và primary/secondary role.
+- [Phân tích bổ sung và 8 câu hỏi nghiên cứu](papers/research-directions.md): tài liệu mở rộng, không thay thế đầu ra literature review.
 - [Related Work: phạm vi, taxonomy và cách dùng 9 survey](papers/related-work.md).
 - [Bản thảo LaTeX/BibTeX để nhập Overleaf](overleaf/README.md) và [PDF xem trước](overleaf/draft-main.pdf).
 - [Hướng dẫn bổ sung paper qua pull request](CONTRIBUTING.md).
 
 Các nhóm nhỏ là đề xuất tổ chức literature của nhóm, có thể điều chỉnh khi thêm paper. Danh mục phân biệt paper Long-CoT trực tiếp, nghiên cứu suy luận liên quan và công trình nền tảng; số liệu là kết quả tác giả báo cáo, chưa được nhóm tái lập.
 
-**Bản mở rộng:** Mỗi hồ sơ trong 24 paper có thêm phần đọc phương pháp và nhận xét đối chiếu; Related Work có phân tích riêng cho cả 9 survey và crosswalk giữa các trục taxonomy. PDF bổ sung so sánh A1–A4, giải thích metric/sampling/compute, và 8 RQ có thiết kế kiểm chứng. Nhận xét tổng hợp và đề xuất của nhóm được ghi riêng với kết quả tác giả.
+**Bố cục PDF theo phân công:** Literature Review nằm trước, gồm đúng bốn nhóm A1–A4; mỗi nhóm có hướng nhỏ, paper tiêu biểu và tổng hợp kết quả/hạn chế. Related Work nằm sau, tập trung vào phạm vi và cách phân loại của chín survey. Phần RQ/phân tích mở rộng được giữ trong tài liệu bổ sung, không đưa vào PDF chính.
+
+| Yêu cầu | Đầu ra để kiểm tra |
+| --- | --- |
+| Paper theo A1–A4, ưu tiên Long-CoT trực tiếp | [Bản tổng hợp 24 paper](papers/literature-review.md), có nhãn phạm vi |
+| Bài toán, phương pháp, kết quả, đóng góp | Bốn trường ghi rõ cho từng paper trong Markdown và PDF; kèm hạn chế |
+| Hướng nhỏ dựa trên phương pháp | 16 subgroup; distillation và data synthesis/selection được nêu tường minh |
+| Survey cho Related Work | [Chín survey](papers/related-work.md), tách scope và taxonomy |
+| Bản thảo LaTeX để ghép vào bài nhóm | [Nguồn và cách build](overleaf/README.md), [PDF](overleaf/draft-main.pdf) |
+| Repo để thành viên bổ sung | [Quy trình pull request](CONTRIBUTING.md) |
 
 **Ngôn ngữ:** Nội dung LaTeX/PDF, bảng và chú thích dùng tiếng Việt; giữ terminology, tên paper/model/dataset và ký hiệu chuyên môn. Nguồn và số liệu vẫn theo bản tổng hợp ngày 07/11/2026; chuyển ngôn ngữ không đồng nghĩa đã cập nhật literature mới.
 
 | Nhóm | Số paper chính | Các hướng nhỏ và paper tiêu biểu |
 | --- | --- | --- |
-| **A1 Training/Data** | 6 | RL/capability (R1, Kimi); SFT dữ liệu ít (s1, LIMO); curriculum (Light-R1); RL học efficiency (Arora & Zanette) |
+| **A1 Training/Data** | 6 | RL (R1, Kimi); SFT (s1, LIMO); data synthesis/selection và curriculum (Light-R1); efficiency RL (Arora & Zanette); distillation/Long2short (dẫn chéo R1, Kimi) |
 | **A2 Inference/Control** | 5 | Dừng sớm (DTSR, REFRAIN); phát hiện bẫy/restart và search (TAAR, MCTSr); quản lý context (Recursive Models); budget forcing/độ sâu khám phá (dẫn chéo s1, TIP, FSF) |
 | **A3 Analysis** | 8 | Discourse/faithfulness (ReasoningFlow, Lanham); graph/failure (CoT2Graph, FSF); scaling limits (ZebraLogic); overthinking/underthinking/self-doubt (Chen, Wang, Peng) |
 | **A4 Evaluation/Benchmark** | 5 | Long-horizon stress test (LongCoT, SPaRC); chỉ số redundancy (CoTJudger); process error/critique (ProcessBench, CriticBench) |

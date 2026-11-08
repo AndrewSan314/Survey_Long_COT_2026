@@ -1,157 +1,57 @@
-% Related Work và đối chiếu taxonomy.
-% Bản tiếng Việt: 2026-11-08; giữ terminology và nguồn của bản trước.
-
-\section{Related Work và đối chiếu taxonomy}
+\section{Related Work: phạm vi và cách phân loại của các survey}
 \label{sec:related_work}
 
-Sự phát triển của reasoning model đã dẫn đến nhiều survey tổ chức literature theo khung nhận thức, search, compute scaling, evaluation và efficiency. Chúng tôi đối chiếu chín survey tiêu biểu \cite{survey_chen2025reasoning, survey_li2025system, survey_zhang2025testtime, survey_wei2026treesearch, survey_lee2025evaluating, survey_ji2025testtime, survey_qu2025efficient, survey_sui2025overthinking, survey_zhu2025adaptive} với bốn vai trò nghiên cứu: \textbf{A1 Training/Data}, \textbf{A2 Inference/Control}, \textbf{A3 Analysis} và \textbf{A4 Evaluation/Benchmark}. Trích dẫn được ghim theo phiên bản preprint; năm xuất bản hoặc taxonomy của bản mới hơn có thể khác. Đây là đối chiếu chọn lọc, không xác lập tính tiên phong so với mọi survey trước.
+Phần này tổng hợp chín survey liên quan để làm rõ \emph{họ nghiên cứu literature nào và phân loại theo trục nào}. Các survey không được tính vào 24 paper nghiên cứu của A1–A4. Phiên bản nguồn được ghim trong BibTeX; nội dung dưới đây là đối chiếu có chọn lọc, không phải kiểm kê mọi survey đến thời điểm hiện tại.
 
-\subsection{Nguyên tắc tổ chức của các survey trước}
-\label{subsec:survey_organizing_principles}
+\subsection{Các survey tiêu biểu}
 
-Các survey tiếp cận literature từ những góc nhìn kỹ thuật bổ sung cho nhau, được tổng hợp trong Bảng~\ref{tab:survey_comparison}.
+\paragraph{Chen và cộng sự — Towards Reasoning Era~\cite{survey_chen2025reasoning}.}
+\textbf{Phạm vi:} Long-CoT trong reasoning LLM và khác biệt với short CoT.
+\textbf{Cách phân loại:} Deep Reasoning, Feasible Reflection và Extensive Exploration; các nhánh con gồm format/learning, feedback/refinement và internal/external exploration.
+\textbf{Dùng cho Related Work:} Cung cấp khung đặc trưng của Long-CoT; tách nhận diện lỗi khỏi sửa lỗi. Khác với khung này, A1–A4 tổ chức theo vai trò đóng góp: học, điều khiển, phân tích hoặc đánh giá cùng một năng lực.
 
-\paragraph{Reflection và exploration.}
-Chen và cộng sự~\cite{survey_chen2025reasoning} tổ chức theo ba năng lực: \emph{Deep Reasoning} (thiết kế định dạng và cách training), \emph{Feasible Reflection} (\emph{Feedback} để nhận diện lỗi và \emph{Refinement} để điều chỉnh trajectory), \emph{Extensive Exploration} (inference scaling qua deliberation nội tại và tương tác công cụ bên ngoài). Tách feedback khỏi refinement giúp phân biệt việc tìm được lỗi với việc thực sự sinh ra bản sửa hợp lệ.
+\paragraph{Li và cộng sự — From System 1 to System 2~\cite{survey_li2025system}.}
+\textbf{Phạm vi:} Reasoning LLM rộng hơn riêng long trace.
+\textbf{Cách phân loại:} Features, Methods, Evolution; nhóm phương pháp gồm Structure Search, Reward Modeling, Self Improvement, Macro Action và Reinforced Fine-Tuning.
+\textbf{Dùng cho Related Work:} Đặt SFT/RL, reward và search vào tiến trình phát triển reasoning model. Khung System 1–2 là cách tổ chức literature, không tự chứng minh cơ chế nhận thức giống người.
 
-\paragraph{Chuyển đổi theo khung dual-process.}
-Li và cộng sự~\cite{survey_li2025system} đặt suy luận trong khung chuyển đổi từ System 1 sang System 2, với ba chiều liên hệ nhau: \emph{Features} mô tả hành vi đầu ra và mẫu suy luận quan sát được; \emph{Methods} gồm Structure Search, Reward Modeling, Self Improvement, Macro Action và Reinforced Fine-Tuning (RFT); \emph{Evolution} mô tả tiến trình từ sinh đáp án trực giác đến inference có deliberation.
+\paragraph{Zhang và cộng sự — A Survey on Test-Time Scaling~\cite{survey_zhang2025testtime}.}
+\textbf{Phạm vi:} Tăng compute lúc inference, gồm cả sequential reasoning và parallel sampling.
+\textbf{Cách phân loại:} What, How, Where, How Well: dạng scaling, cách hiện thực, miền tác vụ và tiêu chí performance/efficiency/controllability/scalability.
+\textbf{Dùng cho Related Work:} Chuẩn hóa cách so test-time compute trong A2. Tăng số ứng viên không nhất thiết tăng độ dài từng trace; cần giữ riêng sampling, length và selection cost.
 
-\paragraph{Test-Time Scaling đa chiều (4W).}
-Zhang và cộng sự~\cite{survey_zhang2025testtime} tổ chức test-time compute scaling theo bốn câu hỏi:
-\begin{enumerate}
-    \item \textbf{What to scale}: Parallel sampling như Best-of-$N$, self-consistency; sequential refinement như sửa lặp, budget forcing; hybrid search; và internal scaling, tức phân bổ compute do model học qua training.
-    \item \textbf{How to scale}: Tuning-based như RL, process supervision; đối chiếu với inference-based prompting và search scaffolding.
-    \item \textbf{Where to scale}: \emph{Reasoning-intensive Tasks} như toán và logic hình thức; \emph{Agentic Tasks} như dùng công cụ và planning nhiều bước; \emph{Others} như hỏi đáp tổng quát và tác vụ chuyên miền.
-    \item \textbf{How well to scale}: \emph{Performance} như accuracy, pass@$k$; \emph{Efficiency} như token budget, compute cost; \emph{Controllability} như tuân thủ budget, hành vi dừng; \emph{Scalability} như số mũ bão hòa thực nghiệm và giới hạn scaling. \S8.2 còn thảo luận tiêu chuẩn kết thúc và khó khăn khi phân biệt độ dài trajectory với logical sufficiency.
-\end{enumerate}
+\paragraph{Wei và cộng sự — When LLM Meets Tree Search~\cite{survey_wei2026treesearch}.}
+\textbf{Phạm vi:} Inference-as-search và các thiết kế tree search cho LLM.
+\textbf{Cách phân loại:} Node representation/granularity, evaluation function, MCTS dynamics và compute reporting; node có thể là trace, state–action hoặc terminal solution.
+\textbf{Dùng cho Related Work:} Nguồn đối chiếu search/branching trong A2. Không xem một rollout hay một tầng cây có cùng ý nghĩa giữa các phương pháp khác độ hạt.
 
-\begin{table*}[p]
-\centering
-\small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{3.2cm} >{\raggedright\arraybackslash}X >{\raggedright\arraybackslash}p{4.6cm}}
-\toprule
-\textbf{Survey} & \textbf{Phạm vi và trục tổ chức} & \textbf{Giá trị đối chiếu} \\
-\midrule
-\textbf{Chen và cộng sự} (2025) \cite{survey_chen2025reasoning} &
-\textbf{Deep Reasoning}: Format, Learning.\newline
-\textbf{Feasible Reflection}: Feedback, Refinement.\newline
-\textbf{Extensive Exploration}: Scaling, Internal, External. &
-Tách nhận diện lỗi (\emph{Feedback}) khỏi điều chỉnh trajectory (\emph{Refinement}). \\
-\addlinespace
-\textbf{Li và cộng sự} (2025) \cite{survey_li2025system} &
-\textbf{System 2 Blueprint}: Features, Methods, Evolution.\newline
-\textbf{Phương pháp}: Structure Search, Reward Modeling, Self Improvement, Macro Action, RFT. &
-Liên hệ mẫu hành vi quan sát được với kỹ thuật training và search. \\
-\addlinespace
-\textbf{Zhang và cộng sự} (2025) \cite{survey_zhang2025testtime} &
-\textbf{What}: Parallel, Sequential, Hybrid, Internal.\newline
-\textbf{How}: Tuning-based, Inference-based.\newline
-\textbf{Where}: Reasoning-intensive, Agentic, Others.\newline
-\textbf{How Well}: Performance, Efficiency, Controllability, Scalability. &
-Taxonomy đa chiều kết nối miền tác vụ, compute budget và hiện tượng bão hòa scaling. \\
-\addlinespace
-\textbf{Wei và cộng sự} (2026) \cite{survey_wei2026treesearch} &
-\textbf{Cấu trúc search}: Node Representation (Trace-based, State--Action, Terminal-State), Evaluation Function, MCTS Dynamics, Compute Reporting. &
-Hệ thống hóa tree search, độ hạt của node và cơ chế credit assignment. \\
-\addlinespace
-\textbf{Lee và Hockenmaier} (2025) \cite{survey_lee2025evaluating} &
-\textbf{Tiêu chí}: Factuality, Validity, Coherence, Utility.\newline
-\textbf{Evaluator}: Rule-based, Intrinsic, External; benchmark meta-evaluation. &
-Phân loại metric và kiến trúc verification cho trace suy luận từng bước. \\
-\addlinespace
-\textbf{Ji và cộng sự} (2025) \cite{survey_ji2025testtime} &
-\textbf{Chuyển đổi nhận thức}: System-1 adaptation (model, input, representation, output) và System-2 deliberate reasoning (feedback, search). &
-Đối chiếu generation trực giác nhanh với deliberate search và đánh đổi compute budget. \\
-\addlinespace
-\textbf{Qu và cộng sự} (2025) \cite{survey_qu2025efficient} &
-\textbf{Lifecycle}: Inference, SFT, RL, pretraining; các dạng inefficiency và hướng evaluation. &
-Nối phân bổ compute lúc inference (A2) với efficiency được học (A1). \\
-\addlinespace
-\textbf{Sui và cộng sự} (2025) \cite{survey_sui2025overthinking} &
-\textbf{Nơi can thiệp}: Model, reasoning output, input prompts; dữ liệu/compression và evaluation. &
-Tổ chức biện pháp giảm overthinking theo nơi can thiệp. \\
-\addlinespace
-\textbf{Zhu và Li} (2025) \cite{survey_zhu2025adaptive} &
-\textbf{Nhu cầu training}: Training-free và training-based cho concise/adaptive thinking. &
-Tách control khi triển khai (A2) khỏi policy suy luận được học (A1). \\
-\bottomrule
-\end{tabularx}
-\caption{Đối chiếu taxonomy của các survey về Long-CoT và test-time reasoning.}
-\label{tab:survey_comparison}
-\end{table*}
+\paragraph{Lee và Hockenmaier — Evaluating Step-by-step Reasoning Traces~\cite{survey_lee2025evaluating}.}
+\textbf{Phạm vi:} Đánh giá reasoning trace và các bước trung gian.
+\textbf{Cách phân loại:} Tách tiêu chí factuality, validity, coherence, utility khỏi loại evaluator rule-based, intrinsic và external; có thảo luận meta-evaluation.
+\textbf{Dùng cho Related Work:} Cung cấp thuật ngữ cho A3/A4. Correctness đáp án, validity từng bước và utility không thay thế nhau; LLM judge cũng cần được kiểm định.
 
-\paragraph{Inference dưới góc nhìn search.}
-Wei và cộng sự~\cite{survey_wei2026treesearch} tổ chức phương pháp theo \emph{Node Representation and Granularity}, gồm \emph{Trace-based}, \emph{State--Action} và \emph{Terminal-State}; \emph{Evaluation Function}, gồm value network, process reward model, self-evaluation; \emph{MCTS Dynamics}, gồm selection, expansion, simulation, backpropagation; cùng giao thức báo cáo compute.
+\paragraph{Ji và cộng sự — A Survey of Test-Time Compute~\cite{survey_ji2025testtime}.}
+\textbf{Phạm vi:} Test-time adaptation và deliberate reasoning, không giới hạn explicit Long-CoT.
+\textbf{Cách phân loại:} System-1 adaptation theo model/input/representation/output; System-2 reasoning theo feedback, test-time strategies và improvement training.
+\textbf{Dùng cho Related Work:} Bối cảnh chung để nối training và inference. Không mặc định mọi paper về test-time compute là nghiên cứu Long-CoT trực tiếp.
 
-\paragraph{Đánh giá trace từng bước.}
-Lee và Hockenmaier \cite{survey_lee2025evaluating} tập trung vào các bước suy luận trung gian, với bốn chiều: \emph{Factuality} là độ đúng dữ kiện của tiền đề; \emph{Validity} là quan hệ suy ra logic giữa các bước; \emph{Coherence} là tổ chức và tính mạch lạc diễn ngôn; \emph{Utility} là đóng góp cho lời giải cuối. Evaluator được chia thành rule-based, intrinsic model-based và external judge, kèm benchmark meta-evaluation.
+\paragraph{Qu và cộng sự — A Survey of Efficient Reasoning for Large Reasoning Models~\cite{survey_qu2025efficient}.}
+\textbf{Phạm vi:} Efficient reasoning của LRM trong các giai đoạn phát triển và triển khai.
+\textbf{Cách phân loại:} Lifecycle gồm inference, SFT, RL, pretraining; inference chia length budgeting, system switch, model switch và parallel search.
+\textbf{Dùng cho Related Work:} Đối chiếu efficiency được học ở A1 với efficiency do control ở A2; nhấn mạnh cần xét cost của toàn hệ thống khi thêm module hoặc đổi model.
 
-\paragraph{Phân bổ compute cho deliberation.}
-Ji và cộng sự~\cite{survey_ji2025testtime} đối chiếu \emph{System-1 adaptation}, gồm thay đổi model, input, representation và phân phối output token, với \emph{System-2 deliberate reasoning}, gồm external feedback loop, tree/graph search policy và compute budgeting thích ứng.
+\paragraph{Sui và cộng sự — Stop Overthinking~\cite{survey_sui2025overthinking}.}
+\textbf{Phạm vi:} Phương pháp giảm overthinking và tăng reasoning efficiency.
+\textbf{Cách phân loại:} Theo nơi can thiệp: model-based, reasoning-output-based, input-prompts-based; bổ sung dữ liệu, model compression và evaluation.
+\textbf{Dùng cho Related Work:} Làm rõ nơi phương pháp tác động. Một pipeline có thể thay nhiều thành phần, nên trục này không trùng hoàn toàn với primary role A1–A4.
 
-\paragraph{Reasoning hiệu quả và thích ứng.}
-Qu và cộng sự~\cite{survey_qu2025efficient} tổ chức theo inference, SFT, RL và pretraining; inference gồm length budgeting, system/model switching và parallel search. Sui và cộng sự~\cite{survey_sui2025overthinking} chia theo nơi can thiệp: model, reasoning output hoặc input prompt. Zhu và Li~\cite{survey_zhu2025adaptive} tách prompting, pipeline, decoding và merging không cần training khỏi fine-tuning và RL có training. Phạm vi được tác giả nêu loại trừ general model compression, tối ưu kiến trúc và multimodal efficiency. Các survey cho thấy việc rút ngắn và thích ứng reasoning đã được khảo sát đáng kể; cách gán research role của nhóm bổ sung cho các trục lifecycle, nơi can thiệp và nhu cầu training này.
+\paragraph{Zhu và Li — Towards Concise and Adaptive Thinking~\cite{survey_zhu2025adaptive}.}
+\textbf{Phạm vi:} Rút ngắn reasoning và thích ứng fast/slow thinking.
+\textbf{Cách phân loại:} Training-free gồm prompting, pipeline, decoding manipulation, merging; training-based gồm fine-tuning và RL.
+\textbf{Dùng cho Related Work:} So phương pháp A1 với A2 theo nhu cầu training. Tác giả nêu loại trừ general compression, tối ưu kiến trúc và multimodal efficiency; training-free không có nghĩa runtime cost bằng không.
 
-\subsection{Taxonomy đang phân loại đối tượng nào?}
-\label{subsec:taxonomy_units}
+\subsection{Tổng hợp liên hệ với bản review A1–A4}
 
-Các survey có đơn vị tổ chức khác nhau. Taxonomy theo capability hỏi hành vi suy luận nào được hỗ trợ; taxonomy theo lifecycle hỏi can thiệp xảy ra ở giai đoạn nào; taxonomy về search mô tả cấu trúc tính toán; taxonomy evaluation tách tiêu chí khỏi cách hiện thực evaluator. Chỉ so tên nhánh cao nhất có thể phóng đại khác biệt hoặc che khuất phần giao nhau đáng kể.
+Các survey trước tổ chức literature theo ít nhất sáu góc nhìn: \emph{đặc trưng reasoning}, \emph{tiến trình model}, \emph{compute scaling}, \emph{cấu trúc search}, \emph{tiêu chí đánh giá} và \emph{efficiency/adaptivity}. Bản review này giữ các góc nhìn đó để mô tả phương pháp, nhưng gán mỗi paper một primary role theo đóng góp trung tâm. Ví dụ s1 thuộc A1 cho dữ liệu/SFT và được dẫn chéo A2 cho budget forcing; CoTJudger thuộc A4 cho evaluator dù có phân tích graph liên quan A3.
 
-\paragraph{Capability và đóng góp nghiên cứu.}
-Deep reasoning, reflection và exploration của Chen và cộng sự mô tả thuộc tính hoặc năng lực deliberation mở rộng~\cite{survey_chen2025reasoning}. Một paper có thể học năng lực đó, điều khiển nó lúc generation, phân tích khi nào nó xuất hiện hoặc xây benchmark đo nó. Những đóng góp này thuộc các research role khác nhau nhưng vẫn dùng chung nhãn capability. Feedback và refinement đặc biệt hữu ích: nhận ra lỗi, sinh bản sửa hiệu quả và đo chất lượng bản sửa là ba đóng góp riêng.
-
-Features, methods và evolution trong Li và cộng sự cung cấp bức tranh rộng hơn về reasoning model~\cite{survey_li2025system}. Khung System 1--2 tổ chức literature, tự nó chưa chứng minh model triển khai cơ chế nhận thức của con người. Tương tự, phạm vi adaptation của Ji và cộng sự bao gồm test-time method ngoài explicit long reasoning trace~\cite{survey_ji2025testtime}. Có thể dùng các khung này để đặt adjacent work vào bối cảnh mà không coi mọi phương pháp là bằng chứng trực tiếp về Long-CoT.
-
-\paragraph{Trục compute và cấu trúc thực thi.}
-Bốn câu hỏi của Zhang và cộng sự có thể gán nhiều mô tả cho cùng nghiên cứu: dạng compute, cách hiện thực, miền tác vụ và tiêu chí đánh giá~\cite{survey_zhang2025testtime}. Parallel sampling có thể tăng compute mà không kéo dài từng trace. Wei và cộng sự bổ sung độ hạt của search node và cơ chế evaluator~\cite{survey_wei2026treesearch}; node là cả lời giải trong phương pháp này không tương đương một bước suy luận nguyên tử trong phương pháp khác. Cần giữ rõ các đơn vị trước khi so depth, rollout count hoặc efficiency.
-
-\paragraph{Tiêu chí đánh giá và loại evaluator.}
-Factuality, validity, coherence và utility của Lee và Hockenmaier xác định \emph{đánh giá điều gì}; rule-based, intrinsic và external evaluator xác định \emph{đánh giá bằng cách nào}~\cite{survey_lee2025evaluating}. Một tiêu chí có thể được hiện thực bằng nhiều evaluator. Trace trôi chảy chưa chắc valid; bước valid chưa chắc useful; reasoning hữu ích nhìn thấy được chưa chắc bộc lộ mọi yếu tố ảnh hưởng đáp án. Vì vậy phần A3/A4 tách process quality khỏi faithfulness.
-
-\paragraph{Lifecycle, nơi can thiệp và nhu cầu training.}
-Các survey efficiency bổ sung cho nhau. Qu và cộng sự chia theo inference, SFT, RL, pretraining; Sui và cộng sự chia theo model, reasoning output, input prompt; Zhu và Li chia theo training-free và training-based~\cite{survey_qu2025efficient,survey_sui2025overthinking,survey_zhu2025adaptive}. Một pipeline có thể thay nhiều thành phần, gồm cả phần đã học và phần chạy lúc inference. Training-free không có nghĩa không cần auxiliary module, calibration hay runtime cost. Phạm vi loại trừ được survey nêu rõ cần được ghi nhận như lựa chọn của tác giả, thay vì xem là thiếu sót đã được chứng minh.
-
-\begin{table}[p]
-\centering\small
-\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.6cm}>{\raggedright\arraybackslash}X>{\raggedright\arraybackslash}X}
-\toprule
-\textbf{Góc nhìn survey} & \textbf{Đơn vị tổ chức chính} & \textbf{Câu hỏi giữ lại trong A1--A4} \\
-\midrule
-Chen và cộng sự & Capability của Long-CoT & Đóng góp là học, điều khiển, giải thích hay đo capability đó? \\
-Li và cộng sự & Features, methods, evolution & Bằng chứng nói về thuật toán, hành vi hay quy trình phát triển? \\
-Zhang và cộng sự & What, how, where, how well & Tài nguyên, cách hiện thực, tác vụ và budget đánh giá là gì? \\
-Wei và cộng sự & Node, evaluator, search dynamics & Một search step là gì; feedback đổi thực thi thế nào? \\
-Lee và Hockenmaier & Tiêu chí và loại evaluator & Đo thuộc tính nào; evaluator được kiểm tra ra sao? \\
-Ji và cộng sự & Adaptation và deliberate reasoning & Bằng chứng trực tiếp Long-CoT hay bối cảnh compute rộng hơn? \\
-Qu và cộng sự & Giai đoạn lifecycle & Chi phí giảm tổng thể hay chuyển giữa training và inference? \\
-Sui và cộng sự & Nơi can thiệp & Input, model, output hay nhiều thành phần cùng thay đổi? \\
-Zhu và Li & Nhu cầu training & Phần nào học trước, phần nào thích ứng khi sử dụng? \\
-\bottomrule
-\end{tabularx}
-\caption{Crosswalk do nhóm đề xuất giữa đơn vị tổ chức của survey và câu hỏi theo research role. Đây không phải điểm coverage nhị phân hay khẳng định từng survey tự gán những nhãn này.}
-\label{tab:survey_crosswalk}
-\end{table}
-
-\subsection{Liên hệ với Research Role A1--A4}
-\label{subsec:relationship_research_roles}
-
-Khung bốn vai trò phân loại đóng góp kỹ thuật trung tâm: \textbf{A1 Training/Data} bao quát objective và dữ liệu; \textbf{A2 Inference/Control} bao quát thực thi và search control; \textbf{A3 Analysis} bao quát giải thích và chẩn đoán; \textbf{A4 Evaluation/Benchmark} bao quát công cụ và giao thức đánh giá. Các vai trò giữ lại mô tả hữu ích từ survey trước thay vì thay thế chúng. Mỗi paper có một bản ghi chính cùng secondary role, giúp thể hiện giao thoa mà không tăng giả số lượng literature.
-
-\paragraph{Ví dụ crosswalk cụ thể.}
-s1 được gán A1 vì quy trình SFT với dữ liệu chọn lọc là đóng góp trung tâm; budget forcing được giữ ở A2~\cite{rra1_s1}. Có thể mô tả thêm bằng sequential scaling và tuning/decoding trong các khung survey trước. TAAR có primary A2 cho adaptive restart, secondary A3 cho chẩn đoán thinking trap~\cite{rra2_taar}. CoTJudger có primary A4 cho evaluator, đồng thời graph analysis cung cấp bằng chứng cho A3~\cite{rra4_cotjudger}. Đây là cách gán của nhóm, không khẳng định mọi survey trước đã gán các paper như vậy.
-
-Trọng tâm đề xuất là nối cách học reasoning, cách điều khiển, những gì phân tích thực nghiệm giải thích được và bằng chứng evaluation hỗ trợ. Đây là lựa chọn tổng hợp, không phải khẳng định survey trước bỏ qua analysis hoặc evaluation. So sánh cần ghi riêng final-answer accuracy, process quality, efficiency và faithfulness, cùng model, split, sampling và compute budget. Giảm token tự nó không đo được latency toàn hệ thống hay chứng minh causal faithfulness.
-
-\subsection{Giới hạn và định vị bản tổng hợp}
-\label{subsec:review_boundaries}
-
-\paragraph{Chọn và trích xuất nghiên cứu.}
-Danh mục ưu tiên nghiên cứu trực tiếp deliberation mở rộng, giữ adjacent hoặc foundational work khi chúng làm rõ phương pháp, failure mode hay giao thức evaluation. Mỗi công trình có nguồn ghim phiên bản, bài toán, phương pháp, kết quả tác giả báo cáo, đóng góp và giới hạn. Từ khóa tìm kiếm và mở rộng theo trích dẫn được dùng để chọn hướng tiêu biểu; đây không phải quy trình systematic review đầy đủ và không bảo đảm coverage toàn bộ. Cập nhật model, venue hoặc dataset về sau có thể cần bản ghi phiên bản riêng.
-
-\paragraph{Diễn giải khoảng trống nghiên cứu.}
-Đối chiếu gợi ra câu hỏi về đánh đổi objective, tín hiệu và action của controller, cấp bằng chứng phân tích và đơn vị evaluation. Đây là cơ hội tổ chức bản thảo, chưa chứng minh survey trước bỏ qua chúng. Muốn tuyên bố novelty mạnh hơn, như survey đầu tiên bao quát đủ bốn vai trò, cần corpus survey rộng hơn và tiêu chí coverage tường minh. Vì vậy đóng góp được định vị là tổng hợp theo research role có chú ý cấp bằng chứng, kèm danh mục paper tái sử dụng được.
-
-\paragraph{Cách sử dụng bản tổng hợp.}
-Phần sau trình bày phương pháp tiêu biểu, đối chiếu giả định và phép đo, rồi đề xuất câu hỏi nghiên cứu liên vai trò có thể kiểm chứng. Danh mục tách kết quả tác giả khỏi diễn giải so sánh của nhóm. Nhờ đó repo có thể tiếp nhận bằng chứng mới, kể cả kết quả âm hoặc mâu thuẫn, mà không coi ranh giới subgroup hiện tại là bất biến.
+Vì vậy, vai trò của Related Work là đặt cách tổ chức hiện tại vào bối cảnh literature đã có, không tuyên bố các survey trước thiếu toàn bộ training, inference, analysis hoặc evaluation. Giá trị tổng hợp được đề xuất là một danh mục có thể tra cứu theo A1–A4, các hướng nhỏ dựa trên phương pháp và tóm tắt từng paper theo bài toán, phương pháp, kết quả, đóng góp cùng hạn chế. Hồ sơ nguồn chi tiết được duy trì trong repo để các thành viên bổ sung và đối chiếu.

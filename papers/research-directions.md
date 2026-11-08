@@ -2,6 +2,8 @@
 
 Bản phân tích mở rộng, ngày **07/11/2026**. Đọc cùng [24 hồ sơ paper](research-role.md) và [9 survey đối chiếu](related-work.md). Các so sánh, ranh giới nhóm và câu hỏi nghiên cứu dưới đây là **tổng hợp/đề xuất của nhóm**, không phải kết quả thực nghiệm mới.
 
+Đây là tài liệu bổ sung. Đầu ra chính theo phân công nằm ở [literature-review.md](literature-review.md), gồm tổng hợp bốn trường cho từng paper và các subgroup tương ứng; các RQ dưới đây không nằm trong PDF chính.
+
 ## 1. Đơn vị phân loại và các khái niệm phải tách
 
 Taxonomy A1–A4 trả lời **paper đóng góp điều gì**, còn subgroup mô tả **họ phương pháp**. Không dùng tên model để quyết định role. Một benchmark có phần phân tích mạnh có thể được gán A3 chính, A4 phụ; một paper SFT có inference control vẫn giữ một bản ghi chính.
@@ -17,29 +19,35 @@ Taxonomy A1–A4 trả lời **paper đóng góp điều gì**, còn subgroup m�
 
 ## 2. A1 — Cách hình thành và điều chỉnh năng lực
 
-### A1.1 Hình thành và mở rộng Long-CoT bằng RL
+### A1.1 RL hình thành năng lực reasoning
 
 **Câu hỏi:** Có thể học hành vi khám phá, kiểm tra và sửa sai từ reward đáp án đến mức nào? [DeepSeek-R1](research-role.md#rra1-deepseek-r1) và [Kimi k1.5](research-role.md#rra1-kimi-k15) là hai đại diện. Trọng tâm là objective, rollout, verifier và độ ổn định của quá trình tối ưu; không chỉ là chuỗi cuối cùng dài bao nhiêu.
 
 **Ranh giới:** Reward ở cuối vẫn có thể khuyến khích một policy sinh nhiều bước, nhưng không chứng minh mọi bước đúng hoặc cần thiết. Phải tách năng lực base, dữ liệu/prompt RL và điều kiện verifier khỏi đóng góp riêng của thuật toán.
 
-### A1.2 SFT với tập dữ liệu nhỏ được chọn lọc
+### A1.2 SFT với dữ liệu được chọn lọc
 
 **Câu hỏi:** Một tập trace nhỏ, được chọn tốt, có đủ để khai thác năng lực của checkpoint mạnh? [s1](research-role.md#rra1-s1) và [LIMO](research-role.md#rra1-limo) đặt dữ liệu ở trung tâm: độ khó, độ đa dạng, khả năng giải được và hành vi có trong trace.
 
 **Ranh giới:** Ít mẫu SFT không đồng nghĩa ít tổng compute. Năng lực teacher, chi phí sinh/lọc và tri thức base vẫn tham gia. So sánh s1 với LIMO cần giữ base, decoding và ngân sách đánh giá; không xếp hạng bằng số AIME lấy từ các setup khác nhau.
 
-### A1.3 Pipeline curriculum nhiều giai đoạn và quy trình kết hợp
+### A1.3 Data synthesis/selection và curriculum
 
 **Câu hỏi:** Thứ tự các stage và loại dữ liệu giúp ổn định Long-CoT ra sao? [Light-R1](research-role.md#rra1-light-r1) kết hợp curriculum SFT, preference optimization và merging. Đơn vị phân tích là **thay đổi qua stage**.
 
 **Ranh giới:** Một stage tăng toán nhưng giảm GPQA cho thấy cần xem chuyển giao đa miền. Ablation đáng tin cần kiểm soát lượng dữ liệu và training budget; đường cong checkpoint đơn thuần chưa cô lập nguyên nhân.
 
-### A1.4 RL hướng efficiency và học phân bổ compute
+### A1.4 RL hướng efficiency
 
 **Câu hỏi:** Có thể học cách dùng ít compute cho bài dễ nhưng giữ deliberation cho bài khó? [Arora & Zanette](research-role.md#rra1-efficient-rl) dùng length-aware objective; Long2short của Kimi và self-training của Chen cung cấp các cơ chế chuyển giao liên quan.
 
 **Ranh giới:** Học efficiency khác cắt max_tokens khi inference. Cần so cả accuracy–cost frontier và faithfulness, vì nén trace có thể bỏ cả bước thừa lẫn nội dung giải thích hữu ích.
+
+### A1.5 Distillation và Long2short
+
+**Câu hỏi:** Chuyển năng lực từ teacher/trace dài sang model nhỏ hoặc trace ngắn như thế nào? DeepSeek-R1 distill reasoning trace sang Qwen/Llama qua SFT; Kimi k1.5 khảo sát Long2short. Đây là dẫn chéo hai paper đã có ở A1.1, không làm tăng tổng số.
+
+**Ranh giới:** Model compression và reasoning compression khác nhau. Cần ghi model size, chất lượng đáp án, độ dài trace và chi phí teacher; trace ngắn hơn chưa chứng minh bảo toàn mọi reasoning dependency.
 
 | Họ phương pháp | Thành phần thay đổi | Điều kiện cần ghi | Đối chứng quan trọng |
 | --- | --- | --- | --- |
@@ -52,19 +60,19 @@ Taxonomy A1–A4 trả lời **paper đóng góp điều gì**, còn subgroup m�
 
 ## 3. A2 — Điều khiển tiến trình lúc suy luận
 
-### A2.1 Early stopping thích ứng và đánh giá sufficiency
+### A2.1 Adaptive reasoning và early stopping
 
 [DTSR](research-role.md#rra2-dtsr) hỏi đã đủ thông tin để kết luận chưa; [REFRAIN](research-role.md#rra2-refrain) tìm phản tư dư thừa và thích ứng ngưỡng. Cần tách **trigger kiểm tra**, **tín hiệu quyết định**, **action dừng**. Cùng trigger “Wait” không có nghĩa hai phương pháp dùng cùng tiêu chuẩn.
 
-### A2.2 Phát hiện thinking trap, phục hồi và search
+### A2.2 Search, branching và phục hồi trajectory
 
 [TAAR](research-role.md#rra2-taar) cắt prefix mắc bẫy và restart; [MCTSr](research-role.md#rra2-mctsr) tìm kiếm qua các bản lời giải được refine. Chia nhỏ hướng này thành **sửa prefix có điều kiện** và **phân bổ nhiều ứng viên** giúp tránh gộp mọi phương pháp có restart vào cùng cơ chế.
 
-### A2.3 Cô lập context và quản lý trạng thái
+### A2.3 Cô lập context và quản lý state
 
 [Recursive Models](research-role.md#rra2-recursive-models) tổ chức subproblem bằng stack frame và return value. Mục tiêu là kiểm soát nội dung đang hoạt động và đường truyền trạng thái. Một thuật toán có thể dùng nhiều tổng token nhưng ít peak context hơn; vì vậy không đánh giá chỉ bằng output length.
 
-### A2.4 Budget forcing và điều khiển độ sâu exploration
+### A2.4 Test-time compute và điều khiển độ sâu
 
 Budget forcing của [s1](research-role.md#rra1-s1) điều tiết thời lượng; [TIP](research-role.md#rra3-underthinking) điều tiết chuyển hướng; [FSF](research-role.md#rra3-effective-reasoning) hỗ trợ selection/pruning theo cấu trúc. Đây là dẫn chéo, không thêm ba paper mới vào số lượng A2.
 
@@ -81,19 +89,19 @@ Budget forcing của [s1](research-role.md#rra1-s1) điều tiết thời lượ
 
 ## 4. A3 — Giải thích hành vi và giới hạn
 
-### A3.1 Cấu trúc diễn ngôn và faithfulness
+### A3.1 Cấu trúc diễn ngôn và interpretability/faithfulness
 
 [ReasoningFlow](research-role.md#rra3-reasoningflow) mô tả quan hệ diễn ngôn; [Lanham et al.](research-role.md#rra3-lanham-faithfulness) dùng can thiệp trên trace để kiểm tra sự phụ thuộc của đáp án. Cấu trúc đọc được và cấu trúc tính toán nội tại là hai đối tượng khác nhau.
 
-### A3.2 Biểu diễn graph và chẩn đoán failure mode
+### A3.2 Redundant steps và cấu trúc graph
 
 [CoT2Graph](research-role.md#rra3-cot2graph) khai thác topology để dự đoán correctness và chọn ứng viên. [Feng et al.](research-role.md#rra3-effective-reasoning) phân tích nhánh bị bỏ dở bằng FSF. Cả hai tạo động lực nghiên cứu graph quality, khả năng đổi judge và mức chuyển giao giữa model/domain.
 
-### A3.3 Giới hạn scaling theo độ phức tạp tổ hợp
+### A3.3 Complexity, error propagation và giới hạn horizon
 
 [ZebraLogic](research-role.md#rra3-zebralogic) kiểm soát độ khó tổ hợp. Liên hệ với [LongCoT](research-role.md#rra4-longcot) cho phép đặt hai câu hỏi riêng: search space tăng có làm thất bại, và dependency horizon tăng có làm thất bại? Thiết kế nghiên cứu nên thao tác độc lập hai yếu tố.
 
-### A3.4 Overthinking, underthinking và self-doubt
+### A3.4 Reasoning behavior: overthinking/underthinking
 
 [Chen](research-role.md#rra3-chen-overthinking), [Wang](research-role.md#rra3-underthinking) và [Peng](research-role.md#rra3-overthinking) mô tả các dạng allocation thất bại khác nhau. Một trace có thể vừa dài, vừa đổi hướng nhiều, vừa chưa phát triển đủ một hướng tốt; ba nhãn không phải các lớp loại trừ nhau.
 
@@ -108,15 +116,15 @@ Budget forcing của [s1](research-role.md#rra1-s1) điều tiết thời lượ
 
 ## 5. A4 — Đo cái gì và đo bằng cách nào
 
-### A4.1 Benchmark dependency dài và giới hạn scaling
+### A4.1 Benchmark long-horizon và planning
 
 [LongCoT](research-role.md#rra4-longcot) kiểm tra chuỗi phụ thuộc đa miền; [SPaRC](research-role.md#rra4-sparc) kiểm tra planning và tính hợp lệ của trạng thái/di chuyển. Điểm mạnh là tạo failure analysis ngoài đáp án cuối. Tuy nhiên, mỗi benchmark vẫn có thiên lệch theo cách sinh đề và biểu diễn.
 
-### A4.2 Đánh giá efficiency và redundancy dựa trên graph
+### A4.2 Metric chất lượng, độ dài và redundancy
 
 [CoTJudger](research-role.md#rra4-cotjudger) đo phần graph nằm ngoài SEP. Cần giữ riêng **step redundancy**, **token cost**, **latency** và **utility nhân quả**. Một step dài và mười step ngắn có thể tạo tỷ lệ node rất khác dù tiêu tốn token tương tự.
 
-### A4.3 Đánh giá lỗi cấp bước và critique-correction
+### A4.3 Process/outcome evaluation và verifier
 
 [ProcessBench](research-role.md#rra4-processbench) hỏi bước lỗi đầu tiên nằm đâu; [CriticBench](research-role.md#rra4-criticbench) tách generation, critique và correction. Đánh giá critic tốt là điều kiện hữu ích cho hệ thống dùng feedback, nhưng không bảo đảm critic đó chọn đúng action dừng hoặc sửa trong mọi Long-CoT.
 

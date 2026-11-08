@@ -2,11 +2,11 @@
 
 Đây là bản thảo tiếng Việt để nhóm biên tập, gồm hai phần và thư mục tài liệu tham khảo. Terminology, tên paper/model, tên dataset, prompt và các ký hiệu kỹ thuật được giữ nguyên khi cần để đối chiếu nguồn.
 
-- `research-role.tex`: A1 Training/Data, A2 Inference/Control, A3 Analysis, A4 Evaluation/Benchmark.
-- `research-synthesis.tex`: so sánh phương pháp, cấp bằng chứng, metric và 8 RQ đề xuất; được nhập ngay sau `research-role.tex` trong cùng section.
+- `research-role.tex`: phần chính có đúng bốn nhóm A1–A4, 16 hướng nhỏ và 24 paper; từng paper ghi rõ bài toán, phương pháp, kết quả, đóng góp và hạn chế.
+- `research-synthesis.tex`: phân tích mở rộng và 8 RQ của bản trước, được giữ làm tài liệu bổ sung; **không được nhập vào PDF chính**.
 - `related-work.tex`: phạm vi và cách phân loại literature của chín survey.
 - `references.bib`: BibTeX dùng chung.
-- `draft-main.tex`: tài liệu độc lập để biên dịch và xem trước bằng `draft-main.pdf`.
+- `draft-main.tex`: bản độc lập, nhập `research-role.tex` trước và `related-work.tex` sau; biên dịch thành `draft-main.pdf`.
 
 ## Build local
 
@@ -27,7 +27,9 @@ Wrapper dùng UTF-8, font encoding `T5` và `babel` với tùy chọn `vietnames
 
 Với project mới, tải các tệp `.tex` và `.bib` trong thư mục này lên, chọn `draft-main.tex` làm Main document và dùng pdfLaTeX. Biên dịch cục bộ tương đương: `pdflatex draft-main`, `bibtex draft-main`, rồi chạy `pdflatex draft-main` hai lần.
 
-Với project nhóm đã có template, nhập `\input{related-work}`, `\input{research-role}`, rồi `\input{research-synthesis}`, sau đó gộp các entry vào bibliography hiện có. Wrapper dùng `natbib`, `hyperref`, `booktabs`, `tabularx`, `amsmath`; điều chỉnh theo template trước khi gộp, tránh nạp trùng gói hoặc thay wrapper đang dùng của nhóm.
+Với project nhóm đã có template, nhập `\input{research-role}` và `\input{related-work}` tại vị trí thích hợp, rồi gộp các entry vào bibliography hiện có. Nếu Literature Review là mục 4 trong template nhóm như ảnh phân công, bộ đếm section của template sẽ tự tạo 4.1–4.4; không đặt cứng số mục trong hai tệp nội dung. Wrapper dùng `natbib`, `hyperref`, `booktabs`, `tabularx`, `amsmath`; điều chỉnh theo template trước khi gộp, tránh nạp trùng gói.
+
+Phần mở rộng `research-synthesis.tex` chỉ nhập riêng khi nhóm cần thảo luận metric hoặc RQ; không trộn vào phần tổng hợp literature theo phân công. [Bản Markdown tóm tắt](../papers/literature-review.md) tương ứng trực tiếp với Literature Review trong PDF; [hồ sơ đầy đủ](../papers/research-role.md) giữ vị trí nguồn và các số liệu bổ sung.
 
 Các khóa `rra1_`–`rra4_` và `survey_` liên kết đến nguồn được dùng trong bản thảo. Giữ khóa duy nhất khi bổ sung hoặc hợp nhất BibTeX. Các nhóm nhỏ và primary/secondary role là đề xuất làm việc của nhóm, không phải taxonomy do từng paper công bố.
 

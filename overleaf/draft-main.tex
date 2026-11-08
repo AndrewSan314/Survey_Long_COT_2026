@@ -13,7 +13,7 @@
 \usepackage[numbers,sort&compress]{natbib}
 \usepackage[colorlinks=true,linkcolor=blue!70!black,citecolor=blue!70!black,urlcolor=blue!70!black]{hyperref}
 
-\title{\textbf{Các vai trò nghiên cứu và Related Work\\trong Long-CoT --- Bản thảo mở rộng}}
+\title{\textbf{Tổng hợp literature Long-CoT theo A1--A4\\và Related Work}}
 \author{}
 \date{Ngày 8 tháng 11 năm 2026}
 
@@ -22,7 +22,7 @@
 \maketitle
 
 \begin{abstract}
-Bản thảo tổng hợp các nghiên cứu về suy luận Long Chain-of-Thought (Long-CoT) trong mô hình ngôn ngữ lớn. Chúng tôi tổ chức 24 công trình tiêu biểu thành 15 nhóm phương pháp thuộc bốn vai trò nghiên cứu: A1 (Training/Data), A2 (Inference/Control), A3 (Analysis) và A4 (Evaluation/Benchmark). Chín survey được đối chiếu theo phạm vi và đơn vị phân loại, từ đó làm rõ mối liên hệ với cách gán vai trò nghiên cứu. Ngoài phương pháp và kết quả, bản tổng hợp phân tích các đánh đổi trong training và inference, cấp bằng chứng phân tích, đơn vị đánh giá, sampling và cách tính compute của toàn hệ thống. Tám câu hỏi nghiên cứu đề xuất kết nối các vai trò này với thiết kế thực nghiệm cụ thể. Danh mục ưu tiên nghiên cứu trực tiếp Long-CoT, đồng thời đánh dấu các công trình liên quan và nền tảng; đây là tập chọn lọc, các thí nghiệm được trích dẫn chưa được nhóm tái lập độc lập.
+Bản thảo phục vụ hai đầu ra: tổng hợp paper Long-CoT theo Research Role A1--A4 và viết Related Work về các survey liên quan. Phần chính trình bày 24 paper theo 16 hướng nhỏ, mỗi paper có bài toán, phương pháp, kết quả, đóng góp và hạn chế; ưu tiên nghiên cứu trực tiếp Long-CoT. Related Work đối chiếu phạm vi và cách phân loại literature của chín survey. Paper liên quan nhiều nhóm được dẫn chéo thay vì đếm lại. Kết quả là tác giả báo cáo, chưa được nhóm tái lập.
 \end{abstract}
 
 \vspace{1.5em}
@@ -31,13 +31,11 @@ Bản thảo tổng hợp các nghiên cứu về suy luận Long Chain-of-Thoug
 % Các phần nội dung
 % -------------------------------------------------------------------------
 
-\input{related-work}
+\input{research-role}
 
 \clearpage
 
-\input{research-role}
-
-\input{research-synthesis}
+\input{related-work}
 
 \clearpage
 
